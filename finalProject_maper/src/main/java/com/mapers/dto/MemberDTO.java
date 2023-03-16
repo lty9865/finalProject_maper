@@ -1,32 +1,31 @@
 package com.mapers.dto;
 
 public class MemberDTO {
-
-	private String userid;
+	private String userId;
 	private String password;
 	private String email;
 	private String birth;
 	private int admins;
-	private String licensekey;
+	private String licenseKey;
 
 	/*
 	 * blob 은 추후 회의 진행 후 추가 private blob
 	 */
 
 	public String getLicensekey() {
-		return licensekey;
+		return licenseKey;
 	}
 
-	public void setLicensekey(String licensekey) {
-		this.licensekey = licensekey;
+	public void setLicenseKey(String licenseKey) {
+		this.licenseKey = licenseKey;
 	}
 
-	public String getUserid() {
-		return userid;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setUserid(String userid) {
-		this.userid = userid;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public String getPassword() {
@@ -60,5 +59,4 @@ public class MemberDTO {
 	public void setAdmins(int admins) {
 		this.admins = admins;
 	}
-
 }
