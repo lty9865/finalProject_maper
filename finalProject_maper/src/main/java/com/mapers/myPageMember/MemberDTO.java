@@ -1,4 +1,4 @@
-package com.mapers.dto;
+package com.mapers.myPageMember;
 
 public class MemberDTO {
 	private String userId;

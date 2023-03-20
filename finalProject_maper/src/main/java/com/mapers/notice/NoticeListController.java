@@ -1,6 +1,7 @@
 package com.mapers.notice;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +30,13 @@ public class NoticeListController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		NoticeDAO dao = NoticeDAO.getInstance();
+		NoticeDAO dao = null;
+		try {
+			dao = new NoticeDAO();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		String searchField = request.getParameter("searchField");

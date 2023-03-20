@@ -3,6 +3,7 @@ package com.mapers.notice;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
@@ -11,27 +12,23 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import com.mapers.common.ConnectionPool;
+
 public class NoticeDAO {
+	private ConnectionPool cp;
+	private Connection conn;
+	private PreparedStatement pstmt;
+	private ResultSet rs;
 
-	private NoticeDAO() {
-	}
-
-	// 싱글턴 패턴으로 인스턴스 생성 제한
-	private static NoticeDAO instance = new NoticeDAO();
-
-	public static NoticeDAO getInstance() {
-		return instance;
-	}
-
-	// DB Connection Pool
-	private Connection getConnection() throws Exception {
-		Connection conn = null;
-		Context initCtx = new InitialContext();
-		Context envCtx = (Context) initCtx.lookup("java:comp/env");
-		DataSource ds = (DataSource) envCtx.lookup("jdbc/myoracle");
-		conn = ds.getConnection();
+	// 커넥션 풀 사용법
+	public NoticeDAO() throws SQLException {
+		// oracle url, oracle userId, oracle userPassword, 초기 커넥션 수, 최대 커넥션 수
+		cp = ConnectionPool.getInstance("jdbc:oracle:thin:@localhose:1521:xe", "c##mapers", "mapers1234", 5, 10);
 		
-		return conn;
+		conn = cp.getConnection();
+		
+		pstmt = null;
+		rs = null;
 	}
 
 	// 공지사항 글 개수 세기 - 김연호
@@ -39,15 +36,12 @@ public class NoticeDAO {
 		int totalCount = 0;
 		
 		String query = "SELECT COUNT(*) FROM NOTICE";
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
+
 		if(map.get("searchWord") != null) {
 			query += " WHERE " + map.get("searchField") + " LIKE '%" + map.get("searchWord") + "%'";
 		}
 		
 		try {
-			conn = getConnection();
 			pstmt = conn.prepareStatement(query);
 			rs = pstmt.executeQuery();
 			rs.next();
@@ -62,7 +56,8 @@ public class NoticeDAO {
 				if(pstmt != null)
 					pstmt.close();
 				if(conn != null)
-					conn.close();
+					cp.releaseConnection(conn);
+					cp.closeAll();
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
@@ -74,10 +69,8 @@ public class NoticeDAO {
 	public int insertNotice(NoticeDTO dto) {
 		int result = 0;
 		String query = "INSERT INTO NOTICE (noticenum, title, content) VALUES (C##MAPERS.NOTICE_SEQ.NEXTVAL,?,?)";
-		Connection conn = null;
-		PreparedStatement pstmt = null;
+
 		try {
-			conn = getConnection();
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, dto.getTitle());
 			pstmt.setString(2, dto.getContent());
@@ -90,7 +83,8 @@ public class NoticeDAO {
 				if(pstmt != null)
 					pstmt.close();
 				if(conn != null)
-					conn.close();
+					cp.releaseConnection(conn);
+					cp.closeAll();
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
@@ -101,10 +95,6 @@ public class NoticeDAO {
 	// 공지사항 DB SELECT DAO - 김연호
 	public List<NoticeDTO> noticeList(Map<String, Object> map){
 		List<NoticeDTO> nl = new Vector<NoticeDTO>();
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		
 		
 		String query = " "
 				+ "SELECT * FROM ( "
@@ -121,7 +111,6 @@ public class NoticeDAO {
 				+ " ) "
 				+ " WHERE rNum BETWEEN ? AND ?";
 		try {
-			conn = getConnection();
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, map.get("start").toString());
 			pstmt.setString(2, map.get("end").toString());
@@ -147,7 +136,8 @@ public class NoticeDAO {
 				if(pstmt != null)
 					pstmt.close();
 				if(conn != null)
-					conn.close();
+					cp.releaseConnection(conn);
+					cp.closeAll();
 			}catch(Exception e) {
 				e.printStackTrace();
 			}

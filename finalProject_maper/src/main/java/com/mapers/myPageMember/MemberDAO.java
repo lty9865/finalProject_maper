@@ -1,68 +1,37 @@
-package com.mapers.dao;
+package com.mapers.myPageMember;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.sql.DataSource;
-
-import com.mapers.dto.MemberDTO;
+import com.mapers.common.ConnectionPool;
 
 
 public class MemberDAO {
-	private Connection conn = null;
-	private PreparedStatement psmt = null;
-	private ResultSet rs = null;
+	private ConnectionPool cp;
+	private Connection conn;
+	private PreparedStatement psmt;
+	private ResultSet rs;
 
-	private MemberDAO() {}
-
-	// 싱글턴 패턴으로 인스턴스 생성 제한
-	private static MemberDAO instance = new MemberDAO();
-
-	public static MemberDAO getInstance() {
-		return instance;
+	// 커넥션 풀 사용법
+	public MemberDAO() throws SQLException {
+		// oracle url, oracle userId, oracle userPassword, 초기 커넥션 수, 최대 커넥션 수
+		cp = ConnectionPool.getInstance("jdbc:oracle:thin:@localhose:1521:xe", "c##mapers", "mapers1234", 5, 10);
+		
+		conn = cp.getConnection();
+		
+		psmt = null;
+		rs = null;
 	}
 	
-	// DB Connection Pool
-	private Connection getConnection() throws Exception {
-		Context initCtx = new InitialContext();
-		Context envCtx = (Context) initCtx.lookup("java:comp/env");
-		DataSource ds = (DataSource) envCtx.lookup("jdbc/myoracle");
-		
-		return ds.getConnection();
-	}
-
-	// 백엔드 코드 작성 예시
-	public int exampleCode(MemberDTO dto) {
-		// 변수 초기화
-		int result = -1;
-		String sql = "";
-
-		//sql 쿼리 실행
-		try {
-
-			result = psmt.executeUpdate(sql);
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-		// 커넥트 풀 자원 반납
-			close();
-		}
-		
-		return result;
-	}
-	
-	// 회원가입 처리
+	// 회원가입 처리 - 박강필
 	public int addMember(MemberDTO dto) {
 		int result = -1;
 		
 		String sql = "insert into account (userid, password, useremail, birth) values (?, ?, ?, ?)";
 
 		try {
-			
-			conn = getConnection();
 
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, dto.getUserId());
@@ -81,7 +50,7 @@ public class MemberDAO {
 		return result;
 	}
 	
-	// 마이 페이지, 계정정보 확인 처리
+	// 마이 페이지, 계정정보 확인 처리 - 박강필
 	public int checkAccount(String userid, String password) {
 		// 경우의 수 3가지= 1 인증 성공/ 0 비밀번호 틀림/ -1 아이디 틀림(없음)
 		int answer = -1;
@@ -89,8 +58,6 @@ public class MemberDAO {
 		String sql = "select id from account where password=?";
 		
 		try {
-			
-			conn = getConnection();
 			
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, password);
@@ -117,7 +84,7 @@ public class MemberDAO {
 		return answer;
 	}
 	
-	// 아이디 중복 확인
+	// 아이디 중복 확인 - 박강필
 	public int confirmId(String id) {
 		// 경우의 수 2가지: 1 중복 있음 / -1 중복 없음(회원가입 가능)
 		int duplicate = 1;
@@ -125,8 +92,6 @@ public class MemberDAO {
 		String sql = "select id from account where id=?";
 		
 		try {
-			
-			conn = getConnection();
 			
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, id);
@@ -151,14 +116,12 @@ public class MemberDAO {
 		return duplicate;
 	}
 	
-	// 회원정보 수정을 위한 정보 가져오기
+	// 회원정보 수정을 위한 정보 가져오기 - 박강필
 	public MemberDTO getMember(String id, String password) {
 		MemberDTO dto = null;
 		String sql = "select * from account where id=? and password=?";
 		
 		try {
-			
-			conn = getConnection();
 			
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, id);
@@ -184,7 +147,7 @@ public class MemberDAO {
 		return dto;
 	}
 	
-	// 실질적인 회원정보 수정 form
+	// 실질적인 회원정보 수정 form - 박강필
 	public int updateMember(MemberDTO dto) {
 		// 회원정보 수정: 성공 1 / 실패 0
 		int answer = -1;
@@ -192,8 +155,6 @@ public class MemberDAO {
 		String sql1 = "select id from account where password=?";
 		
 		try {
-			
-			conn = getConnection();
 			
 			psmt = conn.prepareStatement(sql1);
 			psmt.setString(1, dto.getPassword()); // 입력한 비밀번호 가져오기
@@ -229,7 +190,7 @@ public class MemberDAO {
 		return answer;
 	}
 	
-	// 회원 탈퇴 처리
+	// 회원 탈퇴 처리 - 박강필
 	public int deleteMember(String id, String password) {
 		// 회원탈퇴: 성공 1/ 실패 0
 		int answer = -1;
@@ -237,8 +198,6 @@ public class MemberDAO {
 		String sql1 = "select id from account where password=?";
 		
 		try {
-			
-			conn = getConnection();
 			
 			psmt = conn.prepareStatement(sql1);
 			psmt.setString(1, password);
@@ -270,14 +229,13 @@ public class MemberDAO {
 		return answer;
 	}
 	
-	// 회원 리스트 조회
+	// 회원 리스트 조회 - 박강필
 	public ResultSet registerList() {
 
 		String sql = "select * from account";
 		
 		try {
 			
-			conn = getConnection();
 			psmt = conn.prepareStatement(sql);
 			rs = psmt.executeQuery();
 			
@@ -291,14 +249,13 @@ public class MemberDAO {
 		return rs;
 	}
 	
-	// 마이 페이지, 문의사항 리스트 조회
+	// 마이 페이지, 문의사항 리스트 조회 - 박강필
 	public ResultSet requestList() {
 		
 		String sql = "select * from request";
 		
 		try {
 			
-			conn = getConnection();
 			psmt = conn.prepareStatement(sql);
 			rs = psmt.executeQuery();
 			
@@ -312,14 +269,16 @@ public class MemberDAO {
 		return rs;
 	}
 	
-	
+	// 커넥션 풀 반환 및 종료
 	private void close() {
 		
 		try {
 			
 			if(rs != null) rs.close();
 			if(psmt !=null) psmt.close();
-			if(conn !=null) conn.close();
+			if(conn !=null) cp.releaseConnection(conn);
+			
+			cp.closeAll();
 			
 			System.out.println("DB Connection Pool Resource Dismissed!");
 			
