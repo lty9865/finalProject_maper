@@ -1,17 +1,17 @@
-package com.mapers.dto;
+package com.mapers.notice;
 
 public class NoticeDTO {
-	private String idx;
+	private int idx;
 	private String title;
-	private String contents;
+	private String content;
 	private int visitCount;
 	private String postdate;
 
-	public String getIdx() {
+	public int getIdx() {
 		return idx;
 	}
 
-	public void setIdx(String idx) {
+	public void setIdx(int idx) {
 		this.idx = idx;
 	}
 
@@ -23,12 +23,12 @@ public class NoticeDTO {
 		this.title = title;
 	}
 
-	public String getContents() {
-		return contents;
+	public String getContent() {
+		return content;
 	}
 
-	public void setContents(String contents) {
-		this.contents = contents;
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 	public int getVisitCount() {
@@ -46,5 +46,6 @@ public class NoticeDTO {
 	public void setPostdate(String postdate) {
 		this.postdate = postdate;
 	}
+
 
 }

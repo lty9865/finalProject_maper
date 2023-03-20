@@ -1,4 +1,4 @@
-package com.mapers.controller;
+package com.mapers.notice;
 
 import java.io.IOException;
 
@@ -8,9 +8,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.mapers.dao.NoticeDAO;
-import com.mapers.dto.NoticeDTO;
 
 
 /**
@@ -28,7 +25,7 @@ public class NoticeWriteController extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		NoticeDTO dto = new NoticeDTO();
 		dto.setTitle(request.getParameter("title"));
-		dto.setContents(request.getParameter("contents"));
+		dto.setContent(request.getParameter("content"));
 		
 		NoticeDAO dao = NoticeDAO.getInstance();
 		int result = dao.insertNotice(dto);

@@ -21,7 +21,7 @@
 					onKeypress="javascript:if(event.keyCode==13) {test()}">
 				<script>
 					function test() {
-						alert("Enter Key ÀÔ·Â °¨Áö \nÇÔ¼ö ½ÇÇà.");
+						alert("Enter Key ì…ë ¥ ê°ì§€ \ní•¨ìˆ˜ ì‹¤í–‰.");
 					}
 				</script>
 			</div>
@@ -31,11 +31,11 @@
 	<form name="bookwriteForm" method="post" enctype="multipart/form-data">
 		<div class="maper-body">
 			<div class="maper-book-write">
-				<input type="text" class="form-control" name="title" placeholder="Á¦¸ñ"><br>
-				<input type="text" class="form-control" name="country" placeholder="³ª¶ó"><br>
-				<input type="text" class="form-control" name="city" placeholder="µµ½Ã"><br>
-				<input type="text" class="form-control" name="date" placeholder="ÀÏÀÚ"><br>
-				<input type="text" class="form-control" name="file" placeholder="ÆÄÀÏ ¾÷·Îµå"><br>
+				<input type="text" class="form-control" name="title" placeholder="ì œëª©"><br>
+				<input type="text" class="form-control" name="country" placeholder="ë‚˜ë¼"><br>
+				<input type="text" class="form-control" name="city" placeholder="ë„ì‹œ"><br>
+				<input type="text" class="form-control" name="date" placeholder="ì¼ì"><br>
+				<input type="text" class="form-control" name="file" placeholder="íŒŒì¼ ì—…ë¡œë“œ"><br>
 				<button type=""></button>
 			</div>
 		</div>

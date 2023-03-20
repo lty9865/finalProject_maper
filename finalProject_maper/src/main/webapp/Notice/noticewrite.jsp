@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script type="text/javascript" src="../Common/commonFunction.js"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
@@ -21,7 +22,7 @@
 					onKeypress="javascript:if(event.keyCode==13) {test()}">
 				<script>
 					function test() {
-						alert("Enter Key ÀÔ·Â °¨Áö \nÇÔ¼ö ½ÇÇà.");
+						alert("Enter Key ì…ë ¥ ê°ì§€ \ní•¨ìˆ˜ ì‹¤í–‰.");
 					}
 				</script>
 			</div>
@@ -30,13 +31,13 @@
 	<!-- body -->
 	<form name="writeFrm" method="post" action="../noticewrite.do">
 		<div class="maper-body">
-			<div class="maper-book-write" style="margin-top:15px;">
-				<input type="text" class="form-control" name="title" placeholder="Á¦¸ñ">
+			<div class="maper-book-write" style="margin:15px auto;">
+				<input type="text" class="form-control" name="title" placeholder="ì œëª©">
 				<div style="height: 10px;"></div>
-  				<textarea class="form-control" rows="5" name="contents"></textarea>
+  				<textarea class="form-control" rows="10" name="contents"></textarea>
 				<div style="height: 10px;"></div>
 				<div align="center" style="margin-top:15px;">
-					<button type="submit" class="btn btn-primary btn-lg" style="width:120px;">OK</button>
+					<input type="submit" class="btn btn-primary btn-lg" style="width:120px;" onclick="return noticeBlank()"/>
 					<button type="button" onclick="" class="btn btn-primary btn-lg" style="width:120px;">Cancel</button>
 				</div>
 			</div>
