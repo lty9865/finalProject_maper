@@ -44,6 +44,7 @@ public class NoticeDTO {
 	}
 
 	public void setPostdate(String postdate) {
+		postdate = postdate.substring(0, 10);
 		this.postdate = postdate;
 	}
 

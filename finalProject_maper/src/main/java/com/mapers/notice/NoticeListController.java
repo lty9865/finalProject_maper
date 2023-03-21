@@ -13,14 +13,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Servlet implementation class NoticeListController
- */
+import com.mapers.util.ListPage;
+
 @WebServlet("/Notice/notice.do")
 public class NoticeListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.getRequestDispatcher("/Notice/noticewrite.jsp").forward(request, response);
 	}
 
 	@Override
@@ -60,6 +60,8 @@ public class NoticeListController extends HttpServlet {
 		
 		List<NoticeDTO> noticeLists = dao.noticeList(map);
 		
+		String pagingImg = ListPage.pagingStr(totalCount, pageSize, blockPage, pageNum, "/Notice/notice.do");
+		map.put("pagingImg", pagingImg);
 		map.put("totalCount", totalCount);
 		map.put("pageSize", pageSize);
 		map.put("pageNum", pageNum);

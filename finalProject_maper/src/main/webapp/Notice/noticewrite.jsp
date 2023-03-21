@@ -1,11 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ include file="../Common/link.jsp"%>
+<%@ include file="/Common/link.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
-<script type="text/javascript" src="../Common/commonFunction.js"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
@@ -29,7 +28,7 @@
 		</div>
 	</div>
 	<!-- body -->
-	<form name="writeFrm" method="post" action="../noticewrite.do">
+	<form name="writeFrm" method="post" action="../Notice/noticewrite.do" onsubmit="return noticeBlank()">
 		<div class="maper-body">
 			<div class="maper-book-write" style="margin:15px auto;">
 				<input type="text" class="form-control" name="title" placeholder="제목">
@@ -37,7 +36,7 @@
   				<textarea class="form-control" rows="10" name="contents"></textarea>
 				<div style="height: 10px;"></div>
 				<div align="center" style="margin-top:15px;">
-					<input type="submit" class="btn btn-primary btn-lg" style="width:120px;" onclick="return noticeBlank()"/>
+					<input type="submit" class="btn btn-primary btn-lg" style="width:120px;" />
 					<button type="button" onclick="" class="btn btn-primary btn-lg" style="width:120px;">Cancel</button>
 				</div>
 			</div>

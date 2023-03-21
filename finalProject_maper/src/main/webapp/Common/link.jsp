@@ -4,10 +4,12 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <!-- Favicon-->
 <link rel="icon" type="image/x-icon"
-	href="../Resources/assets/favicon.ico" />
+	href="${pageContext.request.contextPath}/Resources/assets/favicon.ico" />
 <!-- Font Awesome icons (free version)-->
 <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js"
 	crossorigin="anonymous"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/Common/commonFunction.js"></script>
 <!-- Google fonts-->
 <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700"
 	rel="stylesheet" type="text/css" />
@@ -20,7 +22,8 @@
 	rel="stylesheet"
 	integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
 	crossorigin="anonymous">
-<link rel="stylesheet" type="text/css" href="../Resources/css/style.css">
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/Resources/css/style.css">
 </head>
 <body>
 	<script

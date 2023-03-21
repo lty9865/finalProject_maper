@@ -3,7 +3,6 @@ package com.mapers.notice;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-@WebServlet("/noticewrite.do")
+@WebServlet("/Notice/noticewrite.do")
 public class NoticeWriteController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -31,17 +30,16 @@ public class NoticeWriteController extends HttpServlet {
 		
 		if(result == 1) {
 			System.out.println("공지사항을 성공적으로 등록하였습니다.");
+			response.sendRedirect("../Notice/notice.do");
 		}else {
 			System.out.println("공지사항에 실패하였습니다.");
+			response.sendRedirect("../Notice/noticewrite.do");
 		}
-		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("./Boardlist/notice.jsp");
-		dispatcher.forward(request, response);
 	}
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/Boardwrite/noticewrite.jsp").forward(request, response);
+		request.getRequestDispatcher("/Notice/noticewrite.jsp").forward(request, response);
 	}
 	
 }
