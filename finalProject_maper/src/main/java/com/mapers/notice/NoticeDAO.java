@@ -3,28 +3,34 @@ package com.mapers.notice;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
-import com.mapers.common.ConnectionPool;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
 
 public class NoticeDAO {
-	private ConnectionPool cp;
-	private Connection conn;
-	private PreparedStatement pstmt;
-	private ResultSet rs;
+	private Connection conn = null;
+	private PreparedStatement pstmt = null;
+	private ResultSet rs = null;
 
-	// 커넥션 풀 사용법
-	public NoticeDAO() throws SQLException {
-		// oracle url, oracle userId, oracle userPassword, 초기 커넥션 수, 최대 커넥션 수
-		cp = ConnectionPool.getInstance("jdbc:oracle:thin:@localhost:1521:xe", "c##mapers", "mapers1234", 5, 10);
+	private NoticeDAO() {
+	}
 
-		conn = cp.getConnection();
+	private static NoticeDAO instance = new NoticeDAO();
 
-		pstmt = null;
-		rs = null;
+	public static NoticeDAO getInstance() {
+		return instance;
+	}
+
+	public Connection getConnection() throws Exception {
+		Context initContext = new InitialContext();
+		Context envContext = (Context) initContext.lookup("java:/comp/env");
+		DataSource ds = (DataSource) envContext.lookup("jdbc/myoracle");
+		conn = ds.getConnection();
+		return conn;
 	}
 	
 	// 자원 반납
@@ -35,8 +41,7 @@ public class NoticeDAO {
 			if (pstmt != null) 
 				pstmt.close();
 			if (conn != null)
-				cp.releaseConnection(conn);
-				cp.closeAll();
+				conn.close();
 		
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -153,14 +158,15 @@ public class NoticeDAO {
 	}
 	
 	// 공지사항 수정하기 - 김연호
-	public NoticeDTO updateNotice(String idx) {
+	public int updateNotice(NoticeDTO dto) {
+		int result = 0;
 		String query = "UPDATE NOTICE"
-				+ " SET title=?, ";
-		NoticeDTO dto = new NoticeDTO();
+				+ " SET title=?, content=? WHERE NOTICENUM=?";
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, idx);
-			rs = pstmt.executeQuery();
+			pstmt.setString(1, "TITLE");
+			pstmt.setString(1, "CONTENT");
+			result = pstmt.executeUpdate();
 
 			if (rs.next()) {
 				dto.setIdx(rs.getInt("NOTICENUM"));
@@ -171,8 +177,8 @@ public class NoticeDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("공지사항 상세보기 조회 중 예외 발생");
+			System.out.println("공지사항 수정 중 예외 발생");
 		}
-		return dto;
+		return result;
 	}
 }

@@ -1,7 +1,6 @@
 package com.mapers.notice;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,12 +19,7 @@ public class NoticeWriteController extends HttpServlet {
 		dto.setTitle(request.getParameter("title"));
 		dto.setContent(request.getParameter("contents"));
 		
-		NoticeDAO dao = null;
-		try {
-			dao = new NoticeDAO();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		NoticeDAO dao = NoticeDAO.getInstance();
 		int result = dao.insertNotice(dto);
 		
 		if(result == 1) {

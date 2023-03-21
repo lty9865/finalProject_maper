@@ -1,7 +1,6 @@
 package com.mapers.notice;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,19 +18,16 @@ import com.mapers.util.ListPage;
 public class NoticeListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		request.getRequestDispatcher("/Notice/noticewrite.jsp").forward(request, response);
 	}
 
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		NoticeDAO dao = null;
-		try {
-			dao = new NoticeDAO();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		NoticeDAO dao = NoticeDAO.getInstance();
+
 		Map<String, Object> map = new HashMap<String, Object>();
 		String searchField = request.getParameter("searchField");
 		String searchWord = request.getParameter("searchWord");
@@ -41,33 +37,33 @@ public class NoticeListController extends HttpServlet {
 		}
 
 		int totalCount = dao.countNotice(map);
-		
+
 		// 페이지 처리
 		ServletContext application = getServletContext();
 		int pageSize = Integer.parseInt(application.getInitParameter("POSTS_PER_PAGE"));
 		int blockPage = Integer.parseInt(application.getInitParameter("PAGES_PER_BLOCK"));
-		
+
 		// 현재 페이지 확인
 		int pageNum = 1;
 		String pageTemp = request.getParameter("pageNum");
-		if(pageTemp != null && !pageTemp.equals(""))
+		if (pageTemp != null && !pageTemp.equals(""))
 			pageNum = Integer.parseInt(pageTemp);// 요청받은 페이지로 수정
-		
-		int start = (pageNum -1) * pageSize +1;
+
+		int start = (pageNum - 1) * pageSize + 1;
 		int end = pageNum * pageSize;
 		map.put("start", start);
 		map.put("end", end);
-		
+
 		List<NoticeDTO> noticeLists = dao.noticeList(map);
-		
+
 		String pagingImg = ListPage.pagingStr(totalCount, pageSize, blockPage, pageNum, "/Notice/notice.do");
 		map.put("pagingImg", pagingImg);
 		map.put("totalCount", totalCount);
 		map.put("pageSize", pageSize);
 		map.put("pageNum", pageNum);
-		
+
 		dao.close();
-		
+
 		request.setAttribute("noticeLists", noticeLists);
 		request.setAttribute("map", map);
 		request.getRequestDispatcher("/Notice/notice.jsp").forward(request, response);

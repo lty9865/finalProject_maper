@@ -1,7 +1,6 @@
 package com.mapers.notice;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,12 +13,7 @@ public class NoticeViewController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		NoticeDAO dao = null;
-		try {
-			dao = new NoticeDAO();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		NoticeDAO dao = NoticeDAO.getInstance();
 		
 		String idx = request.getParameter("idx");
 		dao.updateVisitCountNotice(idx);
