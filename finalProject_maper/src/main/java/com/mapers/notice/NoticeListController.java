@@ -34,7 +34,6 @@ public class NoticeListController extends HttpServlet {
 		try {
 			dao = new NoticeDAO();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

@@ -17,7 +17,7 @@ public class MemberDAO {
 	// 커넥션 풀 사용법
 	public MemberDAO() throws SQLException {
 		// oracle url, oracle userId, oracle userPassword, 초기 커넥션 수, 최대 커넥션 수
-		cp = ConnectionPool.getInstance("jdbc:oracle:thin:@localhose:1521:xe", "c##mapers", "mapers1234", 5, 10);
+		cp = ConnectionPool.getInstance("jdbc:oracle:thin:@localhost:1521:xe", "c##mapers", "mapers1234", 5, 10);
 		
 		conn = cp.getConnection();
 		

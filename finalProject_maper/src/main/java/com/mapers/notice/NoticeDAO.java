@@ -8,10 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.sql.DataSource;
-
 import com.mapers.common.ConnectionPool;
 
 public class NoticeDAO {
@@ -23,7 +19,7 @@ public class NoticeDAO {
 	// 커넥션 풀 사용법
 	public NoticeDAO() throws SQLException {
 		// oracle url, oracle userId, oracle userPassword, 초기 커넥션 수, 최대 커넥션 수
-		cp = ConnectionPool.getInstance("jdbc:oracle:thin:@localhose:1521:xe", "c##mapers", "mapers1234", 5, 10);
+		cp = ConnectionPool.getInstance("jdbc:oracle:thin:@localhost:1521:xe", "c##mapers", "mapers1234", 5, 10);
 		
 		conn = cp.getConnection();
 		
@@ -36,7 +32,6 @@ public class NoticeDAO {
 		int totalCount = 0;
 		
 		String query = "SELECT COUNT(*) FROM NOTICE";
-
 		if(map.get("searchWord") != null) {
 			query += " WHERE " + map.get("searchField") + " LIKE '%" + map.get("searchWord") + "%'";
 		}
@@ -69,7 +64,6 @@ public class NoticeDAO {
 	public int insertNotice(NoticeDTO dto) {
 		int result = 0;
 		String query = "INSERT INTO NOTICE (noticenum, title, content) VALUES (C##MAPERS.NOTICE_SEQ.NEXTVAL,?,?)";
-
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, dto.getTitle());

@@ -11,18 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-/**
- * Servlet implementation class WriteController
- */
 @WebServlet("/noticewrite.do")
 public class NoticeWriteController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
 		NoticeDTO dto = new NoticeDTO();
 		dto.setTitle(request.getParameter("title"));
@@ -48,7 +41,6 @@ public class NoticeWriteController extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		request.getRequestDispatcher("/Boardwrite/noticewrite.jsp").forward(request, response);
 	}
 	
