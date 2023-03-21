@@ -20,16 +20,11 @@ import javax.servlet.http.HttpServletResponse;
 public class NoticeListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		NoticeDAO dao = null;
 		try {
 			dao = new NoticeDAO();
@@ -68,6 +63,8 @@ public class NoticeListController extends HttpServlet {
 		map.put("totalCount", totalCount);
 		map.put("pageSize", pageSize);
 		map.put("pageNum", pageNum);
+		
+		dao.close();
 		
 		request.setAttribute("noticeLists", noticeLists);
 		request.setAttribute("map", map);

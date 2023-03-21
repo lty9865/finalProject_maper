@@ -165,4 +165,8 @@ public final class ConnectionPool {
 	public int getNumCons() {
 		return numCons;
 	}
+	
+	public int getInitialCons() {
+		return initialCons;
+	}
 }

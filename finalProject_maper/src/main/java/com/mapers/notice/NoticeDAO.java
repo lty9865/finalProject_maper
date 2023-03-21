@@ -44,18 +44,18 @@ public class NoticeDAO {
 		}catch(Exception e) {
 			e.printStackTrace();
 			System.out.println("공지사항 개수 세기 중 예외 발생");
-		}finally {
-			try {
-				if(rs != null)
-					rs.close();
-				if(pstmt != null)
-					pstmt.close();
-				if(conn != null)
-					cp.releaseConnection(conn);
-					cp.closeAll();
-			}catch(Exception e) {
-				e.printStackTrace();
-			}
+//		}finally {
+//			try {
+//				if(rs != null)
+//					rs.close();
+//				if(pstmt != null)
+//					pstmt.close();
+//				if(conn != null)
+//					cp.releaseConnection(conn);
+//					cp.closeAll();
+//			}catch(Exception e) {
+//				e.printStackTrace();
+//			}
 		}
 		return totalCount;
 	}
@@ -72,16 +72,16 @@ public class NoticeDAO {
 		}catch(Exception e) {
 			e.printStackTrace();
 			System.out.println("공지사항 insert 중 예외 발생");
-		}finally {
-			try {
-				if(pstmt != null)
-					pstmt.close();
-				if(conn != null)
-					cp.releaseConnection(conn);
-					cp.closeAll();
-			}catch(Exception e) {
-				e.printStackTrace();
-			}
+//		}finally {
+//			try {
+//				if(pstmt != null)
+//					pstmt.close();
+//				if(conn != null)
+//					cp.releaseConnection(conn);
+//					cp.closeAll();
+//			}catch(Exception e) {
+//				e.printStackTrace();
+//			}
 		}
 		return result;
 	}
@@ -123,20 +123,35 @@ public class NoticeDAO {
 		}catch(Exception e) {
 			e.printStackTrace();
 			System.out.println("공지사항 게시물 조회 중 예외 발생");
-		}finally {
-			try {
-				if(rs != null)
-					rs.close();
-				if(pstmt != null)
-					pstmt.close();
-				if(conn != null)
-					cp.releaseConnection(conn);
-					cp.closeAll();
-			}catch(Exception e) {
-				e.printStackTrace();
-			}
+//		}finally {
+//			try {
+//				if(rs != null)
+//					rs.close();
+//				if(pstmt != null)
+//					pstmt.close();
+//				if(conn != null)
+//					cp.releaseConnection(conn);
+//					cp.closeAll();
+//			}catch(Exception e) {
+//				e.printStackTrace();
+//			}
 		}
 		return nl;
+	}
+	
+	public void close() {
+		try {
+			if (rs != null)
+				rs.close();
+			if (pstmt != null) 
+				pstmt.close();
+			if (conn != null)
+				cp.releaseConnection(conn);
+				cp.closeAll();
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 }
