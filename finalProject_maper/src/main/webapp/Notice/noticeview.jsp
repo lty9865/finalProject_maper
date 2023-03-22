@@ -60,8 +60,8 @@
 			<td>
 				<div class="btn-group" role="group" aria-label="Basic example">
 					<button type="button" class="btn btn-primary" style="width: 150px;" onclick="location.href='../Notice/notice.do';">돌아가기</button>
-					<button type="button" class="btn btn-primary" style="width: 150px;">수정하기</button>
-					<button type="button" class="btn btn-primary" style="width: 150px;">삭제하기</button>
+					<button type="button" class="btn btn-primary" style="width: 150px;" onclick="location.href='../Notice/noticeedit.do?mode=edit&idx=${ param.idx }';">수정하기</button>
+					<button type="button" class="btn btn-primary" style="width: 150px;" onclick="noticeDelete(${dto.idx})">삭제하기</button>
 				</div>
 			</td>
 		</tr>
