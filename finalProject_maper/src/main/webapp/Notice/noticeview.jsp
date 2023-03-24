@@ -39,6 +39,8 @@
 		<tr>
 			<td>번호</td>
 			<td>${ dto.idx }</td>
+			<td>작성자</td>
+			<td>관리자</td>
 		</tr>
 		<tr>
 			<td>작성일</td>

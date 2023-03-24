@@ -1,5 +1,5 @@
 .maper-header {
-	height: 100px;
+	height: 50px;
 	background-color: #0078ff;
 	vertical-align: middle;
 }
@@ -7,12 +7,18 @@
 .maper-header-font {
 	width: 1000px;
 	margin: auto;
-	padding: 10px 0 0 0;
+	padding: 1px 0 0 0;
 }
 
 .maper-header-font-1 {
-	font-size: 50px;
+	font-size: 30px;
 	color: white;
+}
+
+.maper-header-font-2 {
+	font-size: 15px;
+	color: white;
+	padding-top: 5px;
 }
 
 .maper-body {
@@ -81,6 +87,27 @@
 	--bs-btn-font-size: 1.5rem;
 }
 
+.btn#login { 
+	--bs-btn-font-size: 1rem;
+}
+
+.btn-outline-primary#login { 
+	--bs-btn-color: #fff; 
+	--bs-btn-border-color: #fff; 
+	--bs-btn-hover-color: #0d6efd; 
+	--bs-btn-hover-bg: #fff; 
+	--bs-btn-hover-border-color: #fff; 
+	--bs-btn-focus-shadow-rgb: 13, 110, 253; 
+	--bs-btn-active-color: #fff; 
+	--bs-btn-active-bg: #0d6efd; 
+	--bs-btn-active-border-color: #0d6efd; 
+	--bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125); 
+	--bs-btn-disabled-color: #0d6efd; 
+	--bs-btn-disabled-bg: transparent; 
+	--bs-btn-disabled-border-color: #0d6efd; 
+	--bs-gradient: none;
+}
+
 .maper-login-labels {
 	width: 90%;
 	margin: 20px auto;
@@ -109,10 +136,9 @@
 }
 
 .right {
-	width: 30%;
+	width: 50%;
 	float: right;
 	box-sizing: border-box;
-	padding-top: 20px
 }
 
 .circle {
@@ -189,4 +215,72 @@ img {
 
 .maper-book-write {
 	width: 80%;
+}
+
+.nav { 
+	--bs-nav-link-color: white;
+}
+
+.mapers-main-inputbar {
+	width: 70%;
+	margin: 15px auto 0 auto;
+	border-radius: 1.5rem;
+	border: 1.2px solid gray;
+	padding: 5px 0 5px 0;
+}
+
+.main-inputbar {
+	border: none;
+}
+
+.main-inputbar:focus {
+	outline: none;
+}
+
+.parent {
+	width: 100%;
+	display: flex;
+}
+
+.child {
+	flex: 1;
+}
+
+#pageTitle {
+	margin: 30px auto 30px auto;
+}
+
+.bookWrite {
+	width: 80%;
+	margin: auto;
+}
+
+.mapers-book-inputbar {
+	width: 100%;
+	margin: 10px auto auto auto;
+	border-radius: 1.5rem;
+	border: 1.2px solid gray;
+	padding: 5px 0 5px 0;
+}
+
+.input-group:not(.has-validation)>.dropdown-toggle:nth-last-child(n+3),
+	.input-group:not(.has-validation)>.form-floating:not(:last-child)>.form-control,
+	.input-group:not(.has-validation)>.form-floating:not(:last-child)>.form-select,
+	.input-group:not(.has-validation)>:not(:last-child):not(.dropdown-toggle):not(.dropdown-menu):not(.form-floating)
+	{
+	border-top-left-radius: 1.5rem;
+	border-bottom-left-radius: 1.5rem;
+}
+
+.mb-3#fileUploads {
+	margin-top: 10px !important;
+	margin-bottom: 0rem !important;
+}
+
+:root { 
+	--bs-border-color: gray;
+}
+
+.row {
+	margin-left: 0px;
 }

@@ -28,10 +28,9 @@
 		</div>
 	</div>
 	<!-- body -->
-	<div class="table maper-body" style="margin-top: 30px;">
+	<div class="table maper-body" id="pageTitle">
 		<h2>공지사항</h2>
 		<hr>
-		<div style="margin-top: 30px;"></div>
 	</div>
 	<table class="table maper-body">
 		<thead>
@@ -85,7 +84,7 @@
 							<select class="form-select" aria-label="Default select example"
 							name="searchField">
 								<option value="title" selected>제목</option>
-								<option value="contents">내용</option>
+								<option value="content">내용</option>
 						</select>
 						</span> <input type="text" class="form-control"
 							aria-label="Sizing example input"

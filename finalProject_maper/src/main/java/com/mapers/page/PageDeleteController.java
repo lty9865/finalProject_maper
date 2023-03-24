@@ -1,4 +1,4 @@
-package com.mapers.book;
+package com.mapers.page;
 
 import java.io.IOException;
 
@@ -10,28 +10,28 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.mapers.util.FileUtil;
 
-@WebServlet("/Book/bookDelete.do")
-public class BookDeleteController extends HttpServlet {
+@WebServlet("/Page/pageDelete.do")
+public class PageDeleteController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String idx = req.getParameter("idx");
 		String mode = req.getParameter("mode");
-		
-		BookDAO dao = BookDAO.getInstance();
-		
-		if(mode.equals("delete")) {
-			BookDTO dto = dao.selectBook(idx);
-			int result = dao.deleteBook(idx);
+
+		if (mode.equals("delete")) {
+			PageDAO dao = PageDAO.getInstance();
+			PageDTO dto = dao.selectPageView(idx);
+			int result = dao.deletePage(idx);
 			dao.close();
-			if(result==1) {
+
+			if (result == 1) {
 				String saveFileName = dto.getSfile();
-				FileUtil.deleteFile(req, "/Uploads/Book", saveFileName);
+				FileUtil.deleteFile(req, "/Uploads/Page", saveFileName);
+				resp.sendRedirect("../Page/pageList.do");
 			}
-			System.out.println("북 삭제 성공");
+
 		}
 	}
 
-	
 }

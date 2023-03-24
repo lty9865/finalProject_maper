@@ -1,4 +1,4 @@
-package com.mapers.book;
+package com.mapers.page;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -14,54 +14,54 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.mapers.util.ListPage;
 
-@WebServlet("/Book/bookList.do")
-public class BookListController extends HttpServlet {
+@WebServlet("/Page/pageList.do")
+public class PageListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		BookDAO dao = BookDAO.getInstance();
-		
+		PageDAO dao = PageDAO.getInstance();
+
 		Map<String, Object> map = new HashMap<String, Object>();
-		
+
 		String searchField = req.getParameter("searchField");
 		String searchWord = req.getParameter("searchWord");
-		if(searchWord != null) {
+		String idx = req.getParameter("idx");
+		map.put("idx", idx);
+		if (searchWord != null) {
 			map.put("searchField", searchField);
 			map.put("searchWord", searchWord);
 		}
-		
-		int totalCount = dao.countBook(map);
-		
-		// 페이지 처리
+		int totalCount = dao.pageCount(map);
+
 		ServletContext application = getServletContext();
 		int pageSize = Integer.parseInt(application.getInitParameter("POSTS_PER_PAGE"));
 		int blockPage = Integer.parseInt(application.getInitParameter("PAGES_PER_BLOCK"));
-		
-		// 현재 페이지 확인
+
 		int pageNum = 1;
 		String pageTemp = req.getParameter("pageNum");
-		if(pageTemp != null && !pageTemp.equals(""))
+		if (pageTemp != null && !pageTemp.equals("")) {
 			pageNum = Integer.parseInt(pageTemp);
-		
-		int start = (pageNum -1 ) * pageSize + 1;
+		}
+
+		int start = (pageNum - 1) * pageSize + 1;
 		int end = pageNum * pageSize;
 		map.put("start", start);
 		map.put("end", end);
-		
-		List<BookDTO> bookList = dao.selectBookList(map);
-		dao.close();
-		
-		String pagingImg = ListPage.pagingStr(totalCount, pageSize, blockPage, pageNum, "../Book/bookList.do");
+
+		List<PageDTO> pageList = dao.selectPageList(map);
+
+		String pagingImg = ListPage.pagingStr(totalCount, pageSize, blockPage, pageNum, "/Page/pageList.do");
 		map.put("pagingImg", pagingImg);
 		map.put("totalCount", totalCount);
 		map.put("pageSize", pageSize);
 		map.put("pageNum", pageNum);
 		
-		req.setAttribute("bookList", bookList);
+		dao.close();
+
+		req.setAttribute("pageList", pageList);
 		req.setAttribute("map", map);
-		req.getRequestDispatcher("/Book/bookList.jsp").forward(req, resp);
+		req.getRequestDispatcher("/Page/pageList.jsp").forward(req, resp);
 	}
 
-	
 }
