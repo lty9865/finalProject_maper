@@ -12,5 +12,6 @@
 <body>
 <a href="Login/login.jsp">로그인 페이지로 가기</a>
 <a href="Notice/notice.do">공지사항 페이지로 가기</a>
+<a href="MyPage.Request/requestList.jsp">마이 페이지로 가기</a>
 </body>
 </html>

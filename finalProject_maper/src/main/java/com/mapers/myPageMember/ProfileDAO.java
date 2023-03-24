@@ -3,30 +3,73 @@ package com.mapers.myPageMember;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
-import com.mapers.common.ConnectionPool;
+import javax.sql.DataSource;
 
+import com.mapers.common.DataSourceManager;
 
-public class MemberDAO {
-	private ConnectionPool cp;
-	private Connection conn;
-	private PreparedStatement psmt;
-	private ResultSet rs;
+public class ProfileDAO {
+	private Connection conn = null;
+	private PreparedStatement psmt = null;
+	private ResultSet rs = null;
 
-	// 커넥션 풀 사용법
-	public MemberDAO() throws SQLException {
-		// oracle url, oracle userId, oracle userPassword, 초기 커넥션 수, 최대 커넥션 수
-		cp = ConnectionPool.getInstance("jdbc:oracle:thin:@localhost:1521:xe", "c##mapers", "mapers1234", 5, 10);
+	// singleton pattern
+	private static ProfileDAO instance = new ProfileDAO();
+	private DataSource dataSource;
+	
+	private ProfileDAO() {
+		dataSource = DataSourceManager.getInstance().getDataSource();
+	}
+	
+	public static ProfileDAO getInstance() {
+		return instance;
+	}
+	
+	// Connection을 dbcp에 반납
+	private void closeAll() {
 		
-		conn = cp.getConnection();
+		try {
+			
+			if(rs != null) rs.close();
+			if(psmt !=null) psmt.close();
+			if(conn !=null) conn.close();
+			
+			System.out.println("DB Connection Pool Resource Dismissed!");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	// 마이 페이지, 회원정보 수정 전 확인 - 박강필
+	public ProfileDTO checkMember(String id, String password) {
+		ProfileDTO dto = null;
 		
-		psmt = null;
-		rs = null;
+		String sql = "select * from account where id=? and password=?";
+		
+		try {
+			
+			conn = dataSource.getConnection();
+			
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, id);
+			psmt.setString(2, password);
+			
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				dto = new ProfileDTO(id, password);
+			}
+			
+		} catch (Exception e) {
+			System.out.println("회원정보 수정 전 확인 중 Eorror");
+			e.printStackTrace();
+		} 
+		
+		return dto;
 	}
 	
 	// 회원가입 처리 - 박강필
-	public int addMember(MemberDTO dto) {
+	public int addMember(ProfileDTO dto) {
 		int result = -1;
 		
 		String sql = "insert into account (userid, password, useremail, birth) values (?, ?, ?, ?)";
@@ -44,7 +87,7 @@ public class MemberDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close();
+			closeAll();
 		}
 		
 		return result;
@@ -78,7 +121,7 @@ public class MemberDAO {
 			e.printStackTrace();
 		
 		} finally {
-			close();
+			closeAll();
 		}
 		
 		return answer;
@@ -110,15 +153,15 @@ public class MemberDAO {
 			e.printStackTrace();
 			
 		} finally {
-			close();
+			closeAll();
 		}
 		
 		return duplicate;
 	}
 	
 	// 회원정보 수정을 위한 정보 가져오기 - 박강필
-	public MemberDTO getMember(String id, String password) {
-		MemberDTO dto = null;
+	public ProfileDTO getMember(String id, String password) {
+		ProfileDTO dto = null;
 		String sql = "select * from account where id=? and password=?";
 		
 		try {
@@ -129,7 +172,7 @@ public class MemberDAO {
 			
 			rs = psmt.executeQuery();
 			if (rs.next()) {
-				dto = new MemberDTO();
+				dto = new ProfileDTO();
 				
 				dto.setUserId(rs.getString("userid"));
 				dto.setPassword(rs.getString("password"));
@@ -141,14 +184,14 @@ public class MemberDAO {
 			e.printStackTrace();
 		
 		} finally {
-			close();
+			closeAll();
 		}
 		
 		return dto;
 	}
 	
 	// 실질적인 회원정보 수정 form - 박강필
-	public int updateMember(MemberDTO dto) {
+	public int updateMember(ProfileDTO dto) {
 		// 회원정보 수정: 성공 1 / 실패 0
 		int answer = -1;
 		
@@ -184,7 +227,7 @@ public class MemberDAO {
 			e.printStackTrace();
 			
 		} finally {
-			close();
+			closeAll();
 		}
 		
 		return answer;
@@ -223,7 +266,7 @@ public class MemberDAO {
 			e.printStackTrace();
 		
 		} finally {
-			close();
+			closeAll();
 		}
 		
 		return answer;
@@ -243,47 +286,13 @@ public class MemberDAO {
 			e.printStackTrace();
 			
 		} finally {
-			close();
+			closeAll();
 		}
 		
 		return rs;
 	}
-	
-	// 마이 페이지, 문의사항 리스트 조회 - 박강필
-	public ResultSet requestList() {
-		
-		String sql = "select * from request";
-		
-		try {
-			
-			psmt = conn.prepareStatement(sql);
-			rs = psmt.executeQuery();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			
-		} finally {
-			close();
-		}
-		
-		return rs;
-	}
-	
-	// 커넥션 풀 반환 및 종료
-	private void close() {
-		
-		try {
-			
-			if(rs != null) rs.close();
-			if(psmt !=null) psmt.close();
-			if(conn !=null) cp.releaseConnection(conn);
-			
-			cp.closeAll();
-			
-			System.out.println("DB Connection Pool Resource Dismissed!");
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+
+//	public DataSource getDataSource() {
+//		return dataSource;
+//	}
 }

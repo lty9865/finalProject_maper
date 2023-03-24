@@ -1,6 +1,6 @@
 package com.mapers.myPageMember;
 
-public class MemberDTO {
+public class ProfileDTO {
 	private String userId;
 	private String password;
 	private String email;
@@ -12,12 +12,21 @@ public class MemberDTO {
 	 * blob 은 추후 회의 진행 후 추가 private blob
 	 */
 
-	public String getLicensekey() {
-		return licenseKey;
+	public ProfileDTO(String userId, String password, String email, String birth, int admins, String licenseKey) {
+		super();
+		this.userId = userId;
+		this.password = password;
+		this.email = email;
+		this.birth = birth;
+		this.admins = admins;
+		this.licenseKey = licenseKey;
 	}
 
-	public void setLicenseKey(String licenseKey) {
-		this.licenseKey = licenseKey;
+	public ProfileDTO() {
+		super();
+	}
+
+	public ProfileDTO(String id, String password2) {
 	}
 
 	public String getUserId() {
@@ -58,5 +67,13 @@ public class MemberDTO {
 
 	public void setAdmins(int admins) {
 		this.admins = admins;
+	}
+
+	public String getLicensekey() {
+		return licenseKey;
+	}
+	
+	public void setLicenseKey(String licenseKey) {
+		this.licenseKey = licenseKey;
 	}
 }
