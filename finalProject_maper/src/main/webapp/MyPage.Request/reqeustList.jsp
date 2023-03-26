@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>  
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
+<%@ include file="/Common/link.jsp"%>  
 
 <table class="table table-hover boardlist">
 	<thead>
@@ -18,7 +19,7 @@
 			<td>
 			<c:choose>
 				<c:when test="${sessionScope.pDTO != null}">
-					<a href="${pageContext.request.contextPath}/front?command=PostDetail&no=${post.no}">
+					<a href="${pageContext.request.contextPath}/front/request?command=PostDetail&no=${post.no}">
 						${post.title}
 					</a>
 				</c:when>
@@ -52,7 +53,7 @@
  -->  
  	<c:if test="${pb.previousPageGroup}">
 		<li>
-		<a href="front?command=home&pageNo=${pb.startPageOfPageGroup-1}">&laquo;</a>
+		<a href="front/request?command=home&pageNo=${pb.startPageOfPageGroup-1}">&laquo;</a>
 		</li>
 	</c:if>
 <!-- 
@@ -69,7 +70,7 @@
 				end="${pb.endPageOfPageGroup}">
 		<c:choose>
 			<c:when test="${pb.nowPage!=i}">
-				<li><a href="front?command=home&pageNo=${i}">${i}</a></li>
+				<li><a href="front/request?command=home&pageNo=${i}">${i}</a></li>
 			</c:when>
 			<c:otherwise>
 				<li class="active"><a href="#">${i}</a></li>
@@ -89,7 +90,7 @@
  --> 
  	<c:if test="${pb.nextPageGroup}">
 		<li>
-			<a href="front?command=home&pageNo=${pb.endPageOfPageGroup+1}">&raquo;
+			<a href="front/request?command=home&pageNo=${pb.endPageOfPageGroup+1}">&raquo;
 			</a>
 		</li>
 	</c:if>

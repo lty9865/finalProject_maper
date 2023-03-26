@@ -16,8 +16,8 @@ public class DataSourceManager {
 		BasicDataSource dbcp = new BasicDataSource();
 		
 		// dbcp(datasource)에 driver와 dbconnection 정보를 설정
-		dbcp.setDriverClassName("oracle.jdbc.OraclDriver");
-		dbcp.setUrl("jdbc:oracle:thin:@localhost:xe");
+		dbcp.setDriverClassName("oracle.jdbc.OracleDriver");
+		dbcp.setUrl("jdbc:oracle:thin:@localhost:1521:xe");
 		dbcp.setUsername("c##mapers");
 		dbcp.setPassword("mapers1234");
 		

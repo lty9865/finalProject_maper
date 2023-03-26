@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ include file="/Common/link.jsp"%>
 
-<form action="${pageContext.request.contextPath}/front" method="POST">
+<form action="${pageContext.request.contextPath}/front/MyRequest" method="POST">
 	<input type="hidden" name="command" value="WritePost">
 	<table class="table">
 		<tr>
@@ -13,7 +14,6 @@
 					required="required">
 			</td>
 		</tr>
-
 		<tr>
 			<td>
 				<h4>본문 내용</h4>
