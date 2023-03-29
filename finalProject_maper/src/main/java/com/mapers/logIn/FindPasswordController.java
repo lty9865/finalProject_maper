@@ -1,4 +1,5 @@
-package com.mapers.SignUp;
+package com.mapers.logIn;
+
 
 import java.io.IOException;
 
@@ -8,35 +9,39 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-//아이디 찾기 controller
-@WebServlet("/Member/FindId.do")
-public class FindIdController extends HttpServlet {
+//비밀번호 찾기 controller
+@WebServlet("/Member/FindPassword.do")
+public class FindPasswordController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		FindIdMethod(request,response);
+		FindPasswordMethod(request,response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		FindIdMethod(request,response);
+		FindPasswordMethod(request,response);
 	}
-	protected void FindIdMethod(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void FindPasswordMethod(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		request.setCharacterEncoding("UTF-8");
 		
+		String userid = request.getParameter("userid");
 		String licensekey = request.getParameter("licensekey");
 		
-		FindIdDAO fdao = FindIdDAO.getInstance();
+		FindPasswordDAO fdao = FindPasswordDAO.getInstance();
 		
 		MemberVO mVo = new MemberVO();
 		
+		mVo.setUserid(userid);
 		mVo.setLicenseKey(licensekey);
 		
-		String userid = fdao.FindId(mVo);
+		String password = fdao.FindPassword(mVo);
 		
-		request.setAttribute("userid", userid);
+		request.setAttribute("password", password);
 		
-		RequestDispatcher rd = request.getRequestDispatcher("../Member/FindIdResult.jsp");
+		System.out.println(password);
+		
+		RequestDispatcher rd = request.getRequestDispatcher("../Member/FindPasswordResult.jsp");
 		rd.forward(request, response);
 	}
 

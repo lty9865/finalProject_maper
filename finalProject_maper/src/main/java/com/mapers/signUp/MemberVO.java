@@ -1,4 +1,4 @@
-package com.mapers.SignUp;
+package com.mapers.signUp;
 
 public class MemberVO {
 	private String userid;

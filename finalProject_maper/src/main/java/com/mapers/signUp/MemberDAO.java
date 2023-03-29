@@ -1,4 +1,4 @@
-package com.mapers.SignUp;
+package com.mapers.signUp;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -1,4 +1,5 @@
-package com.mapers.SignUp;
+package com.mapers.logIn;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -6,19 +7,19 @@ import java.sql.ResultSet;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
-
-public class FindIdDAO{
+//비밀번호 찾기
+public class FindPasswordDAO{
 
 	   private Connection conn = null;
 	   private PreparedStatement pstmt = null;
 	   private ResultSet rs = null;
 
-	  public FindIdDAO() {
+	  public FindPasswordDAO() {
 	   }
 
-	   private static FindIdDAO instance = new FindIdDAO();
+	   private static FindPasswordDAO instance = new FindPasswordDAO();
 
-	   public static FindIdDAO getInstance() {
+	   public static FindPasswordDAO getInstance() {
 	      return instance;
 	   }
 
@@ -45,33 +46,35 @@ public class FindIdDAO{
 	      }
 	   }
 	   
-	   public String FindId(MemberVO mVo) {
-		   String userid = null;
-		   String query = "SELECT userid FROM ACCOUNT WHERE LICENSEKEY = ?";
+	   public String FindPassword(MemberVO mVo) {
+		   String password = null;
+		   String query = "SELECT PASSWORD FROM ACCOUNT WHERE USERID=? and LICENSEKEY=?";
 		   
 		   try {
 			   conn = getConnection();
 			   
 			   pstmt = conn.prepareStatement(query);
-			   pstmt.setString(1, mVo.getLicenseKey());
-			   
+			   pstmt.setString(1, mVo.getUserid());	
+			   pstmt.setString(2, mVo.getLicenseKey());
 			   rs = pstmt.executeQuery();
 			   
+			   System.out.println(mVo.getUserid());
+			   System.out.println(mVo.getLicenseKey());
+			   
 			   if(rs.next()) {
-				   userid = rs.getString("userid");
-				   System.out.println(userid);
+				   password = rs.getString("password");
 			   }
 		   }catch(Exception e) {
-			   System.out.println(userid);
 			   e.printStackTrace();
 		   }finally {
 			   try {
 				   if(rs != null) rs.close();
 				   if(pstmt != null) pstmt.close();
+				   
 			   }catch(Exception e) {
 				   e.printStackTrace();
 			   }
 		   }
-		   return userid;
+		   return password;
 	   }
 	   }

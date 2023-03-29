@@ -1,4 +1,4 @@
-package com.mapers.SignUp;
+package com.mapers.signUp;
 
 import java.io.IOException;
 

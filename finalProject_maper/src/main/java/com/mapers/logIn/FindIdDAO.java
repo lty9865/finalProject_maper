@@ -1,5 +1,4 @@
-package com.mapers.SignUp;
-
+package com.mapers.logIn;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,19 +6,19 @@ import java.sql.ResultSet;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
-//비밀번호 찾기
-public class FindPasswordDAO{
+
+public class FindIdDAO{
 
 	   private Connection conn = null;
 	   private PreparedStatement pstmt = null;
 	   private ResultSet rs = null;
 
-	  public FindPasswordDAO() {
+	  public FindIdDAO() {
 	   }
 
-	   private static FindPasswordDAO instance = new FindPasswordDAO();
+	   private static FindIdDAO instance = new FindIdDAO();
 
-	   public static FindPasswordDAO getInstance() {
+	   public static FindIdDAO getInstance() {
 	      return instance;
 	   }
 
@@ -46,35 +45,33 @@ public class FindPasswordDAO{
 	      }
 	   }
 	   
-	   public String FindPassword(MemberVO mVo) {
-		   String password = null;
-		   String query = "SELECT PASSWORD FROM ACCOUNT WHERE USERID=? and LICENSEKEY=?";
+	   public String FindId(MemberVO mVo) {
+		   String userid = null;
+		   String query = "SELECT userid FROM ACCOUNT WHERE LICENSEKEY = ?";
 		   
 		   try {
 			   conn = getConnection();
 			   
 			   pstmt = conn.prepareStatement(query);
-			   pstmt.setString(1, mVo.getUserid());	
-			   pstmt.setString(2, mVo.getLicenseKey());
+			   pstmt.setString(1, mVo.getLicenseKey());
+			   
 			   rs = pstmt.executeQuery();
 			   
-			   System.out.println(mVo.getUserid());
-			   System.out.println(mVo.getLicenseKey());
-			   
 			   if(rs.next()) {
-				   password = rs.getString("password");
+				   userid = rs.getString("userid");
+				   System.out.println(userid);
 			   }
 		   }catch(Exception e) {
+			   System.out.println(userid);
 			   e.printStackTrace();
 		   }finally {
 			   try {
 				   if(rs != null) rs.close();
 				   if(pstmt != null) pstmt.close();
-				   
 			   }catch(Exception e) {
 				   e.printStackTrace();
 			   }
 		   }
-		   return password;
+		   return userid;
 	   }
 	   }
