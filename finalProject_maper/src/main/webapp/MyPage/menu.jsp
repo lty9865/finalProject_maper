@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ include file="/Common/link.jsp" %>
+pageEncoding="UTF-8"%>
+<%@ include file="../Common/link.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,18 +8,18 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<div class="container">
-		<ul class="nav nav-underline">
-		  <li class="nav-item">
-		    <a class="nav-link active" aria-current="page" href="./Profile/profile.jsp">내 정보</a>
-		  </li>
-		  <li class="nav-item">
-		    <a class="nav-link" href="./Request/requestFront.jsp">내 문의</a>
-		  </li>
-		  <li class="nav-item">
-		    <a class="nav-link" href="./Like/likeList.jsp">마음에 든 책</a>
-		  </li>
-		</ul>
-	</div>
+<div class="container">
+	<ul class="maper-myPage-menu-underline">
+	    <li class="maper-myPage-menu-item">
+	        <a href="MyPageFront?command=MyProfile">내 정보</a>
+	    </li>
+	    <li class="maper-myPage-menu-item">
+	        <a href="MyPageFront?command=MyRequest">내 문의</a>
+	    </li>
+	    <li class="maper-myPage-menu-item">
+	        <a href="MyPageFront?command=MyLike">내가 좋아하는 책</a>
+	    </li>
+	</ul>
+</div>
 </body>
 </html>

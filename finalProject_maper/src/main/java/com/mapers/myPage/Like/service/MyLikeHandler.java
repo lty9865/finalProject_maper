@@ -1,24 +1,23 @@
-package com.mapers.myPage.Request.service;
+package com.mapers.myPage.Like.service;
 
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.mapers.myPage.Request.controller.Controller;
-import com.mapers.myPage.Request.model.ListDTO;
-import com.mapers.myPage.Request.model.PagingBean;
-import com.mapers.myPage.Request.model.RequestDAO;
-import com.mapers.myPage.Request.model.RequestDTO;
+import com.mapers.common.Controller;
+import com.mapers.myPage.Like.model.LikeDAO;
+import com.mapers.myPage.Like.model.LikeDTO;
+import com.mapers.myPage.Like.model.ListDTO;
+import com.mapers.myPage.Like.model.PagingBean;
 
-public class HomeController implements Controller {
+public class MyLikeHandler implements Controller {
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		request.setCharacterEncoding("UTF-8");
 		
 		// 1. 전체 포스팅의 개수를 받아옴
-		int totalPostCount = RequestDAO.getInstance().getTotalPostCount();
+		int totalPostCount = LikeDAO.getInstance().getTotalPostCount();
 		
 		// 2. 현재 페이지 번호를 받아옴
 		String pageNo = request.getParameter("pageNo");
@@ -33,18 +32,17 @@ public class HomeController implements Controller {
 		
 		// 4. getAllList(PagingBean)과 연동하여
 		// 페이지에 맞는 포스팅 5개 리스트 리턴
-		ArrayList<RequestDTO> rList = RequestDAO.getInstance().getAllList(pagingBean);
+		ArrayList<LikeDTO> kList = LikeDAO.getInstance().getAllList(pagingBean);
 		
 		// + ListDTO list와 PagingBean 넣어 객체 생성
-		ListDTO listDTO = new ListDTO(rList, pagingBean);
+		ListDTO listDTO = new ListDTO(kList, pagingBean);
 		
 		// 5. request에 담아 ListDTO 공유
 		request.setAttribute("lvo", listDTO);
 		
 		// 6. request에 담아 url 공유(requestList.jsp) - layout으로 리턴
-		request.setAttribute("url", "/MyPage.Request/requestList.jsp");
+		request.setAttribute("url", "/MyPageFront?command=MyLike");
 		
-		return "/MyPageCommon/layout.jsp";
+		return "/MyPage/Like/likelist.jsp";
 	}
-
 }

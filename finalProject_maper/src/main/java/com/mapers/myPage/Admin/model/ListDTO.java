@@ -1,25 +1,25 @@
-package com.mapers.myPage.Request.model;
+package com.mapers.myPage.Admin.model;
 
 import java.util.ArrayList;
 
 import com.mapers.common.PagingBean;
 
 public class ListDTO {
-	private ArrayList<RequestDTO> rList;
+	private ArrayList<AdminDTO> aList;
 	private PagingBean paginbean;
 	
-	public ListDTO(ArrayList<RequestDTO> rList, PagingBean pagingbean) {
+	public ListDTO(ArrayList<AdminDTO> aList, PagingBean pagingbean) {
 		super();
-		this.rList = rList;
+		this.aList = aList;
 		this.paginbean = pagingbean;
 	}
 	
-	public ArrayList<RequestDTO> getRList(){
-		return rList;
+	public ArrayList<AdminDTO> getList(){
+		return aList;
 	}
 	
-	public void setRList(ArrayList<RequestDTO> rList) {
-		this.rList = rList;
+	public void setRList(ArrayList<AdminDTO> aList) {
+		this.aList = aList;
 	}
 
 	public PagingBean getPaginbean() {

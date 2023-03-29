@@ -135,11 +135,14 @@ public class ProfileDAO {
 	}
 	
 	// 회원정보 수정을 위한 정보 가져오기 - 박강필
-	public ProfileDTO getMember(String id, String password) {
+	public ProfileDTO getProfile(String id, String password) {
 		ProfileDTO dto = null;
+		
 		String sql = "select * from account where id=? and password=?";
 		
 		try {
+			
+			conn = dataSource.getConnection();
 			
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, id);
@@ -153,17 +156,25 @@ public class ProfileDAO {
 				dto.setPassword(rs.getString("password"));
 				dto.setEmail(rs.getString("usermail"));
 				dto.setBirth(rs.getString("birth"));
+				
+				// get the image URL and modify it to access the image file
+				String imageUrl = rs.getString("image_url");
+				if (imageUrl != null && !imageUrl.isEmpty()) {
+					String[] parts = imageUrl.split("/");
+					imageUrl = "/MyPage.Profile/image/" + parts[parts.length-1];
+					dto.setProfileImg(imageUrl);
+				}
 			}
 		
 		} catch (Exception e) {
 			e.printStackTrace();
-		
-		} finally {
-			closeAll();
-		}
+			System.out.println("내 프로필 불러오기 Error");
+		} 
 		
 		return dto;
 	}
+	
+	// 프로필 이미지 수정 - 박강필
 	
 	// 실질적인 회원정보 수정 form - 박강필
 	public int updateProfile(ProfileDTO dto) {
@@ -266,8 +277,4 @@ public class ProfileDAO {
 		
 		return rs;
 	}
-
-//	public DataSource getDataSource() {
-//		return dataSource;
-//	}
 }

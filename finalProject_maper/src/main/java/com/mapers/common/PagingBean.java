@@ -1,4 +1,4 @@
-package com.mapers.myPage.Request.model;
+package com.mapers.common;
 
 public class PagingBean {
 	// 현재 페이지

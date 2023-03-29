@@ -10,8 +10,12 @@
 <body class="maper-body-background">
 	<!-- header -->
 	<jsp:include page="../../Common/header.jsp"/>
+	
 	<!-- body/menu -->
 	<jsp:include page="../menu.jsp"/>
+	
+	<!-- body -->
+	
 	
 	<!-- footer -->
 	<jsp:include page="../../Common/footer.jsp"/>

@@ -1,6 +1,7 @@
 package com.mapers.myPage.Profile.model;
 
 public class ProfileDTO {
+	private String profileImg;
 	private String userId;
 	private String password;
 	private String email;
@@ -8,10 +9,10 @@ public class ProfileDTO {
 	private int admins;
 	private String licenseKey;
 
-	/*
-	 * blob 은 추후 회의 진행 후 추가 private blob
-	 */
-
+	public ProfileDTO() {
+		super();
+	}
+	
 	public ProfileDTO(String userId, String password, String email, String birth, int admins, String licenseKey) {
 		super();
 		this.userId = userId;
@@ -22,11 +23,18 @@ public class ProfileDTO {
 		this.licenseKey = licenseKey;
 	}
 
-	public ProfileDTO() {
-		super();
+	public ProfileDTO(String id, String password2) {
+	}
+	
+	public ProfileDTO(String userId, String password, String email, String birth, String profileImg) {
 	}
 
-	public ProfileDTO(String id, String password2) {
+	public String getProfileImg() {
+		return profileImg;
+	}
+	
+	public void setProfileImg(String profileImg) {
+		this.profileImg = profileImg;
 	}
 
 	public String getUserId() {

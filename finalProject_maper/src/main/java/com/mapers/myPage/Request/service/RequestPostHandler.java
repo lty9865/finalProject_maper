@@ -4,11 +4,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.mapers.myPage.Request.controller.Controller;
+import com.mapers.common.Controller;
 import com.mapers.myPage.Request.model.RequestDAO;
 import com.mapers.myPage.Request.model.RequestDTO;
 
-public class WritePostController implements Controller {
+public class RequestPostHandler implements Controller {
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {

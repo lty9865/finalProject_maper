@@ -1,18 +1,17 @@
-package com.mapers.myPage.Profile.service;
+package com.mapers.myPage.Request.service;
 
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.mapers.myPage.Profile.controller.Controller;
-import com.mapers.myPage.Request.model.ListDTO;
-import com.mapers.myPage.Request.model.PagingBean;
+import com.mapers.common.Controller;
+import com.mapers.common.PagingBean;
 import com.mapers.myPage.Request.model.RequestDAO;
 import com.mapers.myPage.Request.model.RequestDTO;
+import com.mapers.myPage.common.ListDTO;
 
-
-public class HomeController implements Controller {
+public class MyRequestHandler implements Controller {
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {

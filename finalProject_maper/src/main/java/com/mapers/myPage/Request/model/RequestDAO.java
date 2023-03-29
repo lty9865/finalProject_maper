@@ -11,7 +11,9 @@ import java.util.Vector;
 import javax.sql.DataSource;
 
 import com.mapers.common.DataSourceManager;
+import com.mapers.common.PagingBean;
 import com.mapers.myPage.Profile.model.ProfileDTO;
+
 
 public class RequestDAO {
 	private Connection conn = null;
@@ -313,26 +315,4 @@ public class RequestDAO {
 		
 		return rList;
 	}
-	
-	
-	
-	// 마이 페이지(관리자 모드), 문의사항 리스트 조회 - 박강필
-	
-	
-	// 마이 페이지(관리자 모드), 문의 글 작성(문의 상태 변경 기능 추가) - 박강필
-	
-	
-	// 마이 페이지(관리자 모드), 문의 글 수정(문의 상태 변경 기능 추가) - 박강필
-	
-	
-	// 마이 페이지(관리자 모드), 문의 글 삭제(문의 상태 변경 기능 추가) - 박강필
-	
-	
-	// 마이 페이지(관리자 모드), 신고글 개수 세기 - 박강필
-	
-	
-	// 마이 페이지(관리자 모드), 신고 리스트 조회 - 박강필
-	
-	
-	// 마이 페이지(관리자 모드), 신고 글 상태 변경 - 박강필
 }

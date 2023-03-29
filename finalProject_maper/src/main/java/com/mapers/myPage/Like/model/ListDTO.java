@@ -2,6 +2,8 @@ package com.mapers.myPage.Like.model;
 
 import java.util.ArrayList;
 
+import com.mapers.common.PagingBean;
+
 public class ListDTO {
 	private ArrayList<LikeDTO> kList;
 	private PagingBean paginbean;
@@ -12,11 +14,11 @@ public class ListDTO {
 		this.paginbean = pagingbean;
 	}
 	
-	public ArrayList<LikeDTO> getList(){
+	public ArrayList<LikeDTO> getKList(){
 		return kList;
 	}
 	
-	public void setRList(ArrayList<LikeDTO> kList) {
+	public void setKList(ArrayList<LikeDTO> kList) {
 		this.kList = kList;
 	}
 
