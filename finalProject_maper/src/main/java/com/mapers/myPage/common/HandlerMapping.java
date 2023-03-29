@@ -26,7 +26,9 @@ public class HandlerMapping {
 	// create(command) method
 	public Controller create(String command) {
 	    Controller controller = null;
-	    // command=MyProfile.profileEdit
+	    // 1. /MyPageFront?command=MyProfile.checkRealAccount
+	    // 2. /MyPageFront?command=MyRequest.requestPostDetailView
+		// 3. /MyPageFront?command=MyLike.likeDetailView
 	    String[] parts = command.split("\\."); // split the command into parts
 	    String mainCommand = parts[0];
 	    String subCommand = parts.length > 1 ? parts[1] : null;

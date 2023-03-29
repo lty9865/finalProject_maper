@@ -29,7 +29,7 @@ public class CheckAccountHandler implements Controller {
             return "/MyPageCommon/message.jsp";
         } else {
             request.setAttribute("rDTO", pDTO);
-            request.setAttribute("url", "/MyPageFront?command=MyProfile.profileEditForm");
+            request.setAttribute("url", "/MyPageFront?command=MyProfile.profileEdit");
             return "/MyPage/Profile/profileEdit.jsp";
         }
     }

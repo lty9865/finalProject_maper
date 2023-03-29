@@ -37,7 +37,7 @@ public class ProfileEditHandler implements Controller {
         
         ProfileDTO pDTO = ProfileDAO.getInstance().getProfile(userId, password);
         
-        request.setAttribute("url", "/MyPageFront?command=MyProfile.profileEdit");
+        request.setAttribute("url", "/MyPageFront?command=MyProfile");
         
         return "redirect:/MyPageCommon/layout.jsp";
     }
