@@ -52,8 +52,8 @@
 					<c:forEach items="${ noticeLists }" var="row" varStatus="loop">
 						<tr align="center">
 							<th scope="row">${ map.totalCount - (((map.pageNum-1)*map.pageSize)+loop.index) }</th>
-							<td><a href="../Notice/noticeview.do?idx=${ row.idx }">${ row.title }</a></td>
-							<td>${ row.postdate }</td>
+							<td><a href="../Notice/notice.do?command=view&idx=${ row.idx }">${ row.title }</a></td>
+							<td>${ row.postDate }</td>
 							<td>${ row.visitCount }</td>
 						</tr>
 					</c:forEach>
@@ -65,7 +65,7 @@
 		<tr align="center">
 			<td align="right">
 				<button type="button" class="btn btn-primary"
-					onclick="location.href='../Notice/noticewrite.do';">글쓰기</button>
+					onclick="location.href='../Notice/notice.do?command=writeView';">글쓰기</button>
 			</td>
 		</tr>
 	</table>

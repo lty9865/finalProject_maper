@@ -26,7 +26,7 @@
 			<h2>책 작성</h2>
 			<hr>
 		</div>
-		<form action="../Book/bookwrite.do" name="bookWriteFrm" method="post" enctype="multipart/form-data"
+		<form action="../Book/book.do?command=bookWrite" name="bookWriteFrm" method="post" enctype="multipart/form-data"
 		onsubmit="">
 		<input type="hidden" name="userId" value="green1234">
 		<div class="bookWrite">
