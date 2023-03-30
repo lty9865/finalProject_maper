@@ -6,10 +6,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.mapers.common.Controller;
+import com.mapers.common.PagingBean;
 import com.mapers.myPage.Like.model.LikeDAO;
 import com.mapers.myPage.Like.model.LikeDTO;
 import com.mapers.myPage.Like.model.ListDTO;
-import com.mapers.myPage.Like.model.PagingBean;
 
 public class MyLikeHandler implements Controller {
 

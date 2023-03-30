@@ -26,7 +26,7 @@ public class ProfileDAO {
 	}
 	
 	// Connection을 dbcp에 반납
-	private void closeAll() {
+	public void closeAll() {
 		
 		try {
 			
@@ -41,39 +41,12 @@ public class ProfileDAO {
 		}
 	}
 	
-	// 마이 페이지, 회원정보 수정 전 확인 - 박강필
-	public ProfileDTO checkMember(String id, String password) {
-		ProfileDTO dto = null;
-		
-		String sql = "select * from account where id=? and password=?";
-		
-		try {
-			
-			conn = dataSource.getConnection();
-			
-			psmt = conn.prepareStatement(sql);
-			psmt.setString(1, id);
-			psmt.setString(2, password);
-			
-			rs = psmt.executeQuery();
-			if (rs.next()) {
-				dto = new ProfileDTO(id, password);
-			}
-			
-		} catch (Exception e) {
-			System.out.println("회원정보 수정 전 확인 중 Eorror");
-			e.printStackTrace();
-		} 
-		
-		return dto;
-	}
-	
 	// 마이 페이지, 계정정보 확인 처리 - 박강필
 	public int checkAccount(String userid, String password) {
 		// 경우의 수 3가지= 1 인증 성공/ 0 비밀번호 틀림/ -1 아이디 틀림(없음)
 		int answer = -1;
 		
-		String sql = "select id from account where password=?";
+		String sql = "select userid from account where password=?";
 		
 		try {
 			
@@ -95,29 +68,27 @@ public class ProfileDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		
-		} finally {
-			closeAll();
-		}
+		} 
 		
 		return answer;
 	}
 	
 	// 아이디 중복 확인 - 박강필
-	public int confirmId(String id) {
+	public int confirmId(String userId) {
 		// 경우의 수 2가지: 1 중복 있음 / -1 중복 없음(회원가입 가능)
 		int duplicate = 1;
 		
-		String sql = "select id from account where id=?";
+		String sql = "select userid from account where userid=?";
 		
 		try {
 			
 			psmt = conn.prepareStatement(sql);
-			psmt.setString(1, id);
+			psmt.setString(1, userId);
 			
 			rs = psmt.executeQuery();
 			if (rs.next()) {
 				String userid = rs.getString("userid");
-				if (id.contentEquals(userid)) {
+				if (userid.contentEquals(userId)) {
 					duplicate = 1;
 				}
 			} else {
@@ -127,25 +98,55 @@ public class ProfileDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-		} finally {
-			closeAll();
-		}
+		} 
 		
 		return duplicate;
 	}
 	
-	// 회원정보 수정을 위한 정보 가져오기 - 박강필
-	public ProfileDTO getProfile(String id, String password) {
+	// 마이 페이지로 이동 시, 디폴트 페이지로 보여주는 내 정보 탭 정보 가져오기 - 박강필
+	public ProfileDTO getProfile(String userId) {
 		ProfileDTO dto = null;
 		
-		String sql = "select * from account where id=? and password=?";
+		String sql = "select * from account where userid=? ";
 		
 		try {
 			
 			conn = dataSource.getConnection();
 			
 			psmt = conn.prepareStatement(sql);
-			psmt.setString(1, id);
+			psmt.setString(1, userId);
+			
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				dto = new ProfileDTO();
+				
+				dto.setUserId(rs.getString("userid"));
+				dto.setPassword(rs.getString("password"));
+				dto.setEmail(rs.getString("usermail"));
+				dto.setBirth(rs.getString("birth"));
+				dto.setProfileImg(rs.getString("images"));
+			}
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("내 프로필 불러오기 Error");
+		} 
+		
+		return dto;
+	}
+	
+	// 회원정보 수정을 위한 정보 가져오기 - 박강필
+	public ProfileDTO getProfile(String userId, String password) {
+		ProfileDTO dto = null;
+		
+		String sql = "select * from account where userid=? and password=?";
+		
+		try {
+			
+			conn = dataSource.getConnection();
+			
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, userId);
 			psmt.setString(2, password);
 			
 			rs = psmt.executeQuery();
@@ -156,14 +157,7 @@ public class ProfileDAO {
 				dto.setPassword(rs.getString("password"));
 				dto.setEmail(rs.getString("usermail"));
 				dto.setBirth(rs.getString("birth"));
-				
-				// get the image URL and modify it to access the image file
-				String imageUrl = rs.getString("image_url");
-				if (imageUrl != null && !imageUrl.isEmpty()) {
-					String[] parts = imageUrl.split("/");
-					imageUrl = "/MyPage.Profile/image/" + parts[parts.length-1];
-					dto.setProfileImg(imageUrl);
-				}
+				dto.setProfileImg(rs.getString("images"));
 			}
 		
 		} catch (Exception e) {
@@ -181,7 +175,7 @@ public class ProfileDAO {
 		// 회원정보 수정: 성공 1 / 실패 0
 		int answer = -1;
 		
-		String sql1 = "select id from account where password=?";
+		String sql1 = "select userid from account where password=?";
 		
 		try {
 			
@@ -190,10 +184,10 @@ public class ProfileDAO {
 			
 			rs = psmt.executeQuery();
 			if (rs.next()) {
-				String id = rs.getString("userid");
+				String userId = rs.getString("userid");
 				
-				if (dto.getUserId().equals(id)) { // session에 저장된 아이디 가져와 비교
-					String sql2 = "update account set usermail=?, birth=? where id=?";
+				if (dto.getUserId().equals(userId)) { // session에 저장된 아이디 가져와 비교
+					String sql2 = "update account set usermail=?, birth=? where userid=?";
 					
 					psmt = conn.prepareStatement(sql2);
 					psmt.setString(1, dto.getEmail());
@@ -212,19 +206,17 @@ public class ProfileDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-		} finally {
-			closeAll();
-		}
+		} 
 		
 		return answer;
 	}
 	
 	// 회원 탈퇴 처리 - 박강필
-	public int deleteMember(String id, String password) {
+	public int deleteMember(String userId, String password) {
 		// 회원탈퇴: 성공 1/ 실패 0
 		int answer = -1;
 		
-		String sql1 = "select id from account where password=?";
+		String sql1 = "select userid from account where password=?";
 		
 		try {
 			
@@ -235,11 +227,11 @@ public class ProfileDAO {
 			if (rs.next()) {
 				String existedId = rs.getString("userid");
 				
-				if (existedId.equals(id)) {
+				if (existedId.equals(userId)) {
 					String sql2 = "delete from account where id=?";
 					
 					psmt = conn.prepareStatement(sql2);
-					psmt.setString(1, id);
+					psmt.setString(1, userId);
 					psmt.executeUpdate();
 					
 					answer = 1;
@@ -251,9 +243,7 @@ public class ProfileDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		
-		} finally {
-			closeAll();
-		}
+		} 
 		
 		return answer;
 	}
@@ -271,9 +261,7 @@ public class ProfileDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-		} finally {
-			closeAll();
-		}
+		} 
 		
 		return rs;
 	}

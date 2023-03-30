@@ -1,0 +1,52 @@
+@charset "UTF-8";
+
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+.mapper-myPage-horizontal-menu {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  justify-content: center;
+}
+
+.mapper-myPage-menu-container {
+  margin-right: 20px;
+  padding: 0;
+}
+
+.mapper-myPage-menu-item {
+  position: relative;
+}
+
+.mapper-myPage-menu-item a {
+  display: block;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.mapper-myPage-menu-item a:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  transform: scaleX(0);
+  transform-origin: bottom left;
+  transition: width 0.2s ease-in-out, transform 0.2s ease-in-out;
+  background-color: #000;
+}
+
+.mapper-myPage-menu-container:hover .mapper-myPage-menu-item a:after {
+  width: 100%;
+  transform: scaleX(1);
+}
+
+.mapper-myPage-menu-item.active a:after {
+  width: 100%;
+  transform: scaleX(1);
+}

@@ -15,17 +15,22 @@ public class ProfileDeleteHandler implements Controller {
 		request.setCharacterEncoding("UTF-8");
 		
 		HttpSession session = request.getSession();
-//		if (session == null || session.getAttribute("memberVO") == null) {
-//			return "redirect:index.jsp";
-//		}
 
 		String userId = (String) session.getAttribute("userId");
 		String password = request.getParameter("password");
+		
+		if (userId == null || userId.isEmpty()) {
+		    userId = "test1";
+		}
+		if (password == null || password.isEmpty()) {
+		    password = "pass";
+		}
+		
 		ProfileDAO.getInstance().deleteMember(userId, password);
 		
-		request.setAttribute("url", "/MyPageFront?command=home");
+		request.setAttribute("url", "${pageContext.request.contextPath}/Main/MyPageFront?command=home");
 		
-		return "redirect:/index.jsp";
+		return "redirect:/Webmain/mainpage.jsp";
 	}
 
 }

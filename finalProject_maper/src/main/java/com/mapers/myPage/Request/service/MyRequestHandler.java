@@ -7,9 +7,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.mapers.common.Controller;
 import com.mapers.common.PagingBean;
+import com.mapers.myPage.Request.model.ListDTO;
 import com.mapers.myPage.Request.model.RequestDAO;
 import com.mapers.myPage.Request.model.RequestDTO;
-import com.mapers.myPage.common.ListDTO;
 
 public class MyRequestHandler implements Controller {
 

@@ -10,13 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.mapers.common.Controller;
 
+
 /**
  * Servlet implementation class DispatcherServletSample
  */
-@WebServlet("/MyPageFront")
-// 1. /MyPageFront?command=MyProfile.profileEdit
-// 2. /MyPageFront?command=MyRequest.requestPostDetailView
-// 3. /MyPageFront?command=MyLike.likeDetailView
+@WebServlet("/MyPage/MyPageFront")
 public class DispatcherServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -44,9 +42,6 @@ public class DispatcherServlet extends HttpServlet {
 			throws ServletException, IOException {
 		
 		try {
-			// 1. /MyPageFront?command=MyProfile.profileEdit
-			// 2. /MyPageFront?command=MyRequest.requestPostDetailView
-			// 3. /MyPageFront?command=MyLike.likeDetailView
 			String command = request.getParameter("command");
 			if (command == null) {
 				command = "MyProfile";

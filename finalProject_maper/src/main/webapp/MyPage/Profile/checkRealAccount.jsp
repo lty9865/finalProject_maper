@@ -5,9 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>My Page - Delete Profile</title>
-<!-- include the script file -->
-<script type="text/javascript" src="profileDelete.js" charset="UTF-8"></script>
+<title>Check Real Account</title>
 </head>
 <body class="maper-body-background">
 	<!-- header -->
@@ -17,13 +15,21 @@
 	<jsp:include page="../menu.jsp"/>
 	
 	<!-- body -->
-	<h2>계정 삭제</h2>
+	<h2>Check Real Account</h2>
 	<hr>
-	<form action="${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyProfile.profileDelete" method="post">
-		<p><strong>비밀번호 입력:</strong> <input type="password" name="password"></p>
-		<p><input type="button" value="Delete Profile" onclick="confirmDelete()"></p>
-		<p><input type="button" value="Cancel" onclick="history.back()"></p>
+	<form action="${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyProfile.checkRealAccount" method="post">
+		<p><strong>User ID:</strong> ${sessionScope.userId}</p>
+		<p><strong>Password:</strong> <input type="password" name="password"></p>
+		<input type="submit" value="확인">
+		<hr>
 	</form>
+	
+	<!-- notification message for wrong password -->
+	<c:if test="${not empty errMsg}">
+		<script>
+			alert("${errMsg}");
+		</script>
+	</c:if>
 	
 	<!-- footer -->
 	<%@ include file="/WEB-INF/views/Common/footer.jsp" %>
