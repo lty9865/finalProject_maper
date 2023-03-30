@@ -138,12 +138,12 @@ public class BookDAO {
 			pstmt.setString(4, dto.getTitle());
 			pstmt.setString(5, dto.getSfile());
 			pstmt.setString(6, dto.getOfile());
-			rateRefresh(dto.getBookNum());
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("북 작성 중 예외 발생");
 		}
+		System.out.println(result);
 		return result;
 	}
 
@@ -201,7 +201,6 @@ public class BookDAO {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, idx);
 			result = pstmt.executeUpdate();
-			rateRefresh(Integer.parseInt(idx));
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("북 삭제 중 예외 발생");

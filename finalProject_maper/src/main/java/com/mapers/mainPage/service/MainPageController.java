@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.mapers.book.model.BookDTO;
 import com.mapers.common.Controller;
@@ -16,9 +15,6 @@ public class MainPageController implements Controller {
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		MainPageDAO dao = MainPageDAO.getInstance();
-		
-		HttpSession session = request.getSession();
-		System.out.println(session.getAttribute("userId"));
 
 		String like = "LIKESCOUNT";
 		String last = "BOOKDATE";

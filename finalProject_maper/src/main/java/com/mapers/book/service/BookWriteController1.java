@@ -21,16 +21,18 @@ public class BookWriteController1 implements Controller {
 		// 1.파일업로드 처리
 		// 업로드 디렉터리의 물리적 경로 확인
 		String saveDirectory = request.getServletContext().getRealPath("/Uploads/Book");
+		System.out.println(saveDirectory);
 
 		// 초기화 매개 변수로 설정한 첨부 파일 최대 용량 확인
 		ServletContext application = request.getSession().getServletContext();
 		int maxPostSize = Integer.parseInt(application.getInitParameter("maxPostSize"));
+		System.out.println(maxPostSize);
 
 		// 파일 업로드
 		MultipartRequest mr = FileUtil.uploadFile(request, saveDirectory, maxPostSize);
 		if (mr == null) {
 			// 실패
-			return "";
+			System.out.println("파일 업로드 실패");
 		}
 
 		// 2.파일 업로드 외 처리
@@ -40,9 +42,14 @@ public class BookWriteController1 implements Controller {
 		dto.setTitle(mr.getParameter("title"));
 		dto.setPlace(mr.getParameter("country") + "/" + mr.getParameter("city"));
 		dto.setBookDate(mr.getParameter("bookDate"));
+		System.out.println(dto.getUserId());
+		System.out.println(dto.getTitle());
+		System.out.println(dto.getPlace());
+		System.out.println(dto.getBookDate());
 
 		// 원본 파일명과 저장된 파일 이름 설정
 		String fileName = mr.getFilesystemName("ofile");
+		System.out.println(fileName);
 		if (fileName != null) {
 			// 첨부파일이 있는 경우
 			String now = new SimpleDateFormat("yyyyMMdd_HmsS").format(new Date());
@@ -66,7 +73,7 @@ public class BookWriteController1 implements Controller {
 			request.setAttribute("url", "/Book/book.do?command=bookList");
 			return "redirect:../Book/book.do?command=bookList";
 		} else {
-			System.out.print("북 생성 컨트롤러 중 에러 발생");
+			System.out.println("북 생성 컨트롤러 중 에러 발생");
 			request.setAttribute("url", "/Book/book.do?command=bookWrite");
 			return "redirect:../Book/book.do?command=bookWrite";
 		}

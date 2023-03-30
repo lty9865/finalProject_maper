@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!-- 각종 링크 헤더 include -->
 <%@ include file="../Common/link.jsp"%>
+<%@ include file="../Common/header.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,28 +11,34 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <title>MAPER</title>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/Common/LoginConfirmed.js">
+</script>
 </head>
 <body>
-	<!-- header -->
-	<div class="maper-header">
-		<div class="maper-header-font">
-			<div class="left">
-				<a class="maper-header-font-1" href="login.jsp">MAPER</a>
-			</div>
-			<div class="right" align="right" style="">
-				<input type="text" class="form-control" id="searchKeyword"
-					placeholder="Enter Keyword"
-					onKeypress="javascript:if(event.keyCode==13) {test()}">
-				<script>
-					function test() {
-						alert("Enter Key 입력 감지 \n함수 실행.");
-					}
-				</script>
-			</div>
-		</div>
-	</div>
+	<p>
+		세션 :
+		<%=session.getAttribute("userId")%>
+		어플리케이션 :
+		<%=application.getAttribute("userId")%>
+	</p>
 	<!-- body -->
 	<div class="maper-body">
+		<div align="center" class="mapers-main-inputbar">
+		<form action="../Book/bookList.do">
+			<select class="main-inputbar" style="width: 10%;" name="searchField">
+				<option value="title">제목</option>
+				<option value="place">장소</option>
+			</select>
+			<input class="main-inputbar" style="width: 85%;" type="text" name="searchWord" />
+			<input type="submit" value="검색"/>
+		</form>
+		</div>
+		<div style="width: 55%; margin: auto;">
+			<p>추천 검색어 : a b c d</p>
+		</div>
+		<hr>
 		<div style="height: 400px">
 			<div id="carouselExampleCaptions" class="carousel slide">
 				<div class="carousel-indicators">
@@ -94,19 +101,89 @@
 				</button>
 			</div>
 		</div>
-		<div class="maper-main-writeButton">
-			<div class="d-grid gap-2">
-				<button class="btn btn-primary" type="button">Write</button>
+		<br> <br>
+		<!-- 인기글 -->
+		<h3>인기글</h3>
+		<hr>
+		<div class="container text-center">
+			<div class="row row-cols-auto">
+				<c:choose>
+					<c:when test="${ empty popularBook }">
+						<div class="col">게시물이 없습니다.</div>
+					</c:when>
+					<c:otherwise>
+						<c:forEach items="${ popularBook }" var="row" varStatus="loop">
+							<div class="col">
+								<div class="card" style="width: 18rem; margin: 0 auto 10px auto">
+									<img src="../Uploads/Book/${ row.sfile }" Style="height: 300px"
+										class="card-img-top" alt="..." id="mainMenu">
+									<div class="card-body">
+										<h5 class="card-title">${ row.title }</h5>
+										<a href="../Book/book.do?command=bookView&idx=${ row.bookNum }"
+											class="btn btn-primary">Go somewhere</a>
+									</div>
+								</div>
+							</div>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
 			</div>
 		</div>
-		<div class="maper-body-second">
-		인기글
-			<div class="grid-image">
-
+		<!-- 최신글 -->
+		<h3>최신글</h3>
+		<hr>
+		<div class="container text-center">
+			<div class="row row-cols-auto">
+				<c:choose>
+					<c:when test="${ empty searchBook }">
+						<div class="col">게시물이 없습니다.</div>
+					</c:when>
+					<c:otherwise>
+						<c:forEach items="${ searchBook }" var="row" varStatus="loop">
+							<div class="col">
+								<div class="card" style="width: 18rem; margin: 0 auto 10px auto">
+									<img src="../Uploads/Book/${ row.sfile }" Style="height: 300px"
+										class="card-img-top" alt="..." id="mainMenu">
+									<div class="card-body">
+										<h5 class="card-title">${ row.title }</h5>
+										<a href="../Book/bookView.do?idx=${ row.bookNum }"
+											class="btn btn-primary">Go somewhere</a>
+									</div>
+								</div>
+							</div>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
 			</div>
 		</div>
-		<div class="maper-body-second">최신책</div>
-		<div class="maper-body-second">공지사항</div>
+		<!-- 공지사항 -->
+		<h3>공지사항</h3>
+		<hr>
+		<table border="1">
+			<tr>
+				<th>제목</th>
+				<th>작성자</th>
+				<th>조회수</th>
+				<th>작성일</th>
+			</tr>
+			<c:choose>
+				<c:when test="${ empty mainNoticeList }">
+					<tr>
+						<th colspan="7" align="center">게시물이 없습니다.</th>
+					</tr>
+				</c:when>
+				<c:otherwise>
+					<c:forEach items="${ mainNoticeList }" var="row" varStatus="loop">
+						<tr>
+							<td>${ row.title }</td>
+							<td>관리자</td>
+							<td>${ row.visitCount }</td>
+							<td>${ row.postDate }</td>
+						</tr>
+					</c:forEach>
+				</c:otherwise>
+			</c:choose>
+		</table>
 	</div>
 	<hr>
 	<!-- footer -->

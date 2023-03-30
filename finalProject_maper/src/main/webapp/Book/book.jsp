@@ -10,6 +10,12 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<p>
+		세션 :
+		<%=session.getAttribute("userId")%>
+		어플리케이션 :
+		<%=application.getAttribute("userId")%>
+	</p>
 	<!-- body -->
 	<div class="maper-body">
 		<div class="table maper-body" id="pageTitle">
@@ -30,7 +36,7 @@
 										alt="...">
 									<div class="card-body">
 										<h5 class="card-title">${ row.title }</h5>
-										<a href="../Book/bookView.do?idx=${ row.bookNum }"
+										<a href="../Book/book.do?command=bookView&idx=${ row.bookNum }"
 											class="btn btn-primary">Go somewhere</a>
 									</div>
 								</div>

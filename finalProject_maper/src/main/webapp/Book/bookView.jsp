@@ -23,7 +23,7 @@
 </p>
 
 <input type="button" onclick="location.href='../Page/pageWrite.do?idx=${ dto.bookNum }&title=${ dto.title }';" value="페이지 작성하기">
-<input type="button" onclick="location.href='../Book/bookEdit.do?idx=${ dto.bookNum }';" value="수정하기">
+<input type="button" onclick="location.href='../Book/book.do?command=bookEditView&idx=${ dto.bookNum }';" value="수정하기">
 <input type="submit" onclick="location.href='../Book/bookDelete.do';"value="삭제하기">
 <input type="button" onclick="location.href='../Book/bookList.do';" value="돌아가기">
 <input type="button" onclick="location.href='../Page/pageList.do?idx=${ dto.bookNum }';" value="페이지보기">

@@ -9,6 +9,12 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<p>
+		세션 :
+		<%=session.getAttribute("userId")%>
+		어플리케이션 :
+		<%=application.getAttribute("userId")%>
+	</p>
 	<!-- header -->
 	<div class="maper-header">
 		<div class="maper-header-font">
@@ -26,9 +32,8 @@
 			<h2>책 작성</h2>
 			<hr>
 		</div>
-		<form action="../Book/book.do?command=bookWrite" name="bookWriteFrm" method="post" enctype="multipart/form-data"
-		onsubmit="">
-		<input type="hidden" name="userId" value="green1234">
+		<form action="../Book/book.do?command=bookWrite" name="bookWriteFrm" method="post" enctype="multipart/form-data" onsubmit="">
+		<input type="hidden" name="userId" value="${ sessionScope.userId }">
 		<div class="bookWrite">
 			<div class="mapers-book-inputbar" style="padding-left: 20px;">
 				<label class="main-inputbar" for="title">제목</label>
