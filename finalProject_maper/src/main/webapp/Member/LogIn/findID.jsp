@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<%@ include file="../Common/link.jsp"%>
+<%@ include file="../../Common/link.jsp"%>
 <title>Login</title>
-<script type="text/javascript" src="../script/Member.js"></script>
+<script type="text/javascript" src="../../javascript/Resources/Member.js"></script>
 </head>
 <body class="maper-body-background">
 	<!-- header -->
@@ -16,7 +16,7 @@
 		</div>
 	</div>
 	<!-- body -->
-	<form action="../Member/FindId.do" method="post" name="frm">
+	<form action="FindId.do" method="post" name="frm">
 	<div class="maper-body">
 		<div class="maper-body-login">
 			<p class="maper-fontsize-1">Find ID</p>

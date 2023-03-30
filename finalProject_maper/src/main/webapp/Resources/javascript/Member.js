@@ -21,7 +21,8 @@ function idCheck() {
 		document.frm.userid.focus();
 		return;
 	}
-	var url = "../Member/IdCheck.do?userid=" + document.frm.userid.value;
+
+	var url = "IdCheck.do?userid=" + document.frm.userid.value;
 	window.open(url, "_blank_1", "toolbar=no, menubar=no, scrollbars=yes, resizable=no, width=450, height=200");
 }
 
@@ -31,7 +32,10 @@ function idok() {
 	self.close();
 }
 
+	
+
 function joinCheck() {
+	// 아이디
 	if (document.frm.userid.value.length == "") {
 		alert("아이디를 써주세요.");
 		frm.userid.focus();
@@ -42,23 +46,16 @@ function joinCheck() {
 		frm.userid.focus();
 		return false;
 	}
-	if (document.frm.password.value == "") {
-		alert("비밀번호를 써주세요.");
-		frm.password.focus();
-		return false;
-	}
 
-	if (document.frm.password.value.length < 8 || document.frm.password.value.length > 20) {
-		alert("비밀번호를 8~20자 이내로 입력해주세요.");
-		frm.password.focus();
-		return false;
-	}
+
+	//이메일
 	if (document.frm.email.value == "") {
 		alert("이메일을 입력해주세요.");
 		frm.email.focus();
 		return false;
 	}
-	
+
+	//생년월일
 	if (document.frm.year.value == "") {
 		alert("생년월일을 정확히 입력해주세요.");
 		frm.year.focus();
@@ -75,12 +72,34 @@ function joinCheck() {
 		return false;
 	}
 
+	//비밀번호
+	if (document.frm.password.value == "") {
+		alert("비밀번호를 써주세요.");
+		frm.password.focus();
+		return false;
+	}
+	if (document.frm.password.value == "") {
+		alert("비밀번호를 써주세요.");
+		frm.password.focus();
+		return false;
+	}
+	if (document.frm.password.value.length < 8 || document.frm.password.value.length > 20) {
+		alert("비밀번호를 8~20자 이내로 입력해주세요.");
+		frm.password.focus();
+		return false;
+	}
+	if (document.frm.password.value) {
+		alert("비밀번호를 써주세요.");
+		frm.password.focus();
+		return false;
+	}
 	if (document.frm.password.value != document.frm.confirmPassword.value) {
 		alert("암호가 일치하지 않습니다.");
 		frm.password.focus();
 		return false;
 	}
 
+	//중복체크
 	if (document.frm.reid.value.length == 0) {
 		alert("중복 체크를 하지 않았습니다.");
 		frm.userid.focus();

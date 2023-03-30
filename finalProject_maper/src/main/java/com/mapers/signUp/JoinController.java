@@ -10,8 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 //회원가입
-@WebServlet("/Member/join.do")
+@WebServlet("/Member/SignUp/Join.do")
 public class JoinController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -53,12 +54,14 @@ JoinMethod(request,response);
 
 		HttpSession session = request.getSession();
 		
+
+		
 		//가입 성공
 		if (result == 1) {
 			session.setAttribute("userid", mVo.getUserid());
 			request.setAttribute("licensekey", licensekey);
 			
-			RequestDispatcher dispatcher = request.getRequestDispatcher("../Member/successSignUp.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/Member/SignUp/successSignUp.jsp");
 			dispatcher.forward(request, response);
 			
 		} else {

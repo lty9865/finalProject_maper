@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>아이디 찾기 결과</title>
-    <script type="text/javascript" src="../script/Member.js"></script>
+    <script type="text/javascript" src="../../Resources/javascript/Member.js"></script>
 </head>
 <body>
     <h1>아이디 찾기 결과</h1>

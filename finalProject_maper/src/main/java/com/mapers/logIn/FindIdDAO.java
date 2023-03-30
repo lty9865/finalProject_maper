@@ -7,6 +7,8 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import com.mapers.signUp.MemberVO;
+
 public class FindIdDAO{
 
 	   private Connection conn = null;

@@ -5,9 +5,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<%@ include file="../Common/link.jsp"%>
+<%@ include file="../../Common/link.jsp"%>
 <title>SuccessSingUp</title>
-<script type="text/javascript" src="../script/Member.js"></script>
+<script type="text/javascript" src="../../Resources/javascript/Member.js"></script>
 </head>
 <body class="maper-body-background">
 <div class="maper-header mb-3">

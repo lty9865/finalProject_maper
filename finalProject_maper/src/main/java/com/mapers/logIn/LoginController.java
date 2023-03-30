@@ -9,14 +9,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.mapers.signUp.MemberDAO;
+import com.mapers.signUp.MemberVO;
 
-@WebServlet("/Member/login.do")
+
+@WebServlet("/Member/Login/Login.do")
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String url = "../Member/login.jsp";
+		String url = "/Member/Login/login.jsp";
 		HttpSession session = request.getSession();
 		if(session.getAttribute("useid") != null) {
 			url = "main.jsp";
@@ -28,7 +31,7 @@ public class LoginController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String url = "../Member/login.jsp";
+		String url = "/Member/Login/login.jsp";
 
 		String userid = request.getParameter("userid");
 		String password = request.getParameter("password");

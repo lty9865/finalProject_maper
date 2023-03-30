@@ -1,5 +1,4 @@
 package com.mapers.signUp;
-
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
@@ -9,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 //중복 아이디 체크
-@WebServlet("/Member/IdCheck.do")
+@WebServlet("/Member/SignUp/IdCheck.do")
 public class IdCheckController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -35,7 +34,9 @@ String userid = request.getParameter("userid");
 		request.setAttribute("userid", userid);
 		request.setAttribute("result", result);
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("../Member/IdCheck.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/Member/SignUp/IdCheck.jsp");
+
+		
 		dispatcher.forward(request, response);
 	}
 

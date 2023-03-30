@@ -5,9 +5,9 @@
 <head>
 <meta charset="UTF-8">
 <!-- 각종 링크 헤더 include -->
-<%@ include file="../Common/link.jsp"%>
+<%@ include file="../../Common/link.jsp"%>
 <title>Login</title>
-<script type="text/javascript" src="../script/Member.js"></script>
+<script type="text/javascript" src="../../Resources/javascript/Member.js"></script>
 </head>
 <body class="maper-body-background">
 	<!-- header -->
@@ -17,7 +17,7 @@
 		</div>
 	</div>
 	<!-- body -->
-	<form action="../Member/login.do" method="post" name="frm">
+	<form action="login.do" method="post" name="frm">
 		<div class="maper-body">
 			<div class="maper-body-login">
 				<p class="maper-fontsize-1">Login</p>

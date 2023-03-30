@@ -1,50 +1,44 @@
 package com.mapers.signUp;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-	public class MemberDAO {
+import com.mapers.common.DataSourceManager;
 
-		   private Connection conn = null;
-		   private PreparedStatement pstmt = null;
-		   private ResultSet rs = null;
+public class MemberDAO {
+	private Connection conn = null;
+	private PreparedStatement pstmt = null;
+	private ResultSet rs = null;
 
-		  public MemberDAO() {
-		   }
-
-		   private static MemberDAO instance = new MemberDAO();
-
-		   public static MemberDAO getInstance() {
-		      return instance;
-		   }
-
-		   public Connection getConnection() throws Exception {
-		      Context initContext = new InitialContext();
-		      Context envContext = (Context) initContext.lookup("java:/comp/env");
-		      DataSource ds = (DataSource) envContext.lookup("jdbc/myoracle");
-		      conn = ds.getConnection();
-		      return conn;
-		   }
-		   
-		   // 자원 반납
-		   public void close() {
-		      try {
-		         if (rs != null)
-		            rs.close();
-		         if (pstmt != null) 
-		            pstmt.close();
-		         if (conn != null)
-		            conn.close();
-		      
-		      } catch (Exception e) {
-		         e.printStackTrace();
-		      }
-		   }
+	// singleton pattern
+	private static MemberDAO instance = new MemberDAO();
+	private DataSource dataSource;
+	
+	private MemberDAO() {
+		dataSource = DataSourceManager.getInstance().getDataSource();
+	}
+	
+	public static MemberDAO getInstance() {
+		return instance;
+	}
+	
+	// Connection을 dbcp에 반납
+	public void closeAll() {
+		
+		try {
+			
+			if(rs != null) rs.close();
+			if(pstmt !=null) pstmt.close();
+			if(conn !=null) conn.close();
+			
+			System.out.println("DB Connection Pool Resource Dismissed!");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 		   
 		   // 회원가입
 		   public int join(MemberVO mVo) { 
@@ -55,7 +49,7 @@ import javax.sql.DataSource;
 			   
 			   try {
 				   
-				   conn = getConnection();
+				   conn = dataSource.getConnection();
 				   
 				   pstmt = conn.prepareStatement(query);
 				   pstmt.setString(1, mVo.getUserid());
@@ -86,7 +80,8 @@ import javax.sql.DataSource;
 				String sql = "select userid from ACCOUNT where userid=?";
 
 				try {
-					conn = getConnection();
+					conn = dataSource.getConnection();
+					
 					pstmt = conn.prepareStatement(sql);
 					pstmt.setString(1, userid);
 					rs = pstmt.executeQuery();
@@ -117,7 +112,7 @@ import javax.sql.DataSource;
 			
 
 				try {
-					conn = getConnection();
+					conn = dataSource.getConnection();
 					
 					pstmt = conn.prepareStatement(sql);
 					pstmt.setString(1, userid);
@@ -153,7 +148,7 @@ import javax.sql.DataSource;
 				String sql = "select * from ACCOUNT where userid=?";
 
 				try {
-					conn = getConnection();
+					conn = dataSource.getConnection();
 					
 					pstmt = conn.prepareStatement(sql);
 					pstmt.setString(1, userid);

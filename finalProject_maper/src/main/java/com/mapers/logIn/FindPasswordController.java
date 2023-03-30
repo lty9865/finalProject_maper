@@ -9,8 +9,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.mapers.signUp.MemberVO;
 //비밀번호 찾기 controller
-@WebServlet("/Member/FindPassword.do")
+@WebServlet("/Member/Login/FindPassword.do")
 public class FindPasswordController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -41,7 +43,7 @@ public class FindPasswordController extends HttpServlet {
 		
 		System.out.println(password);
 		
-		RequestDispatcher rd = request.getRequestDispatcher("../Member/FindPasswordResult.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/Member/Login/FindPasswordResult.jsp");
 		rd.forward(request, response);
 	}
 

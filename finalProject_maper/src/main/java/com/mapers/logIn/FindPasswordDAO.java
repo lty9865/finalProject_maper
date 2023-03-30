@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
+
+import com.mapers.signUp.MemberVO;
 //비밀번호 찾기
 public class FindPasswordDAO{
 

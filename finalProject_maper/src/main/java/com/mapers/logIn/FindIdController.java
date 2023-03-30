@@ -8,8 +8,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.mapers.signUp.MemberVO;
 //아이디 찾기 controller
-@WebServlet("/Member/FindId.do")
+@WebServlet("/Member/Login/FindId.do")
 public class FindIdController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -36,7 +38,7 @@ public class FindIdController extends HttpServlet {
 		
 		request.setAttribute("userid", userid);
 		
-		RequestDispatcher rd = request.getRequestDispatcher("../Member/FindIdResult.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/Member/Login/FindIdResult.jsp");
 		rd.forward(request, response);
 	}
 
