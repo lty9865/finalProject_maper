@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ include file="/Common/link.jsp"%>
+<%@ include file="../Common/link.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,17 +8,10 @@
 <title>Insert title here</title>
 </head>
 <body>
+
 	<!-- header -->
-	<div class="maper-header">
-		<div class="maper-header-font">
-			<div class="left">
-				<a class="maper-header-font-1" href="login.jsp">MAPER</a>
-			</div>
-			<div class="right maper-header-font-2" align="right">
-				<button type="button" class="btn btn-outline-primary" id="login">로그인</button>
-			</div>
-		</div>
-	</div>
+	<%@ include file="../Common/header.jsp"%>
+	
 	<!-- body -->
 	<div class="maper-body">
 		<div class="table maper-body" id="pageTitle">
@@ -62,7 +54,7 @@
 				<td>${ map.pagingImg }</td>
 			</tr>
 		</table>
-		<input type="button" onclick="../Book/bookwrite.do">
+		<input type="button" onclick="location.href='../Book/book.do?command=bookView&idx=${ param.idx }';" value="돌아가기">
 	</div>
 </body>
 </html>

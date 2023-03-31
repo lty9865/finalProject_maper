@@ -1,4 +1,4 @@
-package com.mapers.page;
+package com.mapers.page.model;
 
 public class PageDTO {
 	private int pageNum;

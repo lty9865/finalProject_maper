@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ include file="/Common/link.jsp"%>
-<%@ include file="../Common/header.jsp" %>
+<%@ include file="../Common/link.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,6 +14,10 @@
 		어플리케이션 :
 		<%=application.getAttribute("userId")%>
 	</p>
+
+	<!-- header -->
+	<%@ include file="../Common/header.jsp"%>
+
 	<!-- body -->
 	<div class="maper-body">
 		<div class="table maper-body" id="pageTitle">
@@ -36,7 +38,8 @@
 										alt="...">
 									<div class="card-body">
 										<h5 class="card-title">${ row.title }</h5>
-										<a href="../Book/book.do?command=bookView&idx=${ row.bookNum }"
+										<a
+											href="../Book/book.do?command=bookView&idx=${ row.bookNum }"
 											class="btn btn-primary">Go somewhere</a>
 									</div>
 								</div>
@@ -51,7 +54,9 @@
 				<td>${ map.pagingImg }</td>
 			</tr>
 		</table>
-		<input type="button" class="btn btn-primary" onclick="location.href='../Book/book.do?command=bookWriteView';" value="책작성하기">
+		<input type="button" class="btn btn-primary"
+			onclick="location.href='../Book/book.do?command=bookWriteView';"
+			value="책작성하기">
 	</div>
 </body>
 </html>

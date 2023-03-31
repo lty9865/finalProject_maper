@@ -1,39 +1,34 @@
 package com.mapers.book.service;
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.mapers.book.model.BookDAO;
 import com.mapers.book.model.BookDTO;
+import com.mapers.common.Controller;
 import com.mapers.util.FileUtil;
 
-@WebServlet("/Book/bookDelete.do")
-public class BookDeleteController extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+public class BookDeleteController implements Controller {
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String idx = req.getParameter("idx");
-		String mode = req.getParameter("mode");
+	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		System.out.println("북 딜리트 컨트롤러 호출");
 		
-		BookDAO dao = BookDAO.getInstance();
-		
-		if(mode.equals("delete")) {
-			BookDTO dto = dao.selectBook(idx);
-			int result = dao.deleteBook(idx);
-			dao.close();
-			if(result==1) {
-				String saveFileName = dto.getSfile();
-				FileUtil.deleteFile(req, "/Uploads/Book", saveFileName);
-			}
-			System.out.println("북 삭제 성공");
-		}
-	}
+		String idx = request.getParameter("idx");
 
-	
+		BookDAO dao = BookDAO.getInstance();
+
+		BookDTO dto = dao.selectBook(idx);
+		System.out.println("셀렉트 북 성공");
+		int result = dao.deleteBook(idx);
+		dao.close();
+		if (result == 1) {
+			String saveFileName = dto.getSfile();
+			FileUtil.deleteFile(request, "/Uploads/Book", saveFileName);
+		}
+		System.out.println("북 삭제 성공");
+
+		request.setAttribute("url", "/Book/book.do?command=bookList");
+		return "redirect:../Book/book.do?command=bookList";
+	}
 }

@@ -7,30 +7,26 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
 import javax.sql.DataSource;
+
+import com.mapers.common.DataSourceManager;
+import com.mapers.page.model.PageDAO;
 
 public class BookDAO {
 	private Connection conn = null;
 	private PreparedStatement pstmt = null;
 	private ResultSet rs = null;
 
-	private BookDAO() {
-	}
-
+	// singleton pattern
 	private static BookDAO instance = new BookDAO();
+	private DataSource dataSource;
+
+	private BookDAO() {
+		dataSource = DataSourceManager.getInstance().getDataSource();
+	}
 
 	public static BookDAO getInstance() {
 		return instance;
-	}
-
-	public Connection getConnection() throws Exception {
-		Context initContext = new InitialContext();
-		Context envContext = (Context) initContext.lookup("java:/comp/env");
-		DataSource ds = (DataSource) envContext.lookup("jdbc/myoracle");
-		conn = ds.getConnection();
-		return conn;
 	}
 
 	// 자원 반납
@@ -63,7 +59,7 @@ public class BookDAO {
 		}
 
 		try {
-			conn = getConnection();
+			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(query);
 			rs = pstmt.executeQuery();
 			rs.next();
@@ -93,7 +89,7 @@ public class BookDAO {
 		query += "   ORDER BY BOOKNUM DESC" + "  ) Tb " + " ) " + " WHERE rNum BETWEEN ? AND ?";
 
 		try {
-			conn = getConnection();
+			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, map.get("start").toString());
 			pstmt.setString(2, map.get("end").toString());
@@ -104,7 +100,9 @@ public class BookDAO {
 
 				dto.setBookNum(rs.getInt("BOOKNUM"));
 				dto.setUserId(rs.getString("USERID"));
-				dto.setPlace(rs.getString("PLACE"));
+				String[] place = rs.getString("PLACE").split("/");
+				dto.setCountry(place[0]);
+				dto.setCity(place[1]);
 				dto.setBookDate(rs.getString("BOOKDATE"));
 				dto.setTitle(rs.getString("TITLE"));
 				dto.setBlock(rs.getInt("BLOCKS"));
@@ -130,10 +128,10 @@ public class BookDAO {
 				+ "VALUES(C##MAPERS.BOOK_SEQ.NEXTVAL,?,?,?,?,?,?)";
 
 		try {
-			conn = getConnection();
+			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, dto.getUserId());
-			pstmt.setString(2, dto.getPlace());
+			pstmt.setString(2, dto.getCountry() + "/" + dto.getCity());
 			pstmt.setString(3, dto.getBookDate());
 			pstmt.setString(4, dto.getTitle());
 			pstmt.setString(5, dto.getSfile());
@@ -152,7 +150,7 @@ public class BookDAO {
 		BookDTO dto = new BookDTO();
 		String query = "SELECT * FROM BOOK WHERE BOOKNUM=?";
 		try {
-			conn = getConnection();
+			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, idx);
 			rs = pstmt.executeQuery();
@@ -160,7 +158,9 @@ public class BookDAO {
 			if (rs.next()) {
 				dto.setBookNum(rs.getInt("BOOKNUM"));
 				dto.setUserId(rs.getString("USERID"));
-				dto.setPlace(rs.getString("PLACE"));
+				String[] place = rs.getString("PLACE").split("/");
+				dto.setCountry(place[0]);
+				dto.setCity(place[1]);
 				dto.setBookDate(rs.getString("BOOKDATE"));
 				dto.setTitle(rs.getString("TITLE"));
 				dto.setBlock(rs.getInt("BLOCKS"));
@@ -178,11 +178,34 @@ public class BookDAO {
 		return dto;
 	}
 
+	public int updateBook(BookDTO dto) {
+		int result = 0;
+		try {
+			String query = "UPDATE BOOK SET TITLE=?, PLACE=?, BOOKDATE=?, OFILE=?, SFILE=? WHERE BOOKNUM=?";
+
+			conn = dataSource.getConnection();
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, dto.getTitle());
+			pstmt.setString(2, (dto.getCountry() + "/" + dto.getCity()));
+			pstmt.setString(3, dto.getBookDate());
+			pstmt.setString(4, dto.getOfile());
+			pstmt.setString(5, dto.getSfile());
+			pstmt.setInt(6, dto.getBookNum());
+
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("북 수정 중 예외 발생");
+		}
+
+		return result;
+	}
+
 	public void updateBookVisitCount(String idx) {
 		String query = "UPDATE BOOK SET " + " VISITCOUNT = VISITCOUNT+1 " + " WHERE BOOKNUM=?";
 
 		try {
-			conn = getConnection();
+			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, idx);
 			pstmt.executeQuery();
@@ -195,9 +218,15 @@ public class BookDAO {
 	// 북리스트 삭제
 	public int deleteBook(String idx) {
 		int result = 0;
+		PageDAO pageDao = PageDAO.getInstance();
+		int deleteAllPage = pageDao.deleteAllPage(idx);
+		if (deleteAllPage >= 1) {
+			System.out.println("북 삭제 전 페이지 삭제 성공");
+			pageDao.close();
+		}
 		String query = "DELETE FROM BOOK WHERE BOOKNUM=?";
 		try {
-			conn = getConnection();
+			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, idx);
 			result = pstmt.executeUpdate();
@@ -205,6 +234,7 @@ public class BookDAO {
 			e.printStackTrace();
 			System.out.println("북 삭제 중 예외 발생");
 		}
+
 		return result;
 	}
 
@@ -214,7 +244,7 @@ public class BookDAO {
 			String query = "UPDATE BOOK SET RATE=(SELECT AVG(RATE) FROM PAGE WHERE BOOKNUM=" + bookNum
 					+ ") WHERE BOOKNUM=" + bookNum;
 
-			conn = getConnection();
+			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(query);
 			pstmt.executeQuery();
 		} catch (Exception e) {

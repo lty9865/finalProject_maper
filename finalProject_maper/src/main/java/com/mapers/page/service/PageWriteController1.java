@@ -1,40 +1,31 @@
-package com.mapers.page;
+package com.mapers.page.service;
 
 import java.io.File;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.mapers.common.Controller;
+import com.mapers.page.model.PageDAO;
+import com.mapers.page.model.PageDTO;
 import com.mapers.util.FileUtil;
 import com.oreilly.servlet.MultipartRequest;
 
-@WebServlet("/Page/pageWrite.do")
-public class PageWriteController extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+public class PageWriteController1 implements Controller {
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.getRequestDispatcher("/Page/pageWrite.jsp").forward(req, resp);
-	}
+	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String saveDirectory = request.getServletContext().getRealPath("/Uploads/Page");
 
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String saveDirectory = req.getServletContext().getRealPath("/Uploads/Page");
-
-		ServletContext application = getServletContext();
+		ServletContext application = request.getSession().getServletContext();
 		int maxPostSize = Integer.parseInt(application.getInitParameter("maxPostSize"));
 
-		MultipartRequest mr = FileUtil.uploadFile(req, saveDirectory, maxPostSize);
+		MultipartRequest mr = FileUtil.uploadFile(request, saveDirectory, maxPostSize);
 		if (mr == null) {
 			System.out.println("페이지 파일 업로드 실패");
-			return;
 		}
 
 		PageDTO dto = new PageDTO();
@@ -60,14 +51,17 @@ public class PageWriteController extends HttpServlet {
 		PageDAO dao = PageDAO.getInstance();
 		int result = dao.insertPage(dto);
 		dao.close();
-		
-		if(result == 1) {
-			resp.sendRedirect("../Page/pageList.do");
-		}else {
-			System.out.println("페이지 글 작성 실패");
-			resp.sendRedirect("../Page/pageWrite.do");
-		}
 
+		int idx = dto.getBookNum();
+		if (result == 1) {
+			response.sendRedirect("../Page/pageList.do?idx=" + idx);
+			request.setAttribute("url", "/Page/page.do?command=pageList");
+			return "redirect:../Page/page.do?command=pageList";
+		} else {
+			System.out.println("페이지 글 작성 실패");
+			request.setAttribute("url", "/Page/page.do?command=pageWrite");
+			return "redirect:../Page/page.do?command=pageWrite";
+		}
 	}
 
 }

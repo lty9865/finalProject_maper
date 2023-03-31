@@ -19,4 +19,10 @@
 	<param-name>PAGES_PER_BLOCK</param-name>
 	<param-value>5</param-value>
 </context-param>
+
+<!-- 파일 용량 제한 -->
+<context-param>
+	<param-name>maxPostSize</param-name>
+	<param-value>10240000</param-value>
+</context-param>
 </web-app>

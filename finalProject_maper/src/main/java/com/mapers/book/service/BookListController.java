@@ -14,7 +14,7 @@ import com.mapers.book.model.BookDTO;
 import com.mapers.common.Controller;
 import com.mapers.util.ListPage;
 
-public class BookListController1 implements Controller {
+public class BookListController implements Controller {
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {

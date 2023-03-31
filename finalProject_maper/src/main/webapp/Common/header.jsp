@@ -7,8 +7,7 @@
 	<div class="maper-header">
 		<div class="maper-header-font">
 			<div class="left">
-				<a class="maper-header-font-1"
-					href="../Webmain/mainPage.do?command=main">MAPER</a>
+				<a class="maper-header-font-1" href="../Webmain/mainPage.do?command=main">MAPER</a>
 			</div>
 			<c:choose>
 				<c:when test="${ empty sessionScope.userId }">
@@ -24,7 +23,7 @@
 								class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
 								href="#" role="button" aria-expanded="false">${ sessionScope.userId }</a>
 								<ul class="dropdown-menu">
-									<li><a class="dropdown-item" href="#">마이페이지</a></li>
+									<li><a class="dropdown-item" href="${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyProfile">마이페이지</a></li>
 									<li><a class="dropdown-item"
 										href="../Book/book.do?command=bookList">내 책장</a></li>
 									<li><hr class="dropdown-divider"></li>

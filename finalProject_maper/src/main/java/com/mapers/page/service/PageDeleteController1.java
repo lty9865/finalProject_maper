@@ -1,11 +1,11 @@
-package com.mapers.book.service;
+package com.mapers.page.service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.mapers.common.Controller;
 
-public class BookDeleteController1 implements Controller {
+public class PageDeleteController1 implements Controller {
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
