@@ -1,4 +1,4 @@
-package com.mapers.logIn;
+package com.mapers.login;
 
 import java.io.IOException;
 
@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.mapers.signUp.MemberVO;
+import com.mapers.SignUp.MemberVO;
 //아이디 찾기 controller
 @WebServlet("/Member/Login/FindId.do")
 public class FindIdController extends HttpServlet {
@@ -35,11 +35,22 @@ public class FindIdController extends HttpServlet {
 		mVo.setLicenseKey(licensekey);
 		
 		String userid = fdao.FindId(mVo);
+		System.out.print(userid);
+		
+		if(userid != null) {
 		
 		request.setAttribute("userid", userid);
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/Member/Login/FindIdResult.jsp");
 		rd.forward(request, response);
+		}
+		else if(userid == null) {
+			request.setAttribute("errMsg", "라이센스 키를 다시 확인해주세요.");
+			
+			RequestDispatcher rd = request.getRequestDispatcher("/Member/Login/FindIdResult.jsp");
+			rd.forward(request, response);
+			
+		}
 	}
 
 }

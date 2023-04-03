@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<%@ include file="../../Common/link.jsp"%>
+<%@ include file="/Common/link.jsp"%>
 <title>Login</title>
 <script type="text/javascript" src="../../javascript/Resources/Member.js"></script>
 </head>
@@ -44,5 +44,7 @@
 		</div>
 	</div>
 	</form>
+	
+
 </body>
 </html>
