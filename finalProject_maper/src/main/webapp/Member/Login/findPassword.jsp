@@ -4,8 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<!-- 각종 링크 헤더 include -->
-<%@ include file="../../Common/link.jsp"%>
+<%@ include file="/Common/link.jsp"%>
 <title>Login</title>
 <script type="text/javascript" src="../../Resources/javascript/Member.js"></script>
 </head>
@@ -17,36 +16,38 @@
 		</div>
 	</div>
 	<!-- body -->
-	<form action="login.do" method="post" name="frm">
+	<form action="FindPassword.do" method="post" name="frm">
 		<div class="maper-body">
 			<div class="maper-body-login">
-				<p class="maper-fontsize-1">Login</p>
+				<p class="maper-fontsize-1">find PASSWORD</p>
 				<div class="maper-login-rounded">
+
+					<!-- username -->
 					<div class="maper-login-inputsize">
 						<div class="form-floating mb-3">
-							<input type="text" class="form-control" name="userid" value="${userid }"
-								placeholder="Enter UserName"> <label for="floatingInput">UserName</label>
+							<input type="text" class="form-control" id="userid" name="userid"
+								placeholder="userid"> <label
+								for="userid">userId </label>
 						</div>
+
+						<!-- LicenseKey -->
 						<div class="form-floating">
-							<input type="password" class="form-control" name="password"
-								placeholder="Password"> <label for="floatingPassword">Password</label>
+							<input type="text" class="form-control" name="licensekey" id="licensekey"
+								placeholder="licensekey"> <label
+								for="licensekey">licensekey</label>
 						</div>
+
+						<!-- button -->
 						<div class="maper-login-buttonLocation">
 							<div class="d-grid gap-2 col-6 mx-auto">
-								<button type="submit" class="btn btn-primary" type="button" onclick="return loginCheck()">Log
-									in</button>
+								<button type="submit" class="btn btn-primary" type="button" onclick="">ok</button>
 							</div>
-						</div>
-						<div class="maper-login-labels">
-							<a href="Join.jsp">회원가입</a>&nbsp;&nbsp;&nbsp; <a
-								href="findID.jsp">아이디찾기</a>&nbsp;&nbsp;&nbsp; <a
-								href="findPassword.jsp">패스워드찾기</a>
 						</div>
 					</div>
 				</div>
 				<div style="margin: 15px auto; width: 80%;" align="center">
 					<p>
-						<b>MAPER</b> 와 함께 추억을 공유해보세요
+						<b>MAPER</b> 함께 추억을 공유해보세요.
 					</p>
 				</div>
 			</div>

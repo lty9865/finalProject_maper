@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<%@ include file="../../Common/link.jsp"%>
+<%@ include file="/Common/link.jsp"%>
 <title>SuccessSingUp</title>
 <script type="text/javascript" src="../../Resources/javascript/Member.js"></script>
 </head>

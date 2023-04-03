@@ -1,4 +1,4 @@
-package com.mapers.signUp;
+package com.mapers.SignUp;
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
@@ -7,6 +7,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.mapers.SignUp.MemberDAO;
+import com.mapers.SignUp.MemberVO;
 //중복 아이디 체크
 @WebServlet("/Member/SignUp/IdCheck.do")
 public class IdCheckController extends HttpServlet {

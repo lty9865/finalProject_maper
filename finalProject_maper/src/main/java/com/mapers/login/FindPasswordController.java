@@ -1,4 +1,4 @@
-package com.mapers.logIn;
+package com.mapers.login;
 
 
 import java.io.IOException;
@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.mapers.signUp.MemberVO;
+import com.mapers.SignUp.MemberVO;
 //비밀번호 찾기 controller
 @WebServlet("/Member/Login/FindPassword.do")
 public class FindPasswordController extends HttpServlet {

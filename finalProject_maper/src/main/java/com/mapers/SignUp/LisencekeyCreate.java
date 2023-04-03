@@ -1,4 +1,4 @@
-package com.mapers.signUp;
+package com.mapers.SignUp;
 
 import java.util.UUID;
 

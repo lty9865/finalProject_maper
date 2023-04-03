@@ -1,11 +1,16 @@
-package com.mapers.signUp;
+package com.mapers.SignUp;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import com.mapers.SignUp.JoinController;
 import com.mapers.common.DataSourceManager;
+import com.mapers.myPage.Profile.model.ProfileDAO;
 
 public class MemberDAO {
 	private Connection conn = null;
@@ -117,14 +122,21 @@ public class MemberDAO {
 					pstmt = conn.prepareStatement(sql);
 					pstmt.setString(1, userid);
 					rs = pstmt.executeQuery();
+					
 					if (rs.next()) {
 						if (rs.getString("password") != null && rs.getString("password").equals(password)) {
 							result = 1;
+							
+							System.out.println("로그인 성공");
 						} else {
 							result = 0;
+						
+							System.out.println("아이디 및 비밀번호가 틀립니다.");
 						}
 					} else {
 						result = -1;
+						
+						System.out.println("없는 아이디입니다.");
 					}
 				} catch (Exception e) {
 					e.printStackTrace();

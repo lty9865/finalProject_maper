@@ -1,4 +1,4 @@
-package com.mapers.signUp;
+package com.mapers.SignUp;
 
 
 import java.io.IOException;
@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.mapers.SignUp.MemberVO;
+import com.mapers.SignUp.MemberDAO;
 
 //회원가입
 @WebServlet("/Member/SignUp/Join.do")
