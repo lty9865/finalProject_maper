@@ -1,13 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!-- 각종 링크 헤더 include -->
 <%@ include file="../Common/link.jsp"%>
+<%@ include file="../Common/header.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <title>MAPER</title>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-<script type="text/javascript" src="/Common/LoginConfirmed.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/Common/LoginConfirmed.js">
+</script>
 </head>
 <body>
 	<p>
@@ -16,20 +23,17 @@
 		어플리케이션 :
 		<%=application.getAttribute("userId")%>
 	</p>
-
-	<!-- header -->
-	<%@ include file="/Common/header.jsp"%>
-
 	<!-- body -->
 	<div class="maper-body">
 		<div align="center" class="mapers-main-inputbar">
-			<form action="../Book/bookList.do">
-				<select class="main-inputbar" style="width: 10%;" name="searchField">
-					<option value="title">제목</option>
-					<option value="place">장소</option>
-				</select> <input class="main-inputbar" style="width: 85%;" type="text"
-					name="searchWord" /> <input type="submit" value="검색" />
-			</form>
+		<form action="../Book/bookList.do">
+			<select class="main-inputbar" style="width: 10%;" name="searchField">
+				<option value="title">제목</option>
+				<option value="place">장소</option>
+			</select>
+			<input class="main-inputbar" style="width: 85%;" type="text" name="searchWord" />
+			<input type="submit" value="검색"/>
+		</form>
 		</div>
 		<div style="width: 55%; margin: auto;">
 			<p>추천 검색어 : a b c d</p>
@@ -115,8 +119,7 @@
 										class="card-img-top" alt="..." id="mainMenu">
 									<div class="card-body">
 										<h5 class="card-title">${ row.title }</h5>
-										<a
-											href="../Book/book.do?command=bookView&idx=${ row.bookNum }"
+										<a href="../Book/book.do?command=bookView&idx=${ row.bookNum }"
 											class="btn btn-primary">Go somewhere</a>
 									</div>
 								</div>

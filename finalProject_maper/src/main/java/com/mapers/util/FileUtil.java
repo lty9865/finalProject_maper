@@ -9,22 +9,22 @@ import com.oreilly.servlet.MultipartRequest;
 public class FileUtil {
 	
 	public static MultipartRequest uploadFile(HttpServletRequest req, String saveDirectory, int maxPostSize) {
-		// í´ë”ê°€ ì—†ë‹¤ë©´ ìƒì„±
+		// Æú´õ°¡ ¾ø´Ù¸é »ı¼º
 		try {
 			File folder = new File(saveDirectory);
 			if(!folder.exists()) {
 				try {
 					folder.mkdirs();
-					System.out.println("í´ë” ìƒì„± ì™„ë£Œ");
+					System.out.println("Æú´õ »ı¼º ¿Ï·á");
 				}catch(Exception e) {
 					e.printStackTrace();
-					System.out.println("í´ë” ìƒì„± ë„ì¤‘ ì˜ˆì™¸ ë°œìƒ");
+					System.out.println("Æú´õ »ı¼º µµÁß ¿¹¿Ü ¹ß»ı");
 				}
 			}
 			return new MultipartRequest(req, saveDirectory, maxPostSize, "UTF-8");
 		}catch(Exception e) {
 			e.printStackTrace();
-			System.out.println("íŒŒì¼ ì—…ë¡œë“œ ì¤‘ ì˜ˆì™¸ ë°œìƒ");
+			System.out.println("ÆÄÀÏ ¾÷·Îµå Áß ¿¹¿Ü ¹ß»ı");
 			return null;
 		}
 	}

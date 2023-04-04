@@ -1,9 +1,9 @@
 package com.mapers.book.controller;
 
-import com.mapers.book.service.BookDeleteController;
-import com.mapers.book.service.BookEditController;
+import com.mapers.book.service.BookDeleteController1;
+import com.mapers.book.service.BookEditController1;
 import com.mapers.book.service.BookEditViewController;
-import com.mapers.book.service.BookListController;
+import com.mapers.book.service.BookListController1;
 import com.mapers.book.service.BookViewController1;
 import com.mapers.book.service.BookWriteController1;
 import com.mapers.book.service.BookWriteViewController;
@@ -26,7 +26,7 @@ public class HandlerMapping {
 
 		if (command.contentEquals("bookList"))
 			// 게시물 리스트(command=home)
-			controller = new BookListController();
+			controller = new BookListController1();
 		else if (command.contentEquals("bookWriteView"))
 			controller = new BookWriteViewController();
 		else if (command.contentEquals("bookWrite"))
@@ -36,9 +36,9 @@ public class HandlerMapping {
 		else if (command.contentEquals("bookEditView"))
 			controller = new BookEditViewController();
 		else if (command.contentEquals("bookEdit"))
-			controller = new BookEditController();
+			controller = new BookEditController1();
 		else if (command.contentEquals("bookDelete"))
-			controller = new BookDeleteController();
+			controller = new BookDeleteController1();
 
 		return controller;
 	}

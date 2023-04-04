@@ -1,4 +1,4 @@
-package com.mapers.page.service;
+package com.mapers.page;
 
 import java.io.IOException;
 
@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.mapers.page.model.PageDAO;
-import com.mapers.page.model.PageDTO;
 import com.mapers.util.FileUtil;
 
 @WebServlet("/Page/pageDelete.do")

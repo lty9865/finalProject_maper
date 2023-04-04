@@ -40,9 +40,12 @@ public class BookWriteController1 implements Controller {
 		BookDTO dto = new BookDTO();
 		dto.setUserId(mr.getParameter("userId"));
 		dto.setTitle(mr.getParameter("title"));
-		dto.setCountry(mr.getParameter("country"));
-		dto.setCity(mr.getParameter("city"));
+		dto.setPlace(mr.getParameter("country") + "/" + mr.getParameter("city"));
 		dto.setBookDate(mr.getParameter("bookDate"));
+		System.out.println(dto.getUserId());
+		System.out.println(dto.getTitle());
+		System.out.println(dto.getPlace());
+		System.out.println(dto.getBookDate());
 
 		// 원본 파일명과 저장된 파일 이름 설정
 		String fileName = mr.getFilesystemName("ofile");

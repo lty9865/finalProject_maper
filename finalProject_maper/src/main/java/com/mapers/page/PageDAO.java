@@ -1,4 +1,4 @@
-package com.mapers.page.model;
+package com.mapers.page;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,25 +7,30 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.sql.DataSource;
-
-import com.mapers.common.DataSourceManager;
 
 public class PageDAO {
 	private Connection conn = null;
 	private PreparedStatement pstmt = null;
 	private ResultSet rs = null;
 
-	// singleton pattern
-	private static PageDAO instance = new PageDAO();
-	private DataSource dataSource;
-
 	private PageDAO() {
-		dataSource = DataSourceManager.getInstance().getDataSource();
 	}
+
+	private static PageDAO instance = new PageDAO();
 
 	public static PageDAO getInstance() {
 		return instance;
+	}
+
+	public Connection getConnection() throws Exception {
+		Context initContext = new InitialContext();
+		Context envContext = (Context) initContext.lookup("java:/comp/env");
+		DataSource ds = (DataSource) envContext.lookup("jdbc/myoracle");
+		conn = ds.getConnection();
+		return conn;
 	}
 
 	// 자원 반납
@@ -51,19 +56,18 @@ public class PageDAO {
 		if (map.get("searchWord") != null) {
 			query += " AND " + map.get("searchField") + " " + " LIKE '%" + map.get("searchWord") + "%'";
 		}
-
+		
 		try {
-			conn = dataSource.getConnection();
+			conn = getConnection();
 			pstmt = conn.prepareStatement(query);
 			rs = pstmt.executeQuery();
-			if (rs.next()) {
+			if(rs.next()) {
 				totalCount = rs.getInt(1);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("페이지 목록 조회 중 예외 발생");
 		}
-
 		return totalCount;
 	}
 
@@ -76,14 +80,14 @@ public class PageDAO {
 		if (map.get("searchWord") != null) {
 			query += " WHERE " + map.get("searchField") + " LIKE '%" + map.get("searchWord") + "%' ";
 			query += " AND BOOKNUM=" + map.get("idx");
-		} else {
+		}else {
 			query += " WHERE BOOKNUM=" + map.get("idx");
 		}
 
 		query += "   ORDER BY PAGENUM DESC " + "  ) Tb " + " ) " + " WHERE rNUM BETWEEN ? AND ?";
 
 		try {
-			conn = dataSource.getConnection();
+			conn = getConnection();
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, map.get("start").toString());
 			pstmt.setString(2, map.get("end").toString());
@@ -107,7 +111,6 @@ public class PageDAO {
 			e.printStackTrace();
 			System.out.println("선택 게시물 조회 중 예외 발생");
 		}
-
 		return pageList;
 	}
 
@@ -117,7 +120,7 @@ public class PageDAO {
 		try {
 			String query = "INSERT INTO PAGE(PAGENUM,BOOKNUM,TITLE,CONTENT,RATE,SFILE,OFILE)"
 					+ " VALUES(C##MAPERS.PAGE_SEQ.NEXTVAL,?,?,?,?,?,?)";
-			conn = dataSource.getConnection();
+			conn = getConnection();
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, dto.getBookNum());
 			pstmt.setString(2, dto.getSubTitle());
@@ -126,13 +129,10 @@ public class PageDAO {
 			pstmt.setString(5, dto.getSfile());
 			pstmt.setString(6, dto.getOfile());
 			result = pstmt.executeUpdate();
-
-			updateRate(dto.getBookNum());
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("페이지 입력 중 예외 발생");
 		}
-
 		return result;
 	}
 
@@ -141,7 +141,7 @@ public class PageDAO {
 		PageDTO dto = new PageDTO();
 		String query = "SELECT * FROM PAGE WHERE PAGENUM=?";
 		try {
-			conn = dataSource.getConnection();
+			conn = getConnection();
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, idx);
 			rs = pstmt.executeQuery();
@@ -160,7 +160,6 @@ public class PageDAO {
 			e.printStackTrace();
 			System.out.println("페이지 게시물 조회 중 예외 발생");
 		}
-
 		return dto;
 	}
 
@@ -169,7 +168,7 @@ public class PageDAO {
 		int result = 0;
 		try {
 			String query = "DELETE FROM PAGE WHERE PAGENUM=?";
-			conn = dataSource.getConnection();
+			conn = getConnection();
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, idx);
 			result = pstmt.executeUpdate();
@@ -184,8 +183,8 @@ public class PageDAO {
 		int result = 0;
 		int totalCount = 0;
 		try {
-			String query = "SELECT COUNT(*) FROM PAGE WHERE BOOKNUM=?";
-			conn = dataSource.getConnection();
+			String query = "SELETE COUNT(*) FROM PAGE WHERE BOOKNUM=?";
+			conn = getConnection();
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, bookNum);
 			rs = pstmt.executeQuery();
@@ -205,17 +204,18 @@ public class PageDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		return result;
 	}
-
+	
 	// 지정한 페이지 게시물 수정 - 김연호
 	public int updatePage(PageDTO dto) {
-		int result = 0;
+		int result=0;
 		try {
-			String query = "UPDATE PAGE" + " SET title=?, content=?, rate=?, ofile=?, sfile=?" + " WHERE PAGENUM=?";
-
-			conn = dataSource.getConnection();
+			String query = "UPDATE PAGE"
+					+ " SET title=?, content=?, rate=?, ofile=?, sfile=?"
+					+ " WHERE PAGENUM=?";
+			
+			conn = getConnection();
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, dto.getSubTitle());
 			pstmt.setString(2, dto.getContent());
@@ -223,66 +223,12 @@ public class PageDAO {
 			pstmt.setString(4, dto.getOfile());
 			pstmt.setString(5, dto.getSfile());
 			pstmt.setInt(6, dto.getPageNum());
-
+			
 			result = pstmt.executeUpdate();
-
-			updateRate(dto.getBookNum());
-		} catch (Exception e) {
+		}catch(Exception e) {
 			e.printStackTrace();
 			System.out.println("페이지 게시물 수정 중 예외 발생");
 		}
-
-		return result;
-	}
-
-	// 페이지 출력 시 리스트 업 - 김연호
-	public List<PageDTO> pageViewList(String idx) {
-		List<PageDTO> pageList = new Vector<PageDTO>();
-		try {
-			String query = "SELECT * FROM PAGE WHERE BOOKNUM=? ORDER BY PAGENUM ASC";
-
-			conn = dataSource.getConnection();
-			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, idx);
-			rs = pstmt.executeQuery();
-			while (rs.next()) {
-				PageDTO dto = new PageDTO();
-
-				dto.setPageNum(rs.getInt("PAGENUM"));
-				dto.setBookNum(rs.getInt("BOOKNUM"));
-				dto.setSubTitle(rs.getString("TITLE"));
-				dto.setContent(rs.getString("CONTENT"));
-				dto.setPostDate(rs.getString("PAGEDATE"));
-				dto.setRate(rs.getInt("RATE"));
-				dto.setSfile(rs.getString("SFILE"));
-				dto.setOfile(rs.getString("OFILE"));
-
-				pageList.add(dto);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("페이지 책 출력 중 예외 발생");
-		}
-
-		return pageList;
-	}
-
-	// 북 만족도 업데이트 - 김연호
-	public int updateRate(int bookNum) {
-		int result = 0;
-		try {
-			String query = "UPDATE BOOK SET RATE=" + "(SELECT AVG(RATE) FROM PAGE WHERE BOOKNUM=?) WHERE BOOKNUM=?";
-
-			conn = dataSource.getConnection();
-			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, bookNum);
-			pstmt.setInt(2, bookNum);
-			result = pstmt.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("북 만족도 업데이트 중 예외 발생");
-		}
-
 		return result;
 	}
 

@@ -6,10 +6,11 @@ import java.sql.ResultSet;
 import java.util.List;
 import java.util.Vector;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import com.mapers.book.model.BookDTO;
-import com.mapers.common.DataSourceManager;
 import com.mapers.notice.model.NoticeDTO;
 
 public class MainPageDAO {
@@ -17,16 +18,21 @@ public class MainPageDAO {
 	private PreparedStatement pstmt = null;
 	private ResultSet rs = null;
 
-	// singleton pattern
-	private static MainPageDAO instance = new MainPageDAO();
-	private DataSource dataSource;
-
 	private MainPageDAO() {
-		dataSource = DataSourceManager.getInstance().getDataSource();
 	}
+
+	private static MainPageDAO instance = new MainPageDAO();
 
 	public static MainPageDAO getInstance() {
 		return instance;
+	}
+
+	public Connection getConnection() throws Exception {
+		Context initContext = new InitialContext();
+		Context envContext = (Context) initContext.lookup("java:/comp/env");
+		DataSource ds = (DataSource) envContext.lookup("jdbc/myoracle");
+		conn = ds.getConnection();
+		return conn;
 	}
 
 	// 자원 반납
@@ -49,7 +55,7 @@ public class MainPageDAO {
 		double result = 0.0;
 		try {
 			String query = "SELECT AVG(RATE) AS RATE , BOOKNUM FROM PAGE WHERE BOOKNUM=" + bookNum + "GROUP BY BOOKNUM";
-			Connection conn = dataSource.getConnection();
+			Connection conn = getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(query);
 			ResultSet rs = pstmt.executeQuery();
 			if (rs.next()) {
@@ -77,7 +83,7 @@ public class MainPageDAO {
 		String query = "SELECT * FROM ( " + " SELECT * FROM BOOK WHERE BLOCKS != 1 )" + " WHERE ROWNUM <= 5 ORDER BY "
 				+ div + " DESC, BOOKNUM DESC";
 		try {
-			conn = dataSource.getConnection();
+			conn = getConnection();
 			pstmt = conn.prepareStatement(query);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -85,9 +91,7 @@ public class MainPageDAO {
 				dto.setBookNum(rs.getInt("BOOKNUM"));
 				dto.setTitle(rs.getString("TITLE"));
 				dto.setUserId(rs.getString("USERID"));
-				String[] place = rs.getString("PLACE").split("/");
-				dto.setCountry(place[0]);
-				dto.setCity(place[1]);
+				dto.setPlace(rs.getString("PLACE"));
 				dto.setBookDate(rs.getString("BOOKDATE"));
 
 				// 만족도
@@ -114,7 +118,7 @@ public class MainPageDAO {
 		String query = "SELECT * FROM (SELECT * FROM NOTICE ORDER BY POSTDATE DESC) WHERE ROWNUM <= 5 ORDER BY NOTICENUM DESC";
 
 		try {
-			conn = dataSource.getConnection();
+			conn = getConnection();
 			pstmt = conn.prepareStatement(query);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {

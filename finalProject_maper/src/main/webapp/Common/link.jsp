@@ -1,15 +1,15 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <!-- Favicon-->
 <link rel="icon" type="image/x-icon"
-	href="../Resources/assets/favicon.ico" />
+	href="${pageContext.request.contextPath}/Resources/assets/favicon.ico" />
 <!-- Font Awesome icons (free version)-->
 <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js"
 	crossorigin="anonymous"></script>
-<script type="text/javascript" src="../Resources/javascript/notice.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/Common/commonFunction.js"></script>
 <!-- Google fonts-->
 <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700"
 	rel="stylesheet" type="text/css" />
@@ -22,8 +22,8 @@
 	rel="stylesheet"
 	integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
 	crossorigin="anonymous">
-<link rel="stylesheet" type="text/css" href="../Resources/css/style.css">
-<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/Resources/css/style.css">
 </head>
 <body>
 	<script

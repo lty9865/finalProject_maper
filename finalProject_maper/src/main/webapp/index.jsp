@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
-session.setAttribute("userId", "green1234");
+session.setAttribute("userId", "green123");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,7 +23,7 @@ session.setAttribute("userId", "green1234");
 		<%=application.getAttribute("userId")%>
 	</p>
 
-	<a href="Member/Login/Login.do">로그인 페이지로 가기</a>
+	<a href="Login/login.jsp">로그인 페이지로 가기</a>
 	<br>
 	<a href="Notice/notice.do" onclick="return LoginConfirmed()">공지사항
 		페이지로 가기</a>
