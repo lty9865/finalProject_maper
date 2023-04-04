@@ -1,55 +1,54 @@
 package com.mapers.book.service;
 
 import java.io.File;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.mapers.book.model.BookDAO;
 import com.mapers.book.model.BookDTO;
+import com.mapers.common.Controller;
 import com.mapers.util.FileUtil;
 import com.oreilly.servlet.MultipartRequest;
 
-@WebServlet("/Book/bookWrite.do")
-public class BookWriteController extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+public class BookEditController implements Controller {
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.getRequestDispatcher("/Book/bookWrite.jsp").forward(req, resp);
-	}
-
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// 1.파일업로드 처리
 		// 업로드 디렉터리의 물리적 경로 확인
-		String saveDirectory = req.getServletContext().getRealPath("/Uploads/Book");
+		String saveDirectory = request.getServletContext().getRealPath("/Uploads/Book");
 
 		// 초기화 매개 변수로 설정한 첨부 파일 최대 용량 확인
-		ServletContext application = getServletContext();
+		ServletContext application = request.getSession().getServletContext();
 		int maxPostSize = Integer.parseInt(application.getInitParameter("maxPostSize"));
 
 		// 파일 업로드
-		MultipartRequest mr = FileUtil.uploadFile(req, saveDirectory, maxPostSize);
+		MultipartRequest mr = FileUtil.uploadFile(request, saveDirectory, maxPostSize);
 		if (mr == null) {
 			// 실패
-			return;
+			System.out.println("파일 업로드 실패");
 		}
 
 		// 2.파일 업로드 외 처리
-		// 폼값을 DTO에 저장
+		// 수정 내용을 매개 변수에서 얻어옴
+		String idx = mr.getParameter("idx");
+		String title = mr.getParameter("title");
+		String country = mr.getParameter("country");
+		String city = mr.getParameter("city");
+		String bookDate = mr.getParameter("bookDate");
+		String prevOfile = mr.getParameter("prevOfile");
+		String prevSfile = mr.getParameter("prevSfile");
+
 		BookDTO dto = new BookDTO();
-		dto.setUserId(mr.getParameter("userId"));
-		dto.setTitle(mr.getParameter("title"));
-		dto.setPlace(mr.getParameter("country") + "/" + mr.getParameter("city"));
-		dto.setBookDate(mr.getParameter("bookDate"));
+		dto.setBookNum(Integer.parseInt(idx));
+		dto.setTitle(title);
+		dto.setCountry(country);
+		dto.setCity(city);
+		dto.setBookDate(bookDate);
 
 		// 원본 파일명과 저장된 파일 이름 설정
 		String fileName = mr.getFilesystemName("ofile");
@@ -66,18 +65,24 @@ public class BookWriteController extends HttpServlet {
 
 			dto.setOfile(fileName);
 			dto.setSfile(newFileName);
+
+			FileUtil.deleteFile(request, "/Uploads/Book", prevSfile);
+		}else {
+			dto.setOfile(prevOfile);
+			dto.setSfile(prevSfile);
 		}
 
 		BookDAO dao = BookDAO.getInstance();
-		int result = dao.insertBook(dto);
+		int result = dao.updateBook(dto);
 		dao.close();
 
 		if (result == 1) {
-			resp.sendRedirect("../Book/bookList.do");
+			request.setAttribute("url", "/Book/book.do?command=bookList");
+			return "redirect:../Book/book.do?command=bookList";
 		} else {
-			System.out.print("북 생성 컨트롤러 중 에러 발생");
-			resp.sendRedirect("../Book/bookWrite.do");
+			System.out.println("북 생성 컨트롤러 중 에러 발생");
+			request.setAttribute("url", "/Book/book.do?command=bookWrite");
+			return "redirect:../Book/book.do?command=bookWrite";
 		}
 	}
-
 }

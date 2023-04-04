@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ include file="/Common/link.jsp"%>
+<%@ include file="../Common/link.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,17 +8,26 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<p>
+		세션 :
+		<%=session.getAttribute("userId")%>
+		<br>
+		북넘버 :
+		<%=session.getAttribute("bookNum") %>
+		<br>
+		북제목 :
+		<%=session.getAttribute("title") %>
+		<br>
+		허용 :
+		<%=session.getAttribute("allow") %>
+		<br>
+		어플리케이션 :
+		<%=application.getAttribute("userId")%>
+	</p>
+
 	<!-- header -->
-	<div class="maper-header">
-		<div class="maper-header-font">
-			<div class="left">
-				<a class="maper-header-font-1" href="login.jsp">MAPER</a>
-			</div>
-			<div class="right maper-header-font-2" align="right">
-				<button type="button" class="btn btn-outline-primary" id="login">로그인</button>
-			</div>
-		</div>
-	</div>
+	<%@ include file="../Common/header.jsp"%>
+	
 	<!-- body -->
 	<div class="maper-body">
 		<div class="table maper-body" id="pageTitle">
@@ -29,7 +37,6 @@
 		<table border="1" style="width: 100%">
 			<tr>
 				<th scope="col">순서</th>
-				<th scope="col">번호</th>
 				<th scope="col">책번호</th>
 				<th scope="col">제목</th>
 				<th scope="col">일자</th>
@@ -45,13 +52,20 @@
 				<c:otherwise>
 					<c:forEach items="${ pageList }" var="row" varStatus="loop">
 						<tr>
-							<th scope="row">${ map.totalCount - (((map.pageNum-1)*map.pageSize)+loop.index) }</th>
+							<th scope="row">${ map.totalCount - (((map.pageNums-1)*map.pageSize)+loop.index) }</th>
 							<td>${ row.pageNum }</td>
-							<td>${ row.bookNum }</td>
 							<td>${ row.subTitle }</td>
 							<td>${ row.postDate }</td>
 							<td>${ row.rate }</td>
 							<td>${ row.sfile }</td>
+							<c:if test="${ sessionScope.allow eq 1 }">
+								<td>
+									<a href="../Page/page.do?command=pageEditView&idx=${ row.pageNum }">[ 수정 ]</a>
+								</td>
+								<td>
+									<a href="#" onclick="pageDelete(${row.pageNum})">[ 삭제 ]</a>
+								</td>
+							</c:if>
 						</tr>
 					</c:forEach>
 				</c:otherwise>
@@ -62,7 +76,11 @@
 				<td>${ map.pagingImg }</td>
 			</tr>
 		</table>
-		<input type="button" onclick="../Book/bookwrite.do">
+		<c:if test="${ sessionScope.allow eq 1 }">
+			<input type="button" onclick="location.href='../Page/page.do?command=pageWriteView';" value="페이지 작성하기">
+		</c:if>
+		<input type="button" onclick="location.href='../Book/book.do?command=bookView&idx=${ sessionScope.bookNum }';" value="돌아가기">
 	</div>
+		<script type="text/javascript" src="../Resources/javascript/pageScript.js"></script>
 </body>
 </html>

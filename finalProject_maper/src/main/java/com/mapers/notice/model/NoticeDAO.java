@@ -7,30 +7,25 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
 import javax.sql.DataSource;
+
+import com.mapers.common.DataSourceManager;
 
 public class NoticeDAO {
 	private Connection conn = null;
 	private PreparedStatement pstmt = null;
 	private ResultSet rs = null;
 
-	private NoticeDAO() {
-	}
-
+	// singleton pattern
 	private static NoticeDAO instance = new NoticeDAO();
+	private DataSource dataSource;
+
+	private NoticeDAO() {
+		dataSource = DataSourceManager.getInstance().getDataSource();
+	}
 
 	public static NoticeDAO getInstance() {
 		return instance;
-	}
-
-	public Connection getConnection() throws Exception {
-		Context initContext = new InitialContext();
-		Context envContext = (Context) initContext.lookup("java:/comp/env");
-		DataSource ds = (DataSource) envContext.lookup("jdbc/myoracle");
-		conn = ds.getConnection();
-		return conn;
 	}
 
 	// 자원 반납
@@ -58,7 +53,10 @@ public class NoticeDAO {
 		}
 
 		try {
-			conn = getConnection();
+			if (conn != null) {
+				conn.close();
+			}
+			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(query);
 			rs = pstmt.executeQuery();
 			rs.next();
@@ -67,6 +65,7 @@ public class NoticeDAO {
 			e.printStackTrace();
 			System.out.println("공지사항 개수 세기 중 예외 발생");
 		}
+
 		return totalCount;
 	}
 
@@ -75,7 +74,10 @@ public class NoticeDAO {
 		int result = 0;
 		String query = "INSERT INTO NOTICE (noticenum, title, content) VALUES (C##MAPERS.NOTICE_SEQ.NEXTVAL,?,?)";
 		try {
-			conn = getConnection();
+			if (conn != null) {
+				conn.close();
+			}
+			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, dto.getTitle());
 			pstmt.setString(2, dto.getContent());
@@ -100,7 +102,10 @@ public class NoticeDAO {
 
 		query += " 			ORDER BY noticenum DESC " + " 	) Tb " + " ) " + " WHERE rNum BETWEEN ? AND ?";
 		try {
-			conn = getConnection();
+			if (conn != null) {
+				conn.close();
+			}
+			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, map.get("start").toString());
 			pstmt.setString(2, map.get("end").toString());
@@ -128,7 +133,10 @@ public class NoticeDAO {
 		String query = "SELECT * FROM NOTICE WHERE NOTICENUM=?";
 		NoticeDTO dto = new NoticeDTO();
 		try {
-			conn = getConnection();
+			if (conn != null) {
+				conn.close();
+			}
+			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, idx);
 			rs = pstmt.executeQuery();
@@ -152,7 +160,10 @@ public class NoticeDAO {
 		String query = "UPDATE Notice SET " + " visitcount=visitcount+1 " + " WHERE NOTICENUM=?";
 
 		try {
-			conn = getConnection();
+			if (conn != null) {
+				conn.close();
+			}
+			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, idx);
 			pstmt.executeQuery();
@@ -167,7 +178,10 @@ public class NoticeDAO {
 		int result = 0;
 		String query = "UPDATE NOTICE" + " SET title=?, content=? WHERE NOTICENUM=?";
 		try {
-			conn = getConnection();
+			if (conn != null) {
+				conn.close();
+			}
+			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, dto.getTitle());
 			pstmt.setString(2, dto.getContent());
@@ -187,7 +201,10 @@ public class NoticeDAO {
 		int result = 0;
 		String query = "DELETE FROM NOTICE WHERE NOTICENUM=" + idx;
 		try {
-			conn = getConnection();
+			if (conn != null) {
+				conn.close();
+			}
+			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(query);
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {

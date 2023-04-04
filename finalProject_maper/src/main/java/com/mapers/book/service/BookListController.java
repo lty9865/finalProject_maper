@@ -14,7 +14,7 @@ import com.mapers.book.model.BookDTO;
 import com.mapers.common.Controller;
 import com.mapers.util.ListPage;
 
-public class BookListController1 implements Controller {
+public class BookListController implements Controller {
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -39,28 +39,32 @@ public class BookListController1 implements Controller {
 		int blockPage = Integer.parseInt(application.getInitParameter("PAGES_PER_BLOCK"));
 
 		// 현재 페이지 확인
-		int pageNum = 1;
-		String pageTemp = request.getParameter("pageNum");
+		int pageNums = 1;
+		String pageTemp = request.getParameter("pageNums");
 		if (pageTemp != null && !pageTemp.equals(""))
-			pageNum = Integer.parseInt(pageTemp);
+			pageNums = Integer.parseInt(pageTemp);
 
-		int start = (pageNum - 1) * pageSize + 1;
-		int end = pageNum * pageSize;
+		int start = (pageNums - 1) * pageSize + 1;
+		int end = pageNums * pageSize;
 		map.put("start", start);
 		map.put("end", end);
 
 		List<BookDTO> bookList = dao.selectBookList(map, userId);
 		dao.close();
 
-		String pagingImg = ListPage.pagingStr(totalCount, pageSize, blockPage, pageNum, "../Book/bookList.do");
+		
+		String pagingImg = ListPage.pagingStr(totalCount, pageSize, blockPage, pageNums, "Book/book.do?command=bookList");
 		map.put("pagingImg", pagingImg);
 		map.put("totalCount", totalCount);
 		map.put("pageSize", pageSize);
-		map.put("pageNum", pageNum);
+		map.put("pageNums", pageNums);
 
 		request.setAttribute("bookList", bookList);
 		request.setAttribute("map", map);
 		request.setAttribute("url", "/Book/book.do?command=bookList");
+		
+		request.getSession().removeAttribute("bookNum");
+		request.getSession().removeAttribute("title");
 
 		return "/Book/book.jsp";
 	}

@@ -20,7 +20,10 @@ public class BookViewController1 implements Controller {
 
 		request.setAttribute("dto", dto);
 		request.setAttribute("url", "/Book/book.do?command=bookView&idx=" + idx);
-
+		
+		request.getSession().setAttribute("bookNum", idx);
+		request.getSession().setAttribute("title", dto.getTitle());
+		
 		return "/Book/bookView.jsp";
 	}
 }

@@ -3,7 +3,8 @@ package com.mapers.book.model;
 public class BookDTO {
 	private int bookNum;
 	private String userId;
-	private String place;
+	private String country;
+	private String city;
 	private String bookDate;
 	private String title;
 	private int block;
@@ -29,12 +30,20 @@ public class BookDTO {
 		this.userId = userId;
 	}
 
-	public String getPlace() {
-		return place;
+	public String getCountry() {
+		return country;
 	}
 
-	public void setPlace(String place) {
-		this.place = place;
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
 	}
 
 	public String getBookDate() {
