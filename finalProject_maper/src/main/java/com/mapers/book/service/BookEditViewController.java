@@ -12,7 +12,9 @@ public class BookEditViewController implements Controller {
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		String idx = (String)request.getSession().getAttribute("bookNum");
+		BookDTO bookDTO = (BookDTO) request.getSession().getAttribute("bookDTO");
+
+		int idx = bookDTO.getBookNum();
 		BookDAO dao = BookDAO.getInstance();
 		BookDTO dto = dao.selectBook(idx);
 		request.setAttribute("dto", dto);

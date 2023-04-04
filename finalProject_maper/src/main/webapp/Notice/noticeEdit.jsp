@@ -47,5 +47,6 @@
 			</div>
 		</div>
 	</form>
+	<script type="text/javascript" src="../Resources/javascript/notice.js"></script>
 </body>
 </html>

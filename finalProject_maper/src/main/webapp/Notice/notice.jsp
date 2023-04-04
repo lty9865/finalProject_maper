@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="/Common/link.jsp"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,24 +9,10 @@
 <title>Insert title here</title>
 </head>
 <body>
+
 	<!-- header -->
-	<div class="maper-header">
-		<div class="maper-header-font">
-			<div class="left">
-				<a class="maper-header-font-1" href="login.jsp">MAPER</a>
-			</div>
-			<div class="right" align="right" style="">
-				<input type="text" class="form-control" id="searchKeyword"
-					placeholder="Enter Keyword"
-					onKeypress="javascript:if(event.keyCode==13) {test()}">
-				<script>
-					function test() {
-						alert("Enter Key 입력 감지 \n함수 실행.");
-					}
-				</script>
-			</div>
-		</div>
-	</div>
+	<%@ include file="/WEB-INF/views/Common/header.jsp" %>
+	
 	<!-- body -->
 	<div class="table maper-body" id="pageTitle">
 		<h2>공지사항</h2>
@@ -75,7 +61,7 @@
 		</tr>
 	</table>
 	<!-- 검색 폼 -->
-	<form method="get">
+	<form method="post" action="../Notice/notice.do?command=list">
 		<table class="table maper-body">
 			<tr>
 				<td>
@@ -95,5 +81,6 @@
 			</tr>
 		</table>
 	</form>
+	<script type="text/javascript" src="../Resources/javascript/notice.js"></script>
 </body>
 </html>

@@ -8,6 +8,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.mapers.book.model.BookDTO;
 import com.mapers.common.Controller;
 import com.mapers.page.model.PageDAO;
 import com.mapers.page.model.PageDTO;
@@ -23,7 +24,8 @@ public class PageListController implements Controller {
 
 		String searchField = request.getParameter("searchField");
 		String searchWord = request.getParameter("searchWord");
-		String idx = (String)request.getSession().getAttribute("bookNum");
+		BookDTO dto = (BookDTO)request.getSession().getAttribute("bookDTO");
+		int idx = dto.getBookNum();
 		map.put("idx", idx);
 		if (searchWord != null) {
 			map.put("searchField", searchField);

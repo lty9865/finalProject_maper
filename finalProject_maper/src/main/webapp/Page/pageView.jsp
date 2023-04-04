@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ page import="com.mapers.book.model.BookDAO" %>
+	<%@ page import="com.mapers.book.model.BookDTO" %>
 <!-- 각종 링크 헤더 include -->
 <%@ include file="../Common/link.jsp"%>
 <!DOCTYPE html>
@@ -10,6 +12,23 @@
 <script type="text/javascript" src="extras/modernizr.2.5.3.min.js"></script>
 </head>
 <body>
+	<p>
+		세션 : ${ sessionScope.userId }
+		<br>
+		작성자: ${ bookDTO.userId }
+		<br>
+		북넘버 : ${ bookDTO.bookNum }
+		<br>
+		북제목 : ${ bookDTO.title }
+		<br>
+		허용 : ${ sessionScope.allow }
+		<br>
+		좋아요 : ${ bookDTO.likesCount }
+		<br>
+		조회수 : ${ bookDTO.visitCount }
+	</p>
+	
+	<input type="button" value="♥" onclick="goodCheck()" value="${ dto.likesCount }"/> 
 
 	<div class="flipbook-viewport">
 		<div class="container">
@@ -41,7 +60,6 @@
 						</c:forEach>
 					</c:otherwise>
 				</c:choose>
-
 			</div>
 		</div>
 	</div>

@@ -63,8 +63,12 @@ public class BookListController implements Controller {
 		request.setAttribute("map", map);
 		request.setAttribute("url", "/Book/book.do?command=bookList");
 		
-		request.getSession().removeAttribute("bookNum");
-		request.getSession().removeAttribute("title");
+		if(request.getSession().getAttribute("dto") != null) {
+			request.getSession().removeAttribute("dto");
+		}
+		if(request.getSession().getAttribute("allow") != null) {
+			request.getSession().removeAttribute("allow");
+		}
 
 		return "/Book/book.jsp";
 	}

@@ -10,9 +10,23 @@
 	href="${pageContext.request.contextPath}/Resources/css/star.css">
 </head>
 <body>
-
+	<p>
+		세션 : ${ sessionScope.userId }
+		<br>
+		작성자: ${ bookDTO.userId }
+		<br>
+		북넘버 : ${ bookDTO.bookNum }
+		<br>
+		북제목 : ${ bookDTO.title }
+		<br>
+		허용 : ${ sessionScope.allow }
+		<br>
+		좋아요 : ${ bookDTO.likesCount }
+		<br>
+		조회수 : ${ bookDTO.visitCount }
+	</p>
 	<!-- header -->
-	<%@ include file="../Common/header.jsp"%>
+	<%@ include file="/WEB-INF/views/Common/header.jsp"%>
 	
 	<!-- body -->
 	<div class="maper-body">
@@ -21,14 +35,14 @@
 			<hr>
 		</div>
 		<form action="../Page/page.do?command=pageEdit" method="post"
-			enctype="multipart/form-data">
+			enctype="multipart/form-data" name="pageWriteFrm" onsubmit="return pageBlank()">
 		<input type="hidden" name="prevOfile" value="${ dto.ofile }" />
 		<input type="hidden" name="prevSfile" value="${ dto.sfile }" />
 		<input type="hidden" value="${ dto.pageNum }" name="pageNum">
 			<div class="bookWrite">
 				<div class="mapers-book-inputbar" style="padding-left: 20px;">
 					<label class="main-inputbar">제목&nbsp;&nbsp;</label>
-					<label class="main-inputbar" style="width: 85%; padding-left: 20px;">${ sessionScope.title }</label>
+					<label class="main-inputbar" style="width: 85%; padding-left: 20px;">${ bookDTO.title }</label>
 				</div>
 				<div class="mapers-book-inputbar" style="padding-left: 20px;">
 					<label class="main-inputbar" for="subTitle">부제목</label> <input
@@ -38,10 +52,10 @@
 				<div class="input-group mb-3" id="fileUploads">
 					<label class="input-group-text" for="inputGroupFile01">Upload</label>
 					<input type="file" class="form-control" id="inputGroupFile01"
-						name="ofile">
+						name="ofile" value="${ dto.ofile }">
 				</div>
 				<div class="mapers-book-inputbar" style="padding-left: 20px;">
-					<label class="main-inputbar" for="subTitle">만족도</label>
+					<label class="main-inputbar" for="rate">만족도</label>
 					<div class="rating_box">
 						<div class="rating">
 							★★★★★ <span class="rating_star">★★★★★</span> <input type="range"

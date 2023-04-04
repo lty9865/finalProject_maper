@@ -13,7 +13,7 @@ public class NoticeViewController implements Controller {
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		NoticeDAO dao = NoticeDAO.getInstance();
 		
-		String idx = request.getParameter("idx");
+		int idx = Integer.parseInt(request.getParameter("idx"));
 		dao.updateVisitCountNotice(idx);
 		NoticeDTO dto = dao.viewNotice(idx);
 		

@@ -12,12 +12,12 @@ public class NoticeEditController implements Controller {
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("UTF-8");
-		String idx = request.getParameter("idx");
+		int idx = Integer.parseInt(request.getParameter("idx"));
 		String title = request.getParameter("title");
 		String content = request.getParameter("contents");
 
 		NoticeDTO dto = new NoticeDTO();
-		dto.setIdx(Integer.parseInt(idx));
+		dto.setIdx(idx);
 		dto.setTitle(title);
 		dto.setContent(content);
 

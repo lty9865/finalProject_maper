@@ -9,24 +9,23 @@
 </head>
 <body>
 	<p>
-		세션 :
-		<%=session.getAttribute("userId")%>
+		세션 : ${ sessionScope.userId }
 		<br>
-		북넘버 :
-		<%=session.getAttribute("bookNum") %>
+		작성자: ${ bookDTO.userId }
 		<br>
-		북제목 :
-		<%=session.getAttribute("title") %>
+		북넘버 : ${ bookDTO.bookNum }
 		<br>
-		허용 :
-		<%=session.getAttribute("allow") %>
+		북제목 : ${ bookDTO.title }
 		<br>
-		어플리케이션 :
-		<%=application.getAttribute("userId")%>
+		허용 : ${ sessionScope.allow }
+		<br>
+		좋아요 : ${ bookDTO.likesCount }
+		<br>
+		조회수 : ${ bookDTO.visitCount }
 	</p>
 
 	<!-- header -->
-	<%@ include file="../Common/header.jsp"%>
+	<%@ include file="/WEB-INF/views/Common/header.jsp"%>
 	
 	<!-- body -->
 	<div class="maper-body">
@@ -79,7 +78,7 @@
 		<c:if test="${ sessionScope.allow eq 1 }">
 			<input type="button" onclick="location.href='../Page/page.do?command=pageWriteView';" value="페이지 작성하기">
 		</c:if>
-		<input type="button" onclick="location.href='../Book/book.do?command=bookView&idx=${ sessionScope.bookNum }';" value="돌아가기">
+		<input type="button" onclick="location.href='../Book/book.do?command=bookView&idx=${ bookDTO.bookNum }';" value="돌아가기">
 	</div>
 		<script type="text/javascript" src="../Resources/javascript/pageScript.js"></script>
 </body>

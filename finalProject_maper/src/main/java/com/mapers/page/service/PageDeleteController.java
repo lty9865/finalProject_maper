@@ -12,7 +12,7 @@ public class PageDeleteController implements Controller {
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String idx = request.getParameter("idx");
+		int idx = Integer.parseInt(request.getParameter("idx"));
 
 			PageDAO dao = PageDAO.getInstance();
 			PageDTO dto = dao.selectPageView(idx);

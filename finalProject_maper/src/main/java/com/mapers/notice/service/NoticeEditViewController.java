@@ -12,7 +12,7 @@ public class NoticeEditViewController implements Controller {
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-		String idx = request.getParameter("idx");
+		int idx = Integer.parseInt(request.getParameter("idx"));
 		NoticeDAO dao = NoticeDAO.getInstance();
 		NoticeDTO dto = dao.viewNotice(idx);
 		request.setAttribute("dto", dto);

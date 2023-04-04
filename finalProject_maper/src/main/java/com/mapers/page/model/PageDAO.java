@@ -146,7 +146,7 @@ public class PageDAO {
 	}
 
 	// 주어진 일련번호에 해당하는 게시물을 DTO에 담아 반환 - 김연호
-	public PageDTO selectPageView(String idx) {
+	public PageDTO selectPageView(int idx) {
 		PageDTO dto = new PageDTO();
 		String query = "SELECT * FROM PAGE WHERE PAGENUM=?";
 		try {
@@ -155,7 +155,7 @@ public class PageDAO {
 			}
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, idx);
+			pstmt.setInt(1, idx);
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
@@ -177,7 +177,7 @@ public class PageDAO {
 	}
 
 	// 지정한 일련번호의 게시물을 삭제합니다.
-	public int deletePage(String idx) {
+	public int deletePage(int idx) {
 		int result = 0;
 		try {
 			if (conn != null) {
@@ -186,7 +186,7 @@ public class PageDAO {
 			String query = "DELETE FROM PAGE WHERE PAGENUM=?";
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, idx);
+			pstmt.setInt(1, idx);
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -195,7 +195,7 @@ public class PageDAO {
 		return result;
 	}
 
-	public int deleteAllPage(String bookNum) {
+	public int deleteAllPage(int bookNum) {
 		int result = 0;
 		int totalCount = 0;
 		try {
@@ -205,14 +205,14 @@ public class PageDAO {
 			String query = "SELECT COUNT(*) FROM PAGE WHERE BOOKNUM=?";
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, bookNum);
+			pstmt.setInt(1, bookNum);
 			rs = pstmt.executeQuery();
 			rs.next();
 			totalCount = rs.getInt(1);
 
 			query = "DELETE FROM PAGE WHERE BOOKNUM=?";
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, bookNum);
+			pstmt.setInt(1, bookNum);
 			result = pstmt.executeUpdate();
 			if (totalCount == result) {
 				System.out.println("북 삭제를 위해 모든 페이지를 삭제했습니다.");
@@ -257,7 +257,7 @@ public class PageDAO {
 	}
 
 	// 페이지 출력 시 리스트 업 - 김연호
-	public List<PageDTO> pageViewList(String idx) {
+	public List<PageDTO> pageViewList(int idx) {
 		List<PageDTO> pageList = new Vector<PageDTO>();
 		try {
 			if (conn != null) {
@@ -267,7 +267,7 @@ public class PageDAO {
 
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, idx);
+			pstmt.setInt(1, idx);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				PageDTO dto = new PageDTO();

@@ -37,10 +37,11 @@
 				<div style="height: 10px;"></div>
 				<div align="center" style="margin-top:15px;">
 					<input type="submit" class="btn btn-primary btn-lg" style="width:120px;" value="작성완료"/>
-					<button type="button" onclick="" class="btn btn-primary btn-lg" style="width:120px;">Cancel</button>
+					<button type="button" onclick="" class="btn btn-primary btn-lg" style="width:120px;" onclick="location.href='../Notice/notice.do?command=list'">Cancel</button>
 				</div>
 			</div>
 		</div>
 	</form>
+	<script type="text/javascript" src="../Resources/javascript/notice.js"></script>
 </body>
 </html>

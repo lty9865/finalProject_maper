@@ -8,6 +8,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.mapers.book.model.BookDTO;
 import com.mapers.common.Controller;
 import com.mapers.page.model.PageDAO;
 import com.mapers.page.model.PageDTO;
@@ -30,7 +31,8 @@ public class PageEditController implements Controller {
 		}
 
 		int idx = Integer.parseInt(mr.getParameter("pageNum"));
-		int bookNum = Integer.parseInt((String)request.getSession().getAttribute("bookNum"));
+		BookDTO bookDTO = (BookDTO) request.getSession().getAttribute("bookDTO");
+		int bookNum = bookDTO.getBookNum();
 		String prevOfile = mr.getParameter("prevOfile");
 		String prevSfile = mr.getParameter("prevSfile");
 
@@ -38,14 +40,6 @@ public class PageEditController implements Controller {
 		String content = mr.getParameter("content");
 		String postDate = mr.getParameter("postDate");
 		int rate = Integer.parseInt(mr.getParameter("rate"));
-		
-		System.out.println("pageNum: " + idx);
-		System.out.println("bookNum: " + bookNum);
-		System.out.println("ofile: " + prevOfile);
-		System.out.println("sfile: " + prevSfile);
-		System.out.println("subtitle: " + title);
-		System.out.println("content: " + content);
-		System.out.println("rate: " + rate);
 
 		PageDTO dto = new PageDTO();
 		dto.setPageNum(idx);

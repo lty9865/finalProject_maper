@@ -11,16 +11,23 @@
 </head>
 <body>
 	<p>
-		세션 :
-		<%=session.getAttribute("userId")%>
-		<%=session.getAttribute("bookNum") %>
-		<%=session.getAttribute("title") %>
-		어플리케이션 :
-		<%=application.getAttribute("userId")%>
+		세션 : ${ sessionScope.userId }
+		<br>
+		작성자: ${ bookDTO.userId }
+		<br>
+		북넘버 : ${ bookDTO.bookNum }
+		<br>
+		북제목 : ${ bookDTO.title }
+		<br>
+		허용 : ${ sessionScope.allow }
+		<br>
+		좋아요 : ${ bookDTO.likesCount }
+		<br>
+		조회수 : ${ bookDTO.visitCount }
 	</p>
 
 	<!-- header -->
-	<%@ include file="../Common/header.jsp"%>
+	<%@ include file="/WEB-INF/views/Common/header.jsp"%>
 	
 	<!-- body -->
 	<div class="maper-body">
@@ -29,12 +36,12 @@
 			<hr>
 		</div>
 		<form action="../Page/page.do?command=pageWrite" method="post"
-			enctype="multipart/form-data">
+			enctype="multipart/form-data" name="pageWriteFrm" onsubmit="return pageBlank()">
 			<div class="bookWrite">
 				<div class="mapers-book-inputbar" style="padding-left: 20px;">
-					<input type="hidden" value="${ sessionScope.bookNum }" name="bookNum">
+					<input type="hidden" value="${ bookDTO.bookNum }" name="bookNum">
 					<label class="main-inputbar">제목&nbsp;&nbsp;</label>
-					<label class="main-inputbar" style="width: 85%; padding-left: 20px;" >${ sessionScope.title }</label>
+					<label class="main-inputbar" style="width: 85%; padding-left: 20px;">${ bookDTO.title }</label>
 				</div>
 				<div class="mapers-book-inputbar" style="padding-left: 20px;">
 					<label class="main-inputbar" for="subTitle">부제목</label> <input
@@ -47,7 +54,7 @@
 						name="ofile">
 				</div>
 				<div class="mapers-book-inputbar" style="padding-left: 20px;">
-					<label class="main-inputbar" for="subTitle">만족도</label>
+					<label class="main-inputbar" for="rate">만족도</label>
 					<div class="rating_box">
 						<div class="rating">
 							★★★★★ <span class="rating_star">★★★★★</span> <input type="range"
@@ -61,7 +68,7 @@
 				</div>
 			</div>
 			<button type="submit" class="btn btn-primary">전송</button>
-			<button type="button" class="btn btn-primary">돌아가기</button>
+			<button type="button" class="btn btn-primary" onclick="location.href='../Book/book.do?command=bookView&idx=${ bookDTO.bookNum }'">돌아가기</button>
 		</form>
 	</div>
 	<script src="../Resources/javascript/star.js"></script>

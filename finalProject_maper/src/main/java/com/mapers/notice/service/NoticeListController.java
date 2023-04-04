@@ -47,7 +47,7 @@ public class NoticeListController implements Controller {
 
 		List<NoticeDTO> noticeLists = dao.noticeList(map);
 
-		String pagingImg = ListPage.pagingStr(totalCount, pageSize, blockPage, pageNum, "/Notice/notice.do");
+		String pagingImg = ListPage.pagingStr(totalCount, pageSize, blockPage, pageNum, "/Notice/notice.do?command=list");
 		map.put("pagingImg", pagingImg);
 		map.put("totalCount", totalCount);
 		map.put("pageSize", pageSize);

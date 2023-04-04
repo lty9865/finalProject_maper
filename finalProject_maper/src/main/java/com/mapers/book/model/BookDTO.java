@@ -75,7 +75,7 @@ public class BookDTO {
 	}
 
 	public void setRate(double rate) {
-		rate = Math.round(rate * 10) / 10;
+		rate = (double) (Math.floor(rate * 10)) / 10;
 		this.rate = rate;
 	}
 

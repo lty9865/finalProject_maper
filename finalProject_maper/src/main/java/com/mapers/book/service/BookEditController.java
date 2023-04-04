@@ -35,7 +35,7 @@ public class BookEditController implements Controller {
 
 		// 2.파일 업로드 외 처리
 		// 수정 내용을 매개 변수에서 얻어옴
-		String idx = mr.getParameter("idx");
+		int idx = Integer.parseInt(mr.getParameter("idx"));
 		String title = mr.getParameter("title");
 		String country = mr.getParameter("country");
 		String city = mr.getParameter("city");
@@ -44,7 +44,7 @@ public class BookEditController implements Controller {
 		String prevSfile = mr.getParameter("prevSfile");
 
 		BookDTO dto = new BookDTO();
-		dto.setBookNum(Integer.parseInt(idx));
+		dto.setBookNum(idx);
 		dto.setTitle(title);
 		dto.setCountry(country);
 		dto.setCity(city);

@@ -58,7 +58,7 @@ public class DispatcherServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 			// error.jsp로 이동
-			response.sendRedirect("error.jsp");
+//			response.sendRedirect("error.jsp");
 		}
 	}
 }

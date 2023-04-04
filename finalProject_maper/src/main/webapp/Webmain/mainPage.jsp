@@ -18,17 +18,18 @@
 	</p>
 
 	<!-- header -->
-	<%@ include file="/Common/header.jsp"%>
+	<%@ include file="/WEB-INF/views/Common/header.jsp"%>
 
 	<!-- body -->
 	<div class="maper-body">
 		<div align="center" class="mapers-main-inputbar">
-			<form action="../Book/bookList.do">
+			<form action="../Book/book.do?command=bookList" method="post">
 				<select class="main-inputbar" style="width: 10%;" name="searchField">
 					<option value="title">제목</option>
 					<option value="place">장소</option>
-				</select> <input class="main-inputbar" style="width: 85%;" type="text"
-					name="searchWord" /> <input type="submit" value="검색" />
+				</select>
+				<input class="main-inputbar" style="width: 85%;" type="text" name="searchWord" />
+				<input type="submit" value="검색" />
 			</form>
 		</div>
 		<div style="width: 55%; margin: auto;">
@@ -143,7 +144,8 @@
 										class="card-img-top" alt="..." id="mainMenu">
 									<div class="card-body">
 										<h5 class="card-title">${ row.title }</h5>
-										<a href="../Book/bookView.do?idx=${ row.bookNum }"
+										<a
+											href="../Book/book.do?command=bookView&idx=${ row.bookNum }"
 											class="btn btn-primary">Go somewhere</a>
 									</div>
 								</div>

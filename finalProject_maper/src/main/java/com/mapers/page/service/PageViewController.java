@@ -15,7 +15,7 @@ public class PageViewController implements Controller {
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		PageDAO dao = PageDAO.getInstance();
 
-		String idx = request.getParameter("idx");
+		int idx = Integer.parseInt(request.getParameter("idx"));
 		System.out.println(idx);
 
 		List<PageDTO> pageList = dao.pageViewList(idx);

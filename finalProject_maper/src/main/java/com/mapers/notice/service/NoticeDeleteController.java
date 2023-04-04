@@ -10,7 +10,7 @@ public class NoticeDeleteController implements Controller {
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String idx = request.getParameter("idx");
+		int idx = Integer.parseInt(request.getParameter("idx"));
 
 		NoticeDAO dao = NoticeDAO.getInstance();
 		int result = dao.deleteNotice(idx);

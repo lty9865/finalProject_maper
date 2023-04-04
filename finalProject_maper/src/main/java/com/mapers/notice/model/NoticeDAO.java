@@ -129,7 +129,7 @@ public class NoticeDAO {
 	}
 
 	// 공지사항 DB View 게시물 조회 - 김연호
-	public NoticeDTO viewNotice(String idx) {
+	public NoticeDTO viewNotice(int idx) {
 		String query = "SELECT * FROM NOTICE WHERE NOTICENUM=?";
 		NoticeDTO dto = new NoticeDTO();
 		try {
@@ -138,7 +138,7 @@ public class NoticeDAO {
 			}
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, idx);
+			pstmt.setInt(1, idx);
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
@@ -156,7 +156,7 @@ public class NoticeDAO {
 	}
 
 	// 공지사항 조회수 1증가 시키기 - 김연호
-	public void updateVisitCountNotice(String idx) {
+	public void updateVisitCountNotice(int idx) {
 		String query = "UPDATE Notice SET " + " visitcount=visitcount+1 " + " WHERE NOTICENUM=?";
 
 		try {
@@ -165,7 +165,7 @@ public class NoticeDAO {
 			}
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, idx);
+			pstmt.setInt(1, idx);
 			pstmt.executeQuery();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -197,7 +197,7 @@ public class NoticeDAO {
 	}
 
 	// 공지사항 삭제 - 김연호
-	public int deleteNotice(String idx) {
+	public int deleteNotice(int idx) {
 		int result = 0;
 		String query = "DELETE FROM NOTICE WHERE NOTICENUM=" + idx;
 		try {

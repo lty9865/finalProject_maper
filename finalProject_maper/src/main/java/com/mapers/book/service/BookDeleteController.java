@@ -14,7 +14,9 @@ public class BookDeleteController implements Controller {
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		System.out.println("북 딜리트 컨트롤러 호출");
 		
-		String idx = (String)request.getSession().getAttribute("bookNum");
+		BookDTO bookDTO = (BookDTO)request.getSession().getAttribute("bookDTO");
+		
+		int idx = bookDTO.getBookNum();
 		System.out.println(idx);
 
 		BookDAO dao = BookDAO.getInstance();
