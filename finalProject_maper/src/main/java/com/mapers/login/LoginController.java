@@ -10,15 +10,29 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.mapers.SignUp.MemberDAO;
+import com.mapers.SignUp.MemberVO;
 
-@WebServlet("/login.do")
+
+@WebServlet("/Member/Login/login.do")
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		request.getRequestDispatcher("/Member/Login/login.jsp").forward(request, response);
+		String url = "/Webmain/mainpage.jsp";
+		HttpSession session = request.getSession();
+		
+		String userid = request.getParameter("userid");
+		String password = request.getParameter("password");
+		
+		if(session.getAttribute("userid") != null) {
+			url = "/Webmain/mainpage.jsp";
+		}
+		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
+		dispatcher.forward(request, response);
+	
+	
+	
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -33,9 +47,10 @@ public class LoginController extends HttpServlet {
 		int result = mDao.userCheck(userid, password);
 
 		if (result == 1) {		//로그인 성공
+			MemberVO mVo = mDao.getMember(userid);
 			HttpSession session = request.getSession();
 			session.setAttribute("userid", userid);
-			url = "Webmain/mainPage.do?command=main";
+			url = "/Webmain/mainpage.jsp";
 			
 			RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 			dispatcher.forward(request, response);
