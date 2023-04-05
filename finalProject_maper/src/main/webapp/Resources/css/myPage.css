@@ -1,4 +1,6 @@
 @charset "UTF-8";
+
+/* myPage */
 .maper-body-myPageMenu {
 	margin-bottom: 30px;
 }
@@ -8,4 +10,126 @@
 	box-sizing: border-box;
 }
 
+/* myPage - menu */
+.container {
+  display: flex;
+  justify-content: center;
+}
 
+.mapper-myPage-horizontal-menu {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  justify-content: center;
+}
+
+.mapper-myPage-menu-container {
+  margin-right: 20px;
+  padding: 0;
+}
+
+.mapper-myPage-menu-item {
+  position: relative;
+}
+
+.mapper-myPage-menu-item a {
+  display: block;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.mapper-myPage-menu-item a:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  transform: scaleX(0);
+  transform-origin: bottom left;
+  transition: width 0.2s ease-in-out, transform 0.2s ease-in-out;
+  background-color: #000;
+}
+
+.mapper-myPage-menu-container:hover .mapper-myPage-menu-item a:after {
+  width: 100%;
+  transform: scaleX(1);
+}
+
+.mapper-myPage-menu-item.active a:after {
+  width: 100%;
+  transform: scaleX(1);
+}
+
+/* myPage - My Request */
+.header-row th {
+    text-align: center;
+}
+
+/* requestList */
+.pagination .page-link {
+	font-weight: normal;
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  height: 2rem;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.pagingArea {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.write-button-container {
+	text-align: right;
+}
+
+.write-button {
+	position: absolute;
+	right: 0;
+}
+
+.btn.btn-primary {
+	min-width: 80 px;
+	text-align: center;
+}
+
+.current-page {
+  font-weight: bold;
+}
+
+.boardlist {
+    background-color: white;
+}
+
+.pagination .page-item .page-link {
+    color: blue;
+    background-color: white;
+}
+
+.pagination .page-item.active .page-link {
+    color: blue;
+    background-color: white;
+}
+
+.pagingArea ul {
+    display: inline-flex;
+    text-align: center;
+}
+
+.pagination .visited-page {
+    color: darkviolet;
+}

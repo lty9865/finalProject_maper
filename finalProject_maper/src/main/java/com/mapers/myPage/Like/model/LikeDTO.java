@@ -3,23 +3,19 @@ package com.mapers.myPage.Like.model;
 public class LikeDTO {
 	private int bookNum;
 	private String bookImg;
-	private int bookPages;
 	private String userId;
 	private String title;
-	private String content;
 	private String postDate;
 	
 	public LikeDTO() {
 		super();
 	}
 	
-	public LikeDTO(String bookImg, int bookPages, String userId, String title, String content, String postDate) {
+	public LikeDTO(String bookImg, String userId, String title, String postDate) {
 		super();
 		this.bookImg = bookImg;
-		this.bookPages = bookPages;
 		this.userId = userId;
 		this.title = title;
-		this.content = content;
 		this.postDate = postDate;
 	}
 
@@ -39,14 +35,6 @@ public class LikeDTO {
 		this.bookImg = bookImg;
 	}
 
-	public int getBookPages() {
-		return bookPages;
-	}
-
-	public void setBookPages(int bookPages) {
-		this.bookPages = bookPages;
-	}
-
 	public String getUserId() {
 		return userId;
 	}
@@ -63,25 +51,11 @@ public class LikeDTO {
 		this.title = title;
 	}
 
-	public String getContent() {
-		return content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
-	}
-
 	public String getPostDate() {
 		return postDate;
 	}
 
 	public void setPostDate(String postDate) {
 		this.postDate = postDate;
-	}
-
-	@Override
-	public String toString() {
-		return "LikeDTO [bookImg=" + bookImg + ", bookPages=" + bookPages + ", userId=" + userId + ", title=" + title
-				+ ", content=" + content + ", postDate=" + postDate + "]";
 	}
 }

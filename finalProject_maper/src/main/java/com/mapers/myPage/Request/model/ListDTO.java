@@ -6,27 +6,27 @@ import com.mapers.common.PagingBean;
 
 public class ListDTO {
 	private ArrayList<RequestDTO> rList;
-	private PagingBean paginbean;
+	private PagingBean pagingbean;
 	
 	public ListDTO(ArrayList<RequestDTO> rList, PagingBean pagingbean) {
 		super();
 		this.rList = rList;
-		this.paginbean = pagingbean;
+		this.pagingbean = pagingbean;
 	}
 	
-	public ArrayList<RequestDTO> getRList(){
+	public ArrayList<RequestDTO> getRlist(){
 		return rList;
 	}
 	
-	public void setRList(ArrayList<RequestDTO> rList) {
+	public void setRlist(ArrayList<RequestDTO> rList) {
 		this.rList = rList;
 	}
 
-	public PagingBean getPaginbean() {
-		return paginbean;
+	public PagingBean getPagingbean() {
+		return pagingbean;
 	}
 
-	public void setPaginbean(PagingBean paginbean) {
-		this.paginbean = paginbean;
+	public void setPagingbean(PagingBean pagingbean) {
+		this.pagingbean = pagingbean;
 	}
 }

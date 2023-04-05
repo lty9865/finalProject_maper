@@ -50,6 +50,10 @@ public class ProfileDAO {
 		
 		try {
 			
+			if (conn != null) {
+				conn.close();
+			}
+			
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, password);
 			
@@ -81,6 +85,10 @@ public class ProfileDAO {
 		String sql = "select userid from account where userid=?";
 		
 		try {
+
+			if (conn != null) {
+				conn.close();
+			}
 			
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, userId);
@@ -110,6 +118,10 @@ public class ProfileDAO {
 		String sql = "select * from account where userid=? ";
 		
 		try {
+
+			if (conn != null) {
+				conn.close();
+			}
 			
 			conn = dataSource.getConnection();
 			
@@ -142,6 +154,10 @@ public class ProfileDAO {
 		String sql = "select * from account where userid=? and password=?";
 		
 		try {
+
+			if (conn != null) {
+				conn.close();
+			}
 			
 			conn = dataSource.getConnection();
 			
@@ -178,6 +194,10 @@ public class ProfileDAO {
 		String sql1 = "select userid from account where password=?";
 		
 		try {
+
+			if (conn != null) {
+				conn.close();
+			}
 			
 			psmt = conn.prepareStatement(sql1);
 			psmt.setString(1, dto.getPassword()); // 입력한 비밀번호 가져오기
@@ -219,6 +239,10 @@ public class ProfileDAO {
 		String sql1 = "select userid from account where password=?";
 		
 		try {
+
+			if (conn != null) {
+				conn.close();
+			}
 			
 			psmt = conn.prepareStatement(sql1);
 			psmt.setString(1, password);
@@ -254,6 +278,10 @@ public class ProfileDAO {
 		String sql = "select * from account";
 		
 		try {
+
+			if (conn != null) {
+				conn.close();
+			}
 			
 			psmt = conn.prepareStatement(sql);
 			rs = psmt.executeQuery();

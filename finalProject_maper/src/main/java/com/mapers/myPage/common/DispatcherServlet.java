@@ -10,10 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.mapers.common.Controller;
 
-
-/**
- * Servlet implementation class DispatcherServletSample
- */
 @WebServlet("/MyPage/MyPageFront")
 public class DispatcherServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -43,6 +39,7 @@ public class DispatcherServlet extends HttpServlet {
 		
 		try {
 			String command = request.getParameter("command");
+			System.out.println("Dispatcher receiving : " + command);
 			if (command == null) {
 				command = "MyProfile";
 			}

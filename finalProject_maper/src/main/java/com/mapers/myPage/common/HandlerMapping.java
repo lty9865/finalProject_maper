@@ -10,8 +10,10 @@ import com.mapers.myPage.Profile.service.ProfileEditHandler;
 import com.mapers.myPage.Request.service.MyRequestHandler;
 import com.mapers.myPage.Request.service.RequestDeleteHandler;
 import com.mapers.myPage.Request.service.RequestEditHandler;
-import com.mapers.myPage.Request.service.RequestPostDetailHandler;
+import com.mapers.myPage.Request.service.RequestEditProcessHandler;
 import com.mapers.myPage.Request.service.RequestPostHandler;
+import com.mapers.myPage.Request.service.RequestPostProcessHandler;
+import com.mapers.myPage.Request.service.RequestPostViewHandler;
 
 // 개별 컨트롤러 객체 생성을 전담하는 팩토리 클래스 : 생성은 한 번만!
 public class HandlerMapping {
@@ -31,7 +33,8 @@ public class HandlerMapping {
 		String[] parts = command.split("\\."); // split the command into parts
 		String mainCommand = parts[0];
 		String subCommand = parts.length > 1 ? parts[1] : null;
-
+		System.out.println(mainCommand + " " + subCommand);
+		
 		// Check if subcommand is specified
 		if (subCommand != null) {
 			if (mainCommand.contentEquals("MyProfile")) {
@@ -47,12 +50,16 @@ public class HandlerMapping {
 			} else if (mainCommand.contentEquals("MyRequest")) {
 				if (subCommand.contentEquals("requestPost")) {
 					controller = new RequestPostHandler();
+				} else if (subCommand.contentEquals("requestPostProcess")) {
+					controller = new RequestPostProcessHandler();
 				} else if (subCommand.contentEquals("requestEdit")) {
 					controller = new RequestEditHandler();
+				} else if (subCommand.contentEquals("requestEditProcess")) {
+					controller = new RequestEditProcessHandler();
 				} else if (subCommand.contentEquals("requestDelete")) {
 					controller = new RequestDeleteHandler();
-				} else if (subCommand.contentEquals("requestPostDetail")) {
-					controller = new RequestPostDetailHandler();
+				} else if (subCommand.contentEquals("requestPostView")) {
+					controller = new RequestPostViewHandler();
 				} else {
 					controller = new MyRequestHandler();
 				}

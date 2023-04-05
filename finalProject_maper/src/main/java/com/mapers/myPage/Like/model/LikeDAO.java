@@ -3,6 +3,7 @@ package com.mapers.myPage.Like.model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
@@ -51,7 +52,7 @@ public class LikeDAO {
 		String sql = " "
 				   + "select * from ( "
 				   + "	select Tb.* rownum rNum from ( "
-				   + "		select * from like ";
+				   + "		select * from likes ";
 		
 		// 검색 조건
 		if (map.get("searchWord") != null) {
@@ -76,7 +77,6 @@ public class LikeDAO {
 			while(rs.next()) {
 				LikeDTO dto = new LikeDTO();
 				dto.setBookNum(rs.getInt("booknum"));
-				dto.setBookPages(rs.getInt("bookpages"));
 				dto.setUserId(rs.getString("userid"));
 				dto.setTitle(rs.getString("title"));
 				dto.setPostDate(rs.getString("postdate"));
@@ -92,16 +92,64 @@ public class LikeDAO {
 		return kList;
 	}
 	
-	// 마이 페이지, 문의 글 전체 포스팅 개수 리턴
-	public int getTotalPostCount() {
+	// 페이징 처리가 된 좋아요한 책들 조회 - 박강필
+	public ArrayList<LikeDTO> getAllList(int pageNo, int postsPerPage, String userId) {
+	    ArrayList<LikeDTO> kList = new ArrayList<LikeDTO>();
+
+	    String sql = "SELECT * FROM ("
+	               + " SELECT a.*, ROWNUM rnum FROM ("
+	               + " 	SELECT * FROM likes "
+	               + " 	WHERE userid = ? "
+	               + " 	ORDER BY booknum DESC) a "
+	               + " WHERE ROWNUM <= ?) "
+	               + "WHERE rnum > ?";
+
+	    try {
+	    	
+	    	if (conn != null) {
+	    		conn.close();
+	    	}
+	    	
+	        conn = dataSource.getConnection();
+
+	        psmt = conn.prepareStatement(sql);
+	        psmt.setString(1, userId);
+	        psmt.setInt(2, pageNo * postsPerPage);
+	        psmt.setInt(3, (pageNo - 1) * postsPerPage);
+
+	        rs = psmt.executeQuery();
+	        while (rs.next()) {
+	            LikeDTO kDTO = new LikeDTO();
+	            
+	            kDTO.setBookNum(rs.getInt("booknum"));
+	            kDTO.setBookImg(rs.getString("bookimg"));
+	            kDTO.setTitle(rs.getString("title"));
+	            kDTO.setUserId(rs.getString("userid"));
+	            kDTO.setPostDate(rs.getString("postdate"));
+
+	            kList.add(kDTO);
+	        }
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        System.out.println("문의 리스트 조회 중 Error(페이징 처리됨)");
+	    }
+
+	    return kList;
+	}
+	
+	// 마이 페이지, 좋아요한 글 전체 포스팅 개수 리턴
+	public int getTotalPostCount(String userId) {
 		int totalPostCount = 0;
 
-		String sql = " select count(*) from  request ";
+		String sql = " select count(*) from likes where userid=? ";
 		
 		try {
 			
 			conn = dataSource.getConnection();
+			
 			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, userId);
 			
 			rs = psmt.executeQuery();
 			if (rs.next()) {
@@ -116,11 +164,11 @@ public class LikeDAO {
 		return totalPostCount;
 	}
 	
-	// 마이 페이지, 문의글 개수 세기(검색 기능 포함) - 박강필
+	// 마이 페이지, 좋아요한 책 개수 세기(검색 기능 포함) - 박강필
 	public int countTotalLike(Map<String, Object> map) {
 		int totalLikeCount = 0;
 		
-		String sql = " select count(*) from like";
+		String sql = " select count(*) from likes";
 		
 		if(map.get("searchWord") != null) {
 			sql += " where " + map.get("searchField") + " like '%" + map.get("searchWord") + "%' ";
@@ -148,7 +196,7 @@ public class LikeDAO {
 	public LikeDTO viewRequest(int bookNum, String userId) {
 		LikeDTO dto = new LikeDTO();
 		
-		String sql = "select * from request where booknum=? and userid=? ";
+		String sql = "select * from likes where booknum=? and userid=? ";
 		
 		try {
 			
@@ -178,7 +226,7 @@ public class LikeDAO {
 	public int deleteRequest(int requestNum) {
 		int result = 0;
 		
-		String sql = "delete from request where requestnum=?";
+		String sql = "delete from likes where requestnum=?";
 		
 		try {
 			
@@ -195,25 +243,5 @@ public class LikeDAO {
 		}
 		
 		return result;
-	}
-	
-	// 게시글 조회 수 증가(hits)
-	public void addHits(String no) {
-		
-		String sql = "update request set hits = 1 where no=?";
-		
-		try {
-			
-			conn = dataSource.getConnection();
-
-			psmt = conn.prepareStatement(sql);
-			psmt.setString(1, no);
-			
-			psmt.executeUpdate();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("게시글 조회 수 증가 중 Error");
-		}
 	}
 }

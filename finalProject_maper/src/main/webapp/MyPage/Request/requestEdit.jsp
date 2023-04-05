@@ -3,36 +3,56 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
 <%@ include file="/Common/link.jsp"%>  
 
- <form action="${pageContext.request.contextPath}/front/MyRequest" method="POST" >
-	<input type="hidden" name="command" value="UpdatePost"></input>
-	<input type="hidden" name="no" value="${rDTO.requestNum}"></input>
-	<table class="table">
-		<tr>
-			<td>
-				<strong>제목</strong>
-			<br>
-				<input type="text" name="title" value="${rDTO.title}"
-					required="required">
-			</td>
-		</tr>
-		
-		<tr>
-			<td>
-				<strong>내용</strong>
-			<br>
-				<textarea cols="90" rows="15" name="content" 
-					required="required">${rDTO.content}</textarea>
-			</td>
-		</tr>
-		
-		<tr>
-			 <td colspan="2">
-				<div class="btnArea">
-					<button type="submit" class="btn btn-success">수정 완료</button>
-					&nbsp;&nbsp; &nbsp;&nbsp;
-					<button type="reset" class="btn btn-warning">글 초기화</button>
-				</div>
-			 </td>
-		</tr>
-	</table>
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/Resources/css/myPage.css">
+  <title>Request Post</title>
+</head>
+<body>
+  <!-- header -->
+  <%@ include file="/WEB-INF/views/Common/header.jsp"%>
+
+  <!-- body/menu -->
+  <jsp:include page="../menu.jsp" />
+
+  <!-- body/main -->
+  <form action="${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyRequest.requestEditProcess" method="POST">
+    <input type="hidden" name="requestNum" value="${rDTO.requestNum}">
+    <table class="table">
+      <tr>
+        <td><strong>문의 번호</strong></td>
+        <td>${rDTO.requestNum}</td>
+      </tr>
+      <tr>
+        <td><strong>작성자</strong></td>
+        <td>${rDTO.userId}</td>
+      </tr>
+      <tr>
+        <td><strong>작성일</strong></td>
+        <td>${rDTO.postDate}</td>
+      </tr>
+      <tr>
+        <td><strong>제목</strong></td>
+        <td><input type="text" name="title" value="${rDTO.title}" required="required"></td>
+      </tr>
+      <tr>
+        <td><strong>내용</strong></td>
+        <td><textarea cols="90" rows="15" name="content" required="required">${rDTO.content}</textarea></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <div class="btnArea">
+            <button type="submit" class="btn btn-success">수정 완료</button>
+            <button type="button" class="btn btn-warning" onclick="resetForm();">글 초기화</button>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </form>
+  
+  <!-- footer -->
+  <%@ include file="/WEB-INF/views/Common/footer.jsp"%>
+</body>
+</html>

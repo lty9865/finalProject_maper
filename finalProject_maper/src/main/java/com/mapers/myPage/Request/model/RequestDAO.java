@@ -6,14 +6,10 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
 import javax.sql.DataSource;
 
 import com.mapers.common.DataSourceManager;
-import com.mapers.common.PagingBean;
-import com.mapers.myPage.Profile.model.ProfileDTO;
-
 
 public class RequestDAO {
 	private Connection conn = null;
@@ -45,46 +41,63 @@ public class RequestDAO {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.out.println("DB Connection Pool 자원 반납 Error");
 		}
-	}	
+	}
 	
 	// 마이 페이지, 문의사항 리스트 조회(검색 기능 추가) - 박강필
-	public List<RequestDTO> requestList(Map<String, Object> map) {
-		List<RequestDTO> rList = new Vector<RequestDTO>();
-		
-		String sql = " "
-				   + "select * from ( "
-				   + "	select Tb.* rownum rNum from ( "
-				   + "		select * from request ";
-		
-		// 검색 조건
-		if (map.get("searchWord") != null) {
-			sql += " where " + map.get("searchField")
-				 + " like '%" + map.get("searchWorld") + "%' ";
-		}
-		
-		sql += "		order by requestNum desc "
-			 + "		) Tb " 
-			 + "	) " 
-			 + " WHERE rNum BETWEEN ? AND ?";
+	public List<RequestDTO> requestList(Map<String, Object> map, String userId) {
+		List<RequestDTO> rList = new ArrayList<RequestDTO>();
 		
 		try {
+
+			if (conn != null) {
+				conn.close();
+			}
 			
 			conn = dataSource.getConnection();
 			
-			psmt = conn.prepareStatement(sql);
-			psmt.setString(1, map.get("start").toString());
-			psmt.setString(2, map.get("end").toString());
+			String sql;
+			if (map.get("searchWord") != null) {
+				sql = "SELECT * FROM ( "
+				    + "		SELECT a.*, ROWNUM rnum FROM ("
+				    + "			SELECT * FROM request "
+				    + "			WHERE userid = ? AND ? LIKE ? ORDER BY reqnum)"
+				    + "		 a WHERE ROWNUM <= ?) "
+				    + "WHERE rnum > ?";
+				
+				psmt = conn.prepareStatement(sql);
+				psmt.setString(1, userId);
+				psmt.setString(2, map.get("searchField").toString());
+				psmt.setString(3, "%" + map.get("searchWord") + "%");
+				psmt.setString(4, map.get("start").toString());
+				psmt.setString(5, map.get("end").toString());
+				
+			} else {
+				sql = "SELECT * FROM ("
+					+ "		SELECT a.*, ROWNUM rnum FROM ("
+					+ "			SELECT * FROM request "
+					+ "			WHERE userid = ? "
+					+ "			ORDER BY reqnum) "
+					+ "		a WHERE ROWNUM <= ?) "
+					+ "WHERE rnum > ?";
+				
+				psmt = conn.prepareStatement(sql);
+				psmt.setString(1, userId);
+				psmt.setString(2, map.get("start").toString());
+				psmt.setString(3, map.get("end").toString());
+				
+			}
 			
 			rs = psmt.executeQuery();
 			while(rs.next()) {
 				RequestDTO dto = new RequestDTO();
 				
-				dto.setRequestNum(rs.getInt("requestNum"));
-				dto.setUserId(rs.getString("userId"));
+				dto.setRequestNum(rs.getInt("reqnum"));
 				dto.setTitle(rs.getString("title"));
+				dto.setUserId(rs.getString("userid"));
 				dto.setStatus(rs.getInt("status"));
-				dto.setPostDate(rs.getString("postDate"));
+				dto.setPostDate(rs.getString("postdate"));
 				
 				rList.add(dto);
 			}
@@ -92,18 +105,22 @@ public class RequestDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("문의 리스트 조회 중 Error");
-		}
+		} 
 		
 		return rList;
 	}
 	
-	// 마이 페이지, 문의 글 전체 포스팅 개수 리턴
+	// 마이 페이지, 문의 글 전체 포스팅 개수 리턴 - 박강필
 	public int getTotalPostCount() {
 		int totalPostCount = 0;
 
 		String sql = " select count(*) from  request ";
 		
 		try {
+			
+			if (conn != null) {
+				conn.close();
+			}
 			
 			conn = dataSource.getConnection();
 			psmt = conn.prepareStatement(sql);
@@ -116,7 +133,7 @@ public class RequestDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("Error for Searching of MyPage RequestList Total Posting");
-		}
+		} 
 		
 		return totalPostCount;
 	}
@@ -132,6 +149,10 @@ public class RequestDAO {
 		}
 		
 		try {
+
+			if (conn != null) {
+				conn.close();
+			}
 			
 			conn = dataSource.getConnection();
 			
@@ -144,7 +165,7 @@ public class RequestDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("문의 글 불러오기 중 에러 발생");
-		}
+		} 
 		
 		return totalRequestCount;
 	}
@@ -156,6 +177,10 @@ public class RequestDAO {
 		String sql = "select * from request where requestnum=? and userid=? ";
 		
 		try {
+
+			if (conn != null) {
+				conn.close();
+			}
 			
 			conn = dataSource.getConnection();
 			
@@ -165,17 +190,19 @@ public class RequestDAO {
 			
 			rs = psmt.executeQuery();
 			while (rs.next()) {
-				dto.setRequestNum(rs.getInt("requestNum"));
-				dto.setUserId(rs.getString("userId"));
+				dto.setRequestNum(rs.getInt("requestnum"));
+				dto.setUserId(rs.getString("userid"));
 				dto.setTitle(rs.getString("title"));
 				dto.setContent(rs.getString("content"));
-				dto.setPostDate(rs.getString("postDate"));
+				dto.setPostDate(rs.getString("postdate"));
+				
+				
 			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("문의사항 글 상세보기 중 Error");
-		}
+		} 
 		
 		return dto;
 	}
@@ -183,56 +210,62 @@ public class RequestDAO {
 	
 	// 마이 페이지, 문의 글 작성 - 박강필
 	public int insertRequest(RequestDTO dto) {
-		int result = 0;
-		
-		// requestNunm = request_seq로 처리, postDate = sysdate로 처리
-//		String sql = " insert into request(requestNum, userId, title, content, postDate) "
-//				   + " values (c##mapers.request_seq.nextval, ?, ?, ?, sysdate)";
-		
-		String sqlTest = " insert into request(requestNum, title, content, postDate) "
-				   + " values (c##mapers.request_seq.nextval, ?, ?, sysdate)";
-		
-		try {
-			
-			conn = dataSource.getConnection();
-			
-			psmt = conn.prepareStatement(sqlTest);
-//			psmt.setString(1, dto.getUserId());
-			psmt.setString(1, dto.getTitle());
-			psmt.setString(2, dto.getContent());
-			// postDate는 DB sysdate로 처리
-			
-			result = psmt.executeUpdate();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("문의 글 작성 중 에러");
-		}
-		
-		return result;
+	    int result = 0;
+
+	    // requestNunm = request_seq로 처리
+	    String sql = "INSERT INTO request(requestnum, userid, title, content, postdate)"
+	            + " VALUES (c##mapers.request_seq.nextval, ?, ?, ?, ?)";
+
+	    try {
+
+	    	conn = dataSource.getConnection();
+
+	        psmt = conn.prepareStatement(sql);
+	        psmt.setString(1, dto.getUserId());
+	        psmt.setString(2, dto.getTitle());
+	        psmt.setString(3, dto.getContent());
+	        psmt.setString(4, dto.getPostDate());
+
+	        result = psmt.executeUpdate();
+	        System.out.println("문의 글 저장 완료");
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        System.out.println("문의 글 작성 중 에러");
+	    } finally {
+	    	closeAll();
+	    }
+
+	    return result;
 	}
+
 	
 	// 마이 페이지, 문의 글 수정 - 박강필
 	public int editRequest(RequestDTO dto) {
 		int result = 0;
 		
-		String sql = "update request set title=?, content=?, where requestnum=?";
+		String sql = " update request set title = ?, content = ? where userid = ? and requestnum = ? ";
 		
 		try {
+
+			if (conn != null) {
+				conn.close();
+			}
 			
 			conn = dataSource.getConnection();
 			
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, dto.getTitle());
 			psmt.setString(2, dto.getContent());
-			psmt.setInt(3, dto.getRequestNum());
+			psmt.setString(3, dto.getUserId());
+			psmt.setInt(4, dto.getRequestNum());
 			
 			result = psmt.executeUpdate();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("문의 글 수정 중 Error");
-		}
+		} 
 		
 		return result;
 	}
@@ -244,6 +277,10 @@ public class RequestDAO {
 		String sql = "delete from request where requestnum=?";
 		
 		try {
+
+			if (conn != null) {
+				conn.close();
+			}
 			
 			conn = dataSource.getConnection();
 			
@@ -255,7 +292,7 @@ public class RequestDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("문의 글 삭제 중 Error");
-		}
+		} 
 		
 		return result;
 	}
@@ -266,6 +303,10 @@ public class RequestDAO {
 		String sql = "update request set hits = 1 where no=?";
 		
 		try {
+
+			if (conn != null) {
+				conn.close();
+			}
 			
 			conn = dataSource.getConnection();
 
@@ -277,42 +318,51 @@ public class RequestDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("게시글 조회 수 증가 중 Error");
-		}
+		} 
 	}
 	
 	// 마이 페이지, 문의사항 페이지 번호에 해당하는 게시물 리스트 조회 - 박강필
-	public ArrayList<RequestDTO> getAllList(PagingBean pagingBean) {
-		ArrayList<RequestDTO> rList = new ArrayList<RequestDTO>();
-		
-		String sql = " select r.*, p.userId "
-				   + " from ( "
-				   + " 		 select row_number() over(order by requestNum desc) as rnum, "
-				   + " 		 requestNum, title, status, to_char(postDate, 'YYYY-MM-DD') as postDate, userId "
-				   + " 		 from request "
-				   + " 		) request r, profile p "
-				   + " 		where r.userId = p.userId and rnum between ? and ? 		";
-		
-		try {
-			
-			conn = dataSource.getConnection();
-			
-			psmt = conn.prepareStatement(sql);
-			// start, endRowNumber 할당함
-			psmt.setInt(1, pagingBean.getStartRowNumber());
-			psmt.setInt(2, pagingBean.getEndRowNumber());
-			
-			rs = psmt.executeQuery();
-			while(rs.next()) {
-				ProfileDTO pDTO = new ProfileDTO();
-				pDTO.setUserId(rs.getString("userId"));
-				
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("문의사항 리스트 페이징 처리 중 Error");
-		}
-		
-		return rList;
+	public ArrayList<RequestDTO> getAllList(int pageNo, int postsPerPage, String userId) {
+	    ArrayList<RequestDTO> rList = new ArrayList<RequestDTO>();
+
+	    String sql = "SELECT * FROM ("
+	               + " SELECT a.*, ROWNUM rnum FROM ("
+	               + " 	SELECT * FROM request "
+	               + " 	WHERE userid = ? "
+	               + " 	ORDER BY requestnum DESC) a "
+	               + " WHERE ROWNUM <= ?) "
+	               + "WHERE rnum > ?";
+
+	    try {
+	    	
+	    	if (conn != null) {
+	    		conn.close();
+	    	}
+	    	
+	        conn = dataSource.getConnection();
+
+	        psmt = conn.prepareStatement(sql);
+	        psmt.setString(1, userId);
+	        psmt.setInt(2, pageNo * postsPerPage);
+	        psmt.setInt(3, (pageNo - 1) * postsPerPage);
+
+	        rs = psmt.executeQuery();
+	        while (rs.next()) {
+	            RequestDTO rDTO = new RequestDTO();
+	            
+	            rDTO.setRequestNum(rs.getInt("requestnum"));
+	            rDTO.setTitle(rs.getString("title"));
+	            rDTO.setStatus(rs.getInt("status"));
+	            rDTO.setPostDate(rs.getString("postdate"));
+
+	            rList.add(rDTO);
+	        }
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        System.out.println("문의 리스트 조회 중 Error(페이징 처리됨)");
+	    }
+
+	    return rList;
 	}
 }

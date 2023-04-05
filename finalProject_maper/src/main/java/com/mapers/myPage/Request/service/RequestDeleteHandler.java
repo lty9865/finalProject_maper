@@ -11,17 +11,19 @@ public class RequestDeleteHandler implements Controller {
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		request.setCharacterEncoding("UTF-8");
-		
-		HttpSession session = request.getSession(false);
-//		if (session == null || session.getAttribute("memberVO") == null) {
-//			return "redirect:index.jsp";
-//		}
-		
-		String requestNum = request.getParameter("no");
-		RequestDAO.getInstance().deleteRequest(Integer.parseInt(requestNum));
-		
-		return "redirect:/front/MyRequest?command=home";
-	}
+	    request.setCharacterEncoding("UTF-8");
 
+	    HttpSession session = request.getSession();
+	    String userId = (String) session.getAttribute("userId");
+	    session.setAttribute("userId", userId);
+
+	    String requestNum = request.getParameter("requestNum");
+	    RequestDAO.getInstance().deleteRequest(Integer.parseInt(requestNum));
+
+	    response.setContentType("text/plain");
+	    response.setCharacterEncoding("UTF-8");
+	    response.getWriter().write("success");
+
+	    return "/MyPage/Request/requestList.jsp";
+	}
 }

@@ -25,7 +25,7 @@ public class CheckRealAccountHandler implements Controller {
 
         ProfileDTO pDTO = ProfileDAO.getInstance().getProfile(userId, password);
         if (pDTO == null) {
-            request.setAttribute("msg", "비밀번호가 일치하지 않습니다.");
+            request.setAttribute("errMsg", "비밀번호가 일치하지 않습니다.");
             request.setAttribute("url", "${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyProfile.checkRealAccount");
             session.setAttribute("userId", userId);
 
