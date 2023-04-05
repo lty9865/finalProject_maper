@@ -1,22 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!-- 각종 링크 헤더 include -->
+<%@ include file="/Common/link.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<!-- 각종 링크 헤더 include -->
-<%@ include file="/Common/link.jsp"%>
 <title>Login</title>
 <script type="text/javascript" src="../../Resources/javascript/Member.js"></script>
 </head>
 <body class="maper-body-background">
+
 	<!-- header -->
-	<div class="maper-header">
-		<div class="maper-header-font">
-			<a class="maper-header-font-1" href="login.jsp">MAPER</a>
-		</div>
-	</div>
+	<%@ include file="/WEB-INF/views/Common/header.jsp"%>
+	
 	<!-- body -->
 	<form action="login.do" method="post" name="frm">
 		<div class="maper-body">
@@ -39,9 +36,9 @@
 							</div>
 						</div>
 						<div class="maper-login-labels">
-							<a href="../SignUp/Join.jsp">회원가입</a>&nbsp;&nbsp;&nbsp; <a
-								href="findID.jsp">아이디찾기</a>&nbsp;&nbsp;&nbsp; <a
-								href="findPassword.jsp">패스워드찾기</a>
+							<a href="Join.do">회원가입</a>&nbsp;&nbsp;&nbsp; <a
+								href="findID.do">아이디찾기</a>&nbsp;&nbsp;&nbsp; <a
+								href="findPassword.do">패스워드찾기</a>
 						</div>
 					</div>
 				</div>

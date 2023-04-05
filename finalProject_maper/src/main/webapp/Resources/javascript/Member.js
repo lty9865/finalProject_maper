@@ -19,10 +19,8 @@ function idCheck() {
 	if (document.frm.userid.value == "") {
 		alert("아이디를 입력하세요");
 		document.frm.userid.focus();
-		return;
+		return false;
 	}
-	var url = "../Member/IdCheck.do?userid=" + document.frm.userid.value;
-	window.open(url, "_blank_1", "toolbar=no, menubar=no, scrollbars=yes, resizable=no, width=450, height=200");
 }
 
 function idok() {

@@ -11,7 +11,7 @@
 
 		<body>
 			<h2>아이디 중복 확인</h2>
-			<form action="IdCheck.do" method="get" name="frm">
+			<form action="IdCheck.do" method="post" name="frm">
 
 				아이디 <input type="text" name="userid" value="${userid}">
 				<input type="submit" value="중복 체크"> <br>
