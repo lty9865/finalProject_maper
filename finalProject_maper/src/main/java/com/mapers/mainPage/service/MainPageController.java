@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.mapers.book.model.BookDTO;
 import com.mapers.common.Controller;
@@ -16,13 +17,16 @@ public class MainPageController implements Controller {
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		MainPageDAO dao = MainPageDAO.getInstance();
 
+		HttpSession session = request.getSession();
+		if (session.getAttribute("my") != null) {
+			session.removeAttribute("my");
+		}
+
 		String like = "LIKESCOUNT";
 		String last = "BOOKDATE";
 		List<BookDTO> popularBook = dao.searchBook(like);
 		List<BookDTO> searchBook = dao.searchBook(last);
 		List<NoticeDTO> mainNoticeList = dao.mainNotice();
-
-		dao.close();
 
 		request.setAttribute("popularBook", popularBook);
 		request.setAttribute("searchBook", searchBook);

@@ -59,10 +59,24 @@
 							<td>${ row.sfile }</td>
 							<c:if test="${ sessionScope.allow eq 1 }">
 								<td>
-									<a href="../Page/page.do?command=pageEditView&idx=${ row.pageNum }">[ 수정 ]</a>
+									<c:choose>
+										<c:when test="${ empty sessionScope.userId }">
+											<a href="#" onclick="emptySesssion()">[ 수정 ]</a>
+										</c:when>
+										<c:otherwise>
+											<a href="../Page/page.do?command=pageEditView&idx=${ row.pageNum }">[ 수정 ]</a>
+										</c:otherwise>
+									</c:choose>
 								</td>
 								<td>
-									<a href="#" onclick="pageDelete(${row.pageNum})">[ 삭제 ]</a>
+									<c:choose>
+										<c:when test="${ empty sessionScope.userId	 }">
+											<a href="#" onclick="emptySession()">[ 삭제 ]</a>
+										</c:when>
+										<c:otherwise>
+											<a href="#" onclick="pageDelete(${row.pageNum})">[ 삭제 ]</a>
+										</c:otherwise>
+									</c:choose>
 								</td>
 							</c:if>
 						</tr>
@@ -76,7 +90,14 @@
 			</tr>
 		</table>
 		<c:if test="${ sessionScope.allow eq 1 }">
-			<input type="button" onclick="location.href='../Page/page.do?command=pageWriteView';" value="페이지 작성하기">
+			<c:choose>
+				<c:when test="${ empty sessionScope.userId }">
+					<input type="button" onclick="emptySession()" value="페이지 작성하기">
+				</c:when>
+				<c:otherwise>
+					<input type="button" onclick="location.href='../Page/page.do?command=pageWriteView';" value="페이지 작성하기">
+				</c:otherwise>
+			</c:choose>
 		</c:if>
 		<input type="button" onclick="location.href='../Book/book.do?command=bookView&idx=${ bookDTO.bookNum }';" value="돌아가기">
 	</div>

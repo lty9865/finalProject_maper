@@ -15,6 +15,7 @@ public class NoticeDeleteController implements Controller {
 		NoticeDAO dao = NoticeDAO.getInstance();
 		int result = dao.deleteNotice(idx);
 
+		dao.close();
 		if (result == 1) {
 			System.out.println("공지사항 삭제를 성공하였습니다.");
 			request.setAttribute("url", "/Notice/notice.do?command=list");

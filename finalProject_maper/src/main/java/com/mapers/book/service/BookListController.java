@@ -29,7 +29,15 @@ public class BookListController implements Controller {
 			map.put("searchWord", searchWord);
 		}
 		HttpSession session = request.getSession();
-		String userId = (String) session.getAttribute("userId");
+
+		String mode = request.getParameter("mode");
+		String userId = null;
+		if( mode != null) {
+			if (mode.equals("my")) {
+				userId = (String) session.getAttribute("userId");
+				session.setAttribute("my", "my");
+			}
+		}
 
 		int totalCount = dao.countBook(map, userId);
 
@@ -50,10 +58,9 @@ public class BookListController implements Controller {
 		map.put("end", end);
 
 		List<BookDTO> bookList = dao.selectBookList(map, userId);
-		dao.close();
 
-		
-		String pagingImg = ListPage.pagingStr(totalCount, pageSize, blockPage, pageNums, "Book/book.do?command=bookList");
+		String pagingImg = ListPage.pagingStr(totalCount, pageSize, blockPage, pageNums,
+				"Book/book.do?command=bookList");
 		map.put("pagingImg", pagingImg);
 		map.put("totalCount", totalCount);
 		map.put("pageSize", pageSize);
@@ -62,11 +69,11 @@ public class BookListController implements Controller {
 		request.setAttribute("bookList", bookList);
 		request.setAttribute("map", map);
 		request.setAttribute("url", "/Book/book.do?command=bookList");
-		
-		if(request.getSession().getAttribute("dto") != null) {
-			request.getSession().removeAttribute("dto");
+
+		if (request.getSession().getAttribute("bookDTO") != null) {
+			request.getSession().removeAttribute("bookDTO");
 		}
-		if(request.getSession().getAttribute("allow") != null) {
+		if (request.getSession().getAttribute("allow") != null) {
 			request.getSession().removeAttribute("allow");
 		}
 

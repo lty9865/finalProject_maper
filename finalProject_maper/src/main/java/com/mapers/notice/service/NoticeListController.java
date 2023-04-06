@@ -53,8 +53,6 @@ public class NoticeListController implements Controller {
 		map.put("pageSize", pageSize);
 		map.put("pageNum", pageNum);
 
-		dao.close();
-
 		request.setAttribute("noticeLists", noticeLists);
 		request.setAttribute("map", map);
 		request.setAttribute("url", "/Notice/notice.do?command=list");

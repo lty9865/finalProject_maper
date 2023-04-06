@@ -53,7 +53,7 @@ public class NoticeDAO {
 		}
 
 		try {
-			if (conn != null) {
+			if(conn != null) {
 				conn.close();
 			}
 			conn = dataSource.getConnection();
@@ -74,7 +74,7 @@ public class NoticeDAO {
 		int result = 0;
 		String query = "INSERT INTO NOTICE (noticenum, title, content) VALUES (C##MAPERS.NOTICE_SEQ.NEXTVAL,?,?)";
 		try {
-			if (conn != null) {
+			if(conn != null) {
 				conn.close();
 			}
 			conn = dataSource.getConnection();
@@ -102,7 +102,7 @@ public class NoticeDAO {
 
 		query += " 			ORDER BY noticenum DESC " + " 	) Tb " + " ) " + " WHERE rNum BETWEEN ? AND ?";
 		try {
-			if (conn != null) {
+			if(conn != null) {
 				conn.close();
 			}
 			conn = dataSource.getConnection();
@@ -133,7 +133,7 @@ public class NoticeDAO {
 		String query = "SELECT * FROM NOTICE WHERE NOTICENUM=?";
 		NoticeDTO dto = new NoticeDTO();
 		try {
-			if (conn != null) {
+			if(conn != null) {
 				conn.close();
 			}
 			conn = dataSource.getConnection();
@@ -160,7 +160,7 @@ public class NoticeDAO {
 		String query = "UPDATE Notice SET " + " visitcount=visitcount+1 " + " WHERE NOTICENUM=?";
 
 		try {
-			if (conn != null) {
+			if(conn != null) {
 				conn.close();
 			}
 			conn = dataSource.getConnection();
@@ -178,7 +178,7 @@ public class NoticeDAO {
 		int result = 0;
 		String query = "UPDATE NOTICE" + " SET title=?, content=? WHERE NOTICENUM=?";
 		try {
-			if (conn != null) {
+			if(conn != null	) {
 				conn.close();
 			}
 			conn = dataSource.getConnection();
@@ -201,7 +201,7 @@ public class NoticeDAO {
 		int result = 0;
 		String query = "DELETE FROM NOTICE WHERE NOTICENUM=" + idx;
 		try {
-			if (conn != null) {
+			if(conn != null) {
 				conn.close();
 			}
 			conn = dataSource.getConnection();

@@ -8,20 +8,28 @@
 <title>Insert title here</title>
 </head>
 <body>
+
 	<p>
-		세션 :
-		<%=session.getAttribute("userId")%>
-		어플리케이션 :
-		<%=application.getAttribute("userId")%>
+		세션 : ${ sessionScope.userId } <br> 작성자: ${ bookDTO.userId } <br>
+		북넘버 : ${ bookDTO.bookNum } <br> 북제목 : ${ bookDTO.title } <br>
+		허용 : ${ sessionScope.allow } <br> 좋아요 : ${ bookDTO.likesCount } <br>
+		조회수 : ${ bookDTO.visitCount }<br> my: ${ sessionScope.my }
 	</p>
 
 	<!-- header -->
-	<%@ include file="../Common/header.jsp"%>
+	<%@ include file="/WEB-INF/views/Common/header.jsp"%>
 
 	<!-- body -->
 	<div class="maper-body">
 		<div class="table maper-body" id="pageTitle">
-			<h2>책 목록</h2>
+			<c:choose>
+				<c:when test="${ empty sessionScope.my }">
+					<h2>책장</h2>
+				</c:when>
+				<c:otherwise>
+					<h2>내 책장</h2>
+				</c:otherwise>
+			</c:choose>
 			<hr>
 		</div>
 		<div class="container text-center">
@@ -54,10 +62,49 @@
 				<td>${ map.pagingImg }</td>
 			</tr>
 		</table>
-		<input type="button" class="btn btn-primary"
-			onclick="location.href='../Book/book.do?command=bookWriteView';"
-			value="책작성하기">
+		<c:choose>
+			<c:when test="${ empty sessionScope.my }">
+				<form action="../Book/book.do?command=bookList" method="post">
+					<div class="input-group" style="margin-top: 10px;">
+						<select class="form-select circle" id="inputGroupSelect04"
+							aria-label="Example select with button addon" name="searchField">
+							<option value="title">제목</option>
+							<option value="place">장소</option>
+						</select> <input class="form-control" type="text" name="searchWord"
+							style="width: 75%" placeholder="검색어를 입력하세요." />
+						<button class="btn btn-outline-secondary circle" type="submit"
+							style="width: 10%">검색</button>
+					</div>
+				</form>
+			</c:when>
+			<c:otherwise>
+				<form action="../Book/book.do?command=bookList&mode=my"
+					method="post">
+					<div class="input-group" style="margin-top: 10px;">
+						<select class="form-select circle" id="inputGroupSelect04"
+							aria-label="Example select with button addon" name="searchField">
+							<option value="title">제목</option>
+							<option value="place">장소</option>
+						</select> <input class="form-control" type="text" name="searchWord"
+							style="width: 75%" placeholder="검색어를 입력하세요." />
+						<button class="btn btn-outline-secondary circle" type="submit"
+							style="width: 10%">검색</button>
+					</div>
+				</form>
+			</c:otherwise>
+		</c:choose>
+		<c:choose>
+			<c:when test="${ empty sessionScope.userId }">
+				<input type="button" class="btn btn-primary"
+					onclick="LoginConfirmed()" value="책작성하기">
+			</c:when>
+			<c:otherwise>
+				<input type="button" class="btn btn-primary"
+					onclick="location.href='../Book/book.do?command=bookWriteView';"
+					value="책작성하기">
+			</c:otherwise>
+		</c:choose>
 	</div>
-		<script type="text/javascript" src="../Resources/javascript/book.js"></script>
+	<script type="text/javascript" src="../Resources/javascript/book.js"></script>
 </body>
 </html>

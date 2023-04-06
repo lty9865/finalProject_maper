@@ -21,8 +21,10 @@
 	rel="stylesheet"
 	integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
 	crossorigin="anonymous">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/Resources/css/style.css">
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/Resources/css/style.css">
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/Common/LoginConfirmed.js"></script>
 </head>
 <body>
 	<script

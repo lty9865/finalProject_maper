@@ -11,76 +11,71 @@
 <body>
 
 	<!-- header -->
-	<%@ include file="/WEB-INF/views/Common/header.jsp" %>
-	
+	<%@ include file="/WEB-INF/views/Common/header.jsp"%>
+
 	<!-- body -->
 	<div class="table maper-body" id="pageTitle">
 		<h2>공지사항</h2>
 		<hr>
-	</div>
-	<table class="table maper-body">
-		<thead>
-			<tr align="center">
-				<th scope="col">No</th>
-				<th scope="col">제목</th>
-				<th scope="col">작성일</th>
-				<th scope="col">조회수</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:choose>
-				<c:when test="${ empty noticeLists }">
-					<tr>
-						<td colspan="4" align="center">등록된 게시물이 없습니다.</td>
-					</tr>
-				</c:when>
-				<c:otherwise>
-					<c:forEach items="${ noticeLists }" var="row" varStatus="loop">
-						<tr align="center">
-							<th scope="row">${ map.totalCount - (((map.pageNum-1)*map.pageSize)+loop.index) }</th>
-							<td><a href="../Notice/notice.do?command=view&idx=${ row.idx }">${ row.title }</a></td>
-							<td>${ row.postDate }</td>
-							<td>${ row.visitCount }</td>
+		<table class="table table-hover maper-body">
+			<thead>
+				<tr align="center">
+					<th scope="col">No</th>
+					<th scope="col">제목</th>
+					<th scope="col">작성일</th>
+					<th scope="col">조회수</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:choose>
+					<c:when test="${ empty noticeLists }">
+						<tr>
+							<td colspan="4" align="center">등록된 게시물이 없습니다.</td>
 						</tr>
-					</c:forEach>
-				</c:otherwise>
-			</c:choose>
-		</tbody>
-	</table>
-	<table class="table maper-body">
-		<tr align="center">
-			<td align="right">
-				<button type="button" class="btn btn-primary"
-					onclick="location.href='../Notice/notice.do?command=writeView';">글쓰기</button>
-			</td>
-		</tr>
-	</table>
-	<table class="table maper-body">
-		<tr align="center">
-			<td>${ map.pagingImg }</td>
-		</tr>
-	</table>
-	<!-- 검색 폼 -->
-	<form method="post" action="../Notice/notice.do?command=list">
+					</c:when>
+					<c:otherwise>
+						<c:forEach items="${ noticeLists }" var="row" varStatus="loop">
+							<tr align="center">
+								<th scope="row">${ map.totalCount - (((map.pageNum-1)*map.pageSize)+loop.index) }</th>
+								<td><a
+									href="../Notice/notice.do?command=view&idx=${ row.idx }">${ row.title }</a></td>
+								<td>${ row.postDate }</td>
+								<td>${ row.visitCount }</td>
+							</tr>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
+			</tbody>
+		</table>
+		<c:if test="${ sessionScope.admis eq 1}">
+			<table class="table maper-body">
+				<tr align="center">
+					<td align="right">
+						<button type="button" class="btn btn-primary"
+							onclick="NoticeListLoginConfirmed()">글쓰기</button>
+					</td>
+				</tr>
+			</table>
+		</c:if>
 		<table class="table maper-body">
-			<tr>
-				<td>
-					<div class="input-group mb-3">
-						<span class="input-group-text" id="inputGroup-sizing-default">
-							<select class="form-select" aria-label="Default select example"
-							name="searchField">
-								<option value="title" selected>제목</option>
-								<option value="content">내용</option>
-						</select>
-						</span> <input type="text" class="form-control"
-							aria-label="Sizing example input"
-							aria-describedby="inputGroup-sizing-default" name="searchWord">
-						<input class="input-group-text" type="submit" value="검색하기">
-					</div>
-				</td>
+			<tr align="center">
+				<td>${ map.pagingImg }</td>
 			</tr>
 		</table>
-	</form>
+		<!-- 검색 폼 -->
+		<form method="post" action="../Notice/notice.do?command=list">
+			<div class="input-group" style="margin-top: 10px;">
+				<select class="form-select circle" id="inputGroupSelect04"
+					aria-label="Example select with button addon">
+					<option value="title">제목</option>
+					<option value="place">장소</option>
+				</select> <input class="form-control" type="text" name="searchWord"
+					style="width: 75%" placeholder="검색어를 입력하세요." />
+				<button class="btn btn-outline-secondary circle" type="submit"
+					style="width: 10%">검색</button>
+			</div>
+		</form>
+	</div>
 	<script type="text/javascript" src="../Resources/javascript/notice.js"></script>
 </body>
 </html>

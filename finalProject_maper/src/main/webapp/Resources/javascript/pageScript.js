@@ -28,5 +28,24 @@ function pageBlank() {
 		pageWriteFrm.rate.focus();
 		return false;
 	}
+
+	// 수정
+	if (document.pageEditFrm.subTitle.value.length == 0) {
+		alert('부제목을 입력하세요.');
+		pageWriteFrm.subTitle.focus();
+		return false;
+	}
+
+	if (document.pageEditFrm.content.value.length == 0) {
+		alert('내용을 입력하세요.');
+		pageWriteFrm.content.focus();
+		return false;
+	}
+	if (document.pageEditFrm.rate.value.length == 0) {
+		alert('만족도를 입력하세요.');
+		pageWriteFrm.rate.focus();
+		return false;
+	}
+
 	return true;
 }

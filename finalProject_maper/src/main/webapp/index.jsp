@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
-session.setAttribute("userId", "green123");
+session.setAttribute("userId", "green4567");
+session.setAttribute("admins", "0");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,9 +11,7 @@ session.setAttribute("userId", "green123");
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <title>MAPER</title>
-<script type="text/javascript" src="../Common/LoginConfirmed.js">
-	
-</script>
+<script type="text/javascript" src="../Common/LoginConfirmed.js"></script>
 </head>
 <body>
 	<p>
@@ -23,7 +21,7 @@ session.setAttribute("userId", "green123");
 		<%=application.getAttribute("userId")%>
 	</p>
 
-	<a href="Login/login.jsp">로그인 페이지로 가기</a>
+	<a href="login.do">로그인 페이지로 가기</a>
 	<br>
 	<a href="Notice/notice.do" onclick="return LoginConfirmed()">공지사항
 		페이지로 가기</a>

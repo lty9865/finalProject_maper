@@ -22,19 +22,18 @@
 
 	<!-- body -->
 	<div class="maper-body">
-		<div align="center" class="mapers-main-inputbar">
-			<form action="../Book/book.do?command=bookList" method="post">
-				<select class="main-inputbar" style="width: 10%;" name="searchField">
+		<form action="../Book/book.do?command=bookList" method="post">
+			<div class="input-group" style="margin-top: 10px;">
+				<select class="form-select circle" id="inputGroupSelect04"
+					aria-label="Example select with button addon" name="searchField">
 					<option value="title">제목</option>
 					<option value="place">장소</option>
-				</select>
-				<input class="main-inputbar" style="width: 85%;" type="text" name="searchWord" />
-				<input type="submit" value="검색" />
-			</form>
-		</div>
-		<div style="width: 55%; margin: auto;">
-			<p>추천 검색어 : a b c d</p>
-		</div>
+				</select> <input class="form-control" type="text" name="searchWord"
+					style="width: 75%" placeholder="검색어를 입력하세요." />
+				<button class="btn btn-outline-secondary circle" type="submit"
+					style="width: 10%">검색</button>
+			</div>
+		</form>
 		<hr>
 		<div style="height: 400px">
 			<div id="carouselExampleCaptions" class="carousel slide">
@@ -127,6 +126,7 @@
 				</c:choose>
 			</div>
 		</div>
+		<br>
 		<!-- 최신글 -->
 		<h3>최신글</h3>
 		<hr>
@@ -155,33 +155,40 @@
 				</c:choose>
 			</div>
 		</div>
+		<br>
 		<!-- 공지사항 -->
 		<h3>공지사항</h3>
 		<hr>
-		<table border="1">
-			<tr>
-				<th>제목</th>
-				<th>작성자</th>
-				<th>조회수</th>
-				<th>작성일</th>
-			</tr>
-			<c:choose>
-				<c:when test="${ empty mainNoticeList }">
-					<tr>
-						<th colspan="7" align="center">게시물이 없습니다.</th>
-					</tr>
-				</c:when>
-				<c:otherwise>
-					<c:forEach items="${ mainNoticeList }" var="row" varStatus="loop">
+		<table border="1" class="table table-hover">
+			<thead>
+				<tr>
+					<th scope="col">제목</th>
+					<th scope="col">작성자</th>
+					<th scope="col">조회수</th>
+					<th scope="col">작성일</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:choose>
+					<c:when test="${ empty mainNoticeList }">
 						<tr>
-							<td>${ row.title }</td>
-							<td>관리자</td>
-							<td>${ row.visitCount }</td>
-							<td>${ row.postDate }</td>
+							<th colspan="7" align="center">게시물이 없습니다.</th>
 						</tr>
-					</c:forEach>
-				</c:otherwise>
-			</c:choose>
+					</c:when>
+					<c:otherwise>
+						<c:forEach items="${ mainNoticeList }" var="row" varStatus="loop">
+							<tr>
+								<td>
+									<a href="../Notice/notice.do?command=view&idx=${ row.idx }">${ row.title }</a>
+								</td>
+								<td>관리자</td>
+								<td>${ row.visitCount }</td>
+								<td>${ row.postDate }</td>
+							</tr>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
+			</tbody>
 		</table>
 	</div>
 	<hr>

@@ -25,7 +25,12 @@ public class PageListController implements Controller {
 		String searchField = request.getParameter("searchField");
 		String searchWord = request.getParameter("searchWord");
 		BookDTO dto = (BookDTO)request.getSession().getAttribute("bookDTO");
-		int idx = dto.getBookNum();
+		int idx = 0;
+		if(dto != null) {
+			idx = dto.getBookNum();
+		}else {
+			idx = Integer.parseInt(request.getParameter("idx"));
+		}
 		map.put("idx", idx);
 		if (searchWord != null) {
 			map.put("searchField", searchField);
@@ -57,8 +62,6 @@ public class PageListController implements Controller {
 		map.put("pageSize", pageSize);
 		map.put("pageNums", pageNums);
 
-		dao.close();
-		
 		request.setAttribute("pageList", pageList);
 		request.setAttribute("title", request.getAttribute("title"));
 		request.setAttribute("map", map);

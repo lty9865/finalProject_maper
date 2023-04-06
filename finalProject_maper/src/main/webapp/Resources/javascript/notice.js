@@ -14,7 +14,12 @@ function noticeBlank() {
 }
 
 function noticeDelete(idx) {
-	if (confirm('복원은 불가능합니다. 정말 삭제하시겠습니까?')) {
+	if (sessionStorage.getItem("userId") == null) {
+		alert("로그인이 필요한 서비스입니다.");
+		location.href = "${pageContext.request.contextPath}/Common/logOutProcess.jsp";
+		result = false;
+	}
+	else if (confirm('복원은 불가능합니다. 정말 삭제하시겠습니까?')) {
 		alert('삭제되었습니다.');
 		location.href = '../Notice/notice.do?command=delete&idx=' + idx;
 	}

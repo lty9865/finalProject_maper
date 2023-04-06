@@ -46,6 +46,7 @@ public class BookDAO {
 
 	// 북리스트 개수 세기 - 김연호
 	public int countBook(Map<String, Object> map, String userId) {
+
 		int totalCount = 0;
 
 		String query = "SELECT COUNT(*) FROM";
@@ -289,7 +290,7 @@ public class BookDAO {
 			pstmt.setString(1, userId);
 			pstmt.setInt(2, bookNum);
 			result = pstmt.executeUpdate();
-			updateLikesCount(bookNum);	
+			updateLikesCount(bookNum);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("좋아요 사용자 저장 중 예외 발생");

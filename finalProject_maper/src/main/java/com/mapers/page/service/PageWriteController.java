@@ -50,10 +50,10 @@ public class PageWriteController implements Controller {
 
 		PageDAO dao = PageDAO.getInstance();
 		int result = dao.insertPage(dto);
-		dao.close();
 
 		int idx = dto.getBookNum();
 		String title = request.getParameter("title");
+		dao.close();
 		if (result == 1) {
 			request.setAttribute("url", "/Page/page.do?command=pageList&idx=" + idx);
 			return "redirect:../Page/page.do?command=pageList&idx=" + idx;

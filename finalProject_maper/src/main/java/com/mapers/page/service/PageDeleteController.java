@@ -17,13 +17,13 @@ public class PageDeleteController implements Controller {
 			PageDAO dao = PageDAO.getInstance();
 			PageDTO dto = dao.selectPageView(idx);
 			int result = dao.deletePage(idx);
-			dao.close();
 
 			if (result == 1) {
 				String saveFileName = dto.getSfile();
 				FileUtil.deleteFile(request, "/Uploads/Page", saveFileName);
 				request.setAttribute("url", "/Page/page.do?command=pageList");
 			}
+			dao.close();
 
 		return "/Page/page.do?command=pageList";
 	}

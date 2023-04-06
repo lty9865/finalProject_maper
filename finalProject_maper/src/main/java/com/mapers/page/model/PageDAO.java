@@ -53,7 +53,7 @@ public class PageDAO {
 		}
 
 		try {
-			if (conn != null) {
+			if(conn != null) {
 				conn.close();
 			}
 			conn = dataSource.getConnection();
@@ -86,7 +86,7 @@ public class PageDAO {
 		query += "   ORDER BY PAGENUM DESC " + "  ) Tb " + " ) " + " WHERE rNUM BETWEEN ? AND ?";
 
 		try {
-			if (conn != null) {
+			if(conn != null) {
 				conn.close();
 			}
 			conn = dataSource.getConnection();
@@ -121,7 +121,7 @@ public class PageDAO {
 	public int insertPage(PageDTO dto) {
 		int result = 0;
 		try {
-			if (conn != null) {
+			if(conn != null) {
 				conn.close();
 			}
 			String query = "INSERT INTO PAGE(PAGENUM,BOOKNUM,TITLE,CONTENT,RATE,SFILE,OFILE)"
@@ -150,7 +150,7 @@ public class PageDAO {
 		PageDTO dto = new PageDTO();
 		String query = "SELECT * FROM PAGE WHERE PAGENUM=?";
 		try {
-			if (conn != null) {
+			if(conn != null) {
 				conn.close();
 			}
 			conn = dataSource.getConnection();
@@ -179,11 +179,11 @@ public class PageDAO {
 	// 지정한 일련번호의 게시물을 삭제합니다.
 	public int deletePage(int idx) {
 		int result = 0;
+		String query = "DELETE FROM PAGE WHERE PAGENUM=?";
 		try {
-			if (conn != null) {
+			if(conn != null) {
 				conn.close();
 			}
-			String query = "DELETE FROM PAGE WHERE PAGENUM=?";
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, idx);
@@ -198,11 +198,11 @@ public class PageDAO {
 	public int deleteAllPage(int bookNum) {
 		int result = 0;
 		int totalCount = 0;
+		String query = "SELECT COUNT(*) FROM PAGE WHERE BOOKNUM=?";
 		try {
-			if (conn != null) {
+			if(conn != null) {
 				conn.close();
 			}
-			String query = "SELECT COUNT(*) FROM PAGE WHERE BOOKNUM=?";
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, bookNum);
@@ -230,11 +230,11 @@ public class PageDAO {
 	// 지정한 페이지 게시물 수정 - 김연호
 	public int updatePage(PageDTO dto) {
 		int result = 0;
+		String query = "UPDATE PAGE" + " SET title=?, content=?, rate=?, ofile=?, sfile=?" + " WHERE PAGENUM=?";
 		try {
-			if (conn != null) {
+			if(conn != null	) {
 				conn.close();
 			}
-			String query = "UPDATE PAGE" + " SET title=?, content=?, rate=?, ofile=?, sfile=?" + " WHERE PAGENUM=?";
 
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(query);
@@ -259,12 +259,12 @@ public class PageDAO {
 	// 페이지 출력 시 리스트 업 - 김연호
 	public List<PageDTO> pageViewList(int idx) {
 		List<PageDTO> pageList = new Vector<PageDTO>();
+		String query = "SELECT * FROM PAGE WHERE BOOKNUM=? ORDER BY PAGENUM ASC";
 		try {
-			if (conn != null) {
+			if(conn != null) {
 				conn.close();
 			}
-			String query = "SELECT * FROM PAGE WHERE BOOKNUM=? ORDER BY PAGENUM ASC";
-
+			
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, idx);
@@ -294,11 +294,11 @@ public class PageDAO {
 	// 북 만족도 업데이트 - 김연호
 	public int updateRate(int bookNum) {
 		int result = 0;
+		String query = "UPDATE BOOK SET RATE=" + "(SELECT AVG(RATE) FROM PAGE WHERE BOOKNUM=?) WHERE BOOKNUM=?";
 		try {
-			if (conn != null) {
+			if(conn != null) {
 				conn.close();
 			}
-			String query = "UPDATE BOOK SET RATE=" + "(SELECT AVG(RATE) FROM PAGE WHERE BOOKNUM=?) WHERE BOOKNUM=?";
 
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(query);

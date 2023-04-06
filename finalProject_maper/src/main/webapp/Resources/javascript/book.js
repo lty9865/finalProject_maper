@@ -28,9 +28,32 @@ function bookBlank() {
 		bookWriteFrm.bookDate.focus();
 		return false;
 	}
-		if (document.bookWriteFrm.ofile.value.length == 0) {
+	if (document.bookWriteFrm.ofile.value.length == 0) {
 		alert('파일 첨부는 필수입니다.');
 		bookWriteFrm.ofile.focus();
+		return false;
+	}
+
+	// 수정
+	if (document.bookEditFrm.title.value.length == 0) {
+		alert('제목을 입력하세요.');
+		bookWriteFrm.title.focus();
+		return false;
+	}
+
+	if (document.bookEditFrm.country.value.length == 0) {
+		alert('국가를 입력하세요.');
+		bookWriteFrm.country.focus();
+		return false;
+	}
+	if (document.bookEditFrm.city.value.length == 0) {
+		alert('도시를 입력하세요.');
+		bookWriteFrm.city.focus();
+		return false;
+	}
+	if (document.bookEditFrm.bookDate.value.length == 0) {
+		alert('작성일자를 입력하세요.');
+		bookWriteFrm.bookDate.focus();
 		return false;
 	}
 	return true;

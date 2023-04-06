@@ -47,8 +47,9 @@ public class MainPageDAO {
 	// 만족도 값 조회 - 김연호
 	public double bookRate(int bookNum) {
 		double result = 0.0;
+		String query = "SELECT AVG(RATE) AS RATE , BOOKNUM FROM PAGE WHERE BOOKNUM=" + bookNum + "GROUP BY BOOKNUM";
+		
 		try {
-			String query = "SELECT AVG(RATE) AS RATE , BOOKNUM FROM PAGE WHERE BOOKNUM=" + bookNum + "GROUP BY BOOKNUM";
 			Connection conn = dataSource.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(query);
 			ResultSet rs = pstmt.executeQuery();

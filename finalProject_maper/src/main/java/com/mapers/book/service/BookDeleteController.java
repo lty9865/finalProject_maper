@@ -24,12 +24,12 @@ public class BookDeleteController implements Controller {
 		BookDTO dto = dao.selectBook(idx);
 		System.out.println("셀렉트 북 성공");
 		int result = dao.deleteBook(idx);
-		dao.close();
 		if (result == 1) {
 			String saveFileName = dto.getSfile();
 			FileUtil.deleteFile(request, "/Uploads/Book", saveFileName);
 		}
 		System.out.println("북 삭제 성공");
+		dao.close();
 
 		request.setAttribute("url", "/Book/book.do?command=bookList");
 		return "redirect:../Book/book.do?command=bookList";

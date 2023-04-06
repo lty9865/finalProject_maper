@@ -19,7 +19,6 @@ public class PageViewController implements Controller {
 		System.out.println(idx);
 
 		List<PageDTO> pageList = dao.pageViewList(idx);
-		dao.close();
 
 		request.setAttribute("pageList", pageList);
 		request.setAttribute("url", "/Page/page.do?command=pageView&idx=" + idx);
