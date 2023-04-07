@@ -15,7 +15,7 @@
 				<c:when test="${ empty sessionScope.userId }">
 					<div class="right maper-header-font-2" align="right">
 						<button type="button" class="btn btn-outline-primary" id="login"
-							onclick="location.href='${pageContext.request.contextPath}/Member/Login/login.jsp'">·Î±×ÀÎ</button>
+							onclick="location.href='${pageContext.request.contextPath}/Member/Login/login.jsp'">ë¡œê·¸ì¸</button>
 					</div>
 				</c:when>
 				<c:otherwise>
@@ -27,24 +27,24 @@
 								<ul class="dropdown-menu">
 									<c:choose>
 										<c:when test="${ empty sessionScope.userId }">
-											<li><a class="dropdown-item" onclick="LoginConfirmed()">¸¶ÀÌÆäÀÌÁö</a></li>
+											<li><a class="dropdown-item" onclick="LoginConfirmed()">ë§ˆì´íŽ˜ì´ì§€</a></li>
 										</c:when>
 										<c:otherwise>
-											<li><a class="dropdown-item" href="#">¸¶ÀÌÆäÀÌÁö</a></li>
+											<li><a class="dropdown-item" href="#">ë§ˆì´íŽ˜ì´ì§€</a></li>
 										</c:otherwise>
 									</c:choose>
 									<c:choose>
 										<c:when test="${ empty sessionScope.userId }">
-											<li><a class="dropdown-item" onclick="LoginConfirmed()">³» Ã¥Àå</a></li>
+											<li><a class="dropdown-item" onclick="LoginConfirmed()">ë‚´ ì±…ìž¥</a></li>
 										</c:when>
 										<c:otherwise>
 											<li><a class="dropdown-item"
-												href="../Book/book.do?command=bookList&mode=my">³» Ã¥Àå</a></li>
+												href="../Book/book.do?command=bookList&mode=my">ë‚´ ì±…ìž¥</a></li>
 										</c:otherwise>
 									</c:choose>
 									<li><hr class="dropdown-divider"></li>
 									<li><a class="dropdown-item"
-										href="${pageContext.request.contextPath}/Common/logOutProcess.jsp">·Î±×¾Æ¿ô</a></li>
+										href="${pageContext.request.contextPath}/Common/logOutProcess.jsp">ë¡œê·¸ì•„ì›ƒ</a></li>
 								</ul></li>
 						</ul>
 					</div>
