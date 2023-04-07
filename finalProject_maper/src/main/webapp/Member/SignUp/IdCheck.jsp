@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 </head>
 <body>
-	<form action="idCheck.do" method="get" name="frm">
+	<form action="IdCheck.do" method="get" name="frm">
 		아이디 <input type="text" name="userid" value="${userid}">
 		<input type="submit" value="중복 체크"> <br>
 		<c:if test="${result==1}">

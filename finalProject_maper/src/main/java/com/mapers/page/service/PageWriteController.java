@@ -19,6 +19,7 @@ public class PageWriteController implements Controller {
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String saveDirectory = request.getServletContext().getRealPath("/Uploads/Page");
+		System.out.println(saveDirectory);
 
 		ServletContext application = request.getSession().getServletContext();
 		int maxPostSize = Integer.parseInt(application.getInitParameter("maxPostSize"));
@@ -33,6 +34,7 @@ public class PageWriteController implements Controller {
 		dto.setSubTitle(mr.getParameter("subTitle"));
 		dto.setContent(mr.getParameter("content"));
 		dto.setRate(Integer.parseInt(mr.getParameter("rate")));
+		dto.setPostDate(mr.getParameter("pageDate"));
 
 		String fileName = mr.getFilesystemName("ofile");
 		if (fileName != null) {
@@ -53,7 +55,6 @@ public class PageWriteController implements Controller {
 
 		int idx = dto.getBookNum();
 		String title = request.getParameter("title");
-		dao.close();
 		if (result == 1) {
 			request.setAttribute("url", "/Page/page.do?command=pageList&idx=" + idx);
 			return "redirect:../Page/page.do?command=pageList&idx=" + idx;

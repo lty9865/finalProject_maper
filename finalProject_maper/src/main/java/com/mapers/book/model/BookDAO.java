@@ -71,6 +71,17 @@ public class BookDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("북리스트 개수 세기 중 예외 발생");
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return totalCount;
 	}
@@ -124,6 +135,17 @@ public class BookDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("북리스트 게시물 조회 중 예외 발생");
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return bookList;
 	}
@@ -156,8 +178,8 @@ public class BookDAO {
 //			}
 //		}
 
-		String query = "INSERT INTO BOOK(BOOKNUM,USERID,PLACE,BOOKDATE,TITLE,SFILE,OFILE) "
-				+ "VALUES(C##MAPERS.BOOK_SEQ.NEXTVAL,?,?,?,?,?,?)";
+		String query = "INSERT INTO BOOK(BOOKNUM,USERID,PLACE,TITLE,SFILE,OFILE) "
+				+ "VALUES(C##MAPERS.BOOK_SEQ.NEXTVAL,?,?,?,?,?)";
 
 		try {
 			if (conn != null) {
@@ -167,14 +189,24 @@ public class BookDAO {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, dto.getUserId());
 			pstmt.setString(2, dto.getCountry() + "/" + dto.getCity());
-			pstmt.setString(3, dto.getBookDate());
-			pstmt.setString(4, dto.getTitle());
-			pstmt.setString(5, dto.getSfile());
-			pstmt.setString(6, dto.getOfile());
+			pstmt.setString(3, dto.getTitle());
+			pstmt.setString(4, dto.getSfile());
+			pstmt.setString(5, dto.getOfile());
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("북 작성 중 예외 발생");
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return result;
 	}
@@ -210,6 +242,17 @@ public class BookDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("북 상세보기 중 예외 발생");
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 		return dto;
@@ -221,21 +264,31 @@ public class BookDAO {
 			if (conn != null) {
 				conn.close();
 			}
-			String query = "UPDATE BOOK SET TITLE=?, PLACE=?, BOOKDATE=?, OFILE=?, SFILE=? WHERE BOOKNUM=?";
+			String query = "UPDATE BOOK SET TITLE=?, PLACE=?, OFILE=?, SFILE=? WHERE BOOKNUM=?";
 
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, dto.getTitle());
 			pstmt.setString(2, (dto.getCountry() + "/" + dto.getCity()));
-			pstmt.setString(3, dto.getBookDate());
-			pstmt.setString(4, dto.getOfile());
-			pstmt.setString(5, dto.getSfile());
-			pstmt.setInt(6, dto.getBookNum());
+			pstmt.setString(3, dto.getOfile());
+			pstmt.setString(4, dto.getSfile());
+			pstmt.setInt(5, dto.getBookNum());
 
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("북 수정 중 예외 발생");
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 		return result;
@@ -256,10 +309,21 @@ public class BookDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("북 조회수 1증가 도중 예외 발생");
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
-	// 북 좋아요 + 1 및 사용자 저장
+	// 북 좋아요 + 1
 	public void updateLikesCount(int idx) {
 		String query = "UPDATE BOOK SET LIKESCOUNT = LIKESCOUNT + 1 WHERE BOOKNUM=?";
 
@@ -274,7 +338,115 @@ public class BookDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("북 좋아요 1증가 도중 예외 발생");
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
+	}
+
+	// 북 좋아요 - 1
+	public void deleteLikesCount(int idx) {
+		String query = "UPDATE BOOK SET LIKESCOUNT = LIKESCOUNT - 1 WHERE BOOKNUM=?";
+
+		try {
+			if (conn != null) {
+				conn.close();
+			}
+			conn = dataSource.getConnection();
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, idx);
+			pstmt.executeQuery();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("북 좋아요 1감소 도중 예외 발생");
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	// 현재 이용자가 해당 북에 좋아요를 했는지 확인 *0=없음 1=좋아요함
+	public int likeCheck(int bookNum, String userId) {
+		String query = "SELECT COUNT(*) FROM LIKELIST WHERE BOOKNUM=? AND USERID=?";
+		int result = 0;
+		try {
+			if (conn != null) {
+				conn.close();
+			}
+			conn = dataSource.getConnection();
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, bookNum);
+			pstmt.setString(2, userId);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				result = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("현재 이용자 해당 북에 좋아요 체크 도중 예외 발생");
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+
+	// 북 좋아요 취소
+	public int deleteLikeUser(int bookNum, String userId) {
+		int result = 0;
+		String query = "DELETE FROM LIKELIST WHERE BOOKNUM=? AND USERID=?";
+
+		try {
+			if (conn != null) {
+				conn.close();
+			}
+			conn = dataSource.getConnection();
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, bookNum);
+			pstmt.setString(2, userId);
+			result = pstmt.executeUpdate();
+			deleteLikesCount(bookNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("좋아요 취소 도중 예외 발생");
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return result;
 	}
 
 	// 북 좋아요 누른 사용자 DB 저장
@@ -294,11 +466,36 @@ public class BookDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("좋아요 사용자 저장 중 예외 발생");
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return result;
 	}
 
-	// 북리스트 삭제
+	public void deleteAllLikeList(int bookNum) {
+		String query = "DELETE FROM LIKELIST WHERE BOOKNUM=?";
+
+		try {
+			conn = dataSource.getConnection();
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, bookNum);
+			pstmt.executeQuery();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("삭제할 책 기준 좋아요 리스트 삭제");
+		}
+	}
+
+	// 북 삭제
 	public int deleteBook(int idx) {
 		int result = 0;
 		PageDAO pageDao = PageDAO.getInstance();
@@ -319,6 +516,17 @@ public class BookDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("북 삭제 중 예외 발생");
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 		return result;
@@ -339,6 +547,17 @@ public class BookDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("만족도 최신화 도중 예외 발생");
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 }

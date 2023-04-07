@@ -16,7 +16,6 @@ public class PageViewController implements Controller {
 		PageDAO dao = PageDAO.getInstance();
 
 		int idx = Integer.parseInt(request.getParameter("idx"));
-		System.out.println(idx);
 
 		List<PageDTO> pageList = dao.pageViewList(idx);
 

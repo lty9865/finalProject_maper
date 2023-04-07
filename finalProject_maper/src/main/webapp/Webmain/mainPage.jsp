@@ -2,21 +2,19 @@
 	pageEncoding="UTF-8"%>
 <!-- 각종 링크 헤더 include -->
 <%@ include file="../Common/link.jsp"%>
+<%
+response.setHeader("Pragma", "no-cache");
+response.setDateHeader("Expires", 0);
+response.setHeader("Cache-Control", "no-cache");
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <title>MAPER</title>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-<script type="text/javascript" src="/Common/LoginConfirmed.js"></script>
+<script type="text/javascript" src="../Common/LoginConfirmed.js"></script>
 </head>
 <body>
-	<p>
-		세션 :
-		<%=session.getAttribute("userId")%>
-		어플리케이션 :
-		<%=application.getAttribute("userId")%>
-	</p>
-
 	<!-- header -->
 	<%@ include file="/WEB-INF/views/Common/header.jsp"%>
 
@@ -35,7 +33,7 @@
 			</div>
 		</form>
 		<hr>
-		<div style="height: 400px">
+		<div style="height: 400px;">
 			<div id="carouselExampleCaptions" class="carousel slide">
 				<div class="carousel-indicators">
 					<button type="button" data-bs-target="#carouselExampleCaptions"
@@ -46,44 +44,56 @@
 					<button type="button" data-bs-target="#carouselExampleCaptions"
 						data-bs-slide-to="2" aria-label="Slide 3"></button>
 				</div>
-				<div class="carousel-inner">
-					<div class="carousel-item active">
-						<img src="../Resources/assets/img/thumnail/drink.jpg"
-							class="d-block w-100" alt="...">
-						<div class="carousel-caption d-none d-md-block">
-							<h1>Title</h1>
-							<p>place</p>
-							<p>date</p>
-							<p>Some representative placeholder content for the first
-								slide.</p>
-						</div>
-					</div>
-					<div class="carousel-item">
-						<img src="../Resources/assets/img/thumnail/notice.jpg"
-							class="d-block w-100" alt="...">
-						<div class="carousel-caption d-none d-md-block">
-							<h1>First slide label</h1>
-							<p>Some representative placeholder content for the first
-								slide.</p>
-							<p>Some representative placeholder content for the first
-								slide.</p>
-							<p>Some representative placeholder content for the first
-								slide.</p>
-						</div>
-					</div>
-					<div class="carousel-item">
-						<img src="../Resources/assets/img/thumnail/travel.jpg"
-							class="d-block w-100" alt="...">
-						<div class="carousel-caption d-none d-md-block">
-							<h1>First slide label</h1>
-							<p>Some representative placeholder content for the first
-								slide.</p>
-							<p>Some representative placeholder content for the first
-								slide.</p>
-							<p>Some representative placeholder content for the first
-								slide.</p>
-						</div>
-					</div>
+				<div class="carousel-inner" style="background-color: black;">
+					<c:choose>
+						<c:when test="${ empty popularBook }">
+							<div class="carousel-inner">
+								<div class="carousel-item active">
+									<img src="..." class="d-block w-100" alt="...">
+									<div class="carousel-caption d-none d-md-block">
+										<h1>게시물이 없습니다.</h1>
+									</div>
+								</div>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<c:forEach items="${ popularBook }" var="row" varStatus="loop"
+								begin="0" end="2" step="1">
+								<c:choose>
+									<c:when test="${loop.first}">
+										<div class="carousel-item active">
+											<img src="../Uploads/Book/${ row.sfile }"
+												style="opacity: 30%;" class="d-block w-100">
+											<div class="carousel-caption d-none d-md-block">
+												<h1>${ row.title }</h1>
+												<p>${ row.country }&nbsp;${ row.city }</p>
+												<p>${ row.bookDate }</p>
+												<p>${ row.visitCount }</p>
+												<a
+													href="../Book/book.do?command=bookView&idx=${ row.bookNum }"
+													class="btn btn-primary">보러가기</a>
+											</div>
+										</div>
+									</c:when>
+									<c:otherwise>
+										<div class="carousel-item">
+											<img src="../Uploads/Book/${ row.sfile }"
+												style="opacity: 30%;" class="d-block w-100">
+											<div class="carousel-caption d-none d-md-block">
+												<h1>${ row.title }</h1>
+												<p>${ row.country }&nbsp;${ row.city }</p>
+												<p>${ row.bookDate }</p>
+												<p>${ row.visitCount }</p>
+												<a
+													href="../Book/book.do?command=bookView&idx=${ row.bookNum }"
+													class="btn btn-primary">보러가기</a>
+											</div>
+										</div>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+						</c:otherwise>
+					</c:choose>
 				</div>
 				<button class="carousel-control-prev" type="button"
 					data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
@@ -98,35 +108,6 @@
 			</div>
 		</div>
 		<br> <br>
-		<!-- 인기글 -->
-		<h3>인기글</h3>
-		<hr>
-		<div class="container text-center">
-			<div class="row row-cols-auto">
-				<c:choose>
-					<c:when test="${ empty popularBook }">
-						<div class="col">게시물이 없습니다.</div>
-					</c:when>
-					<c:otherwise>
-						<c:forEach items="${ popularBook }" var="row" varStatus="loop">
-							<div class="col">
-								<div class="card" style="width: 18rem; margin: 0 auto 10px auto">
-									<img src="../Uploads/Book/${ row.sfile }" Style="height: 300px"
-										class="card-img-top" alt="..." id="mainMenu">
-									<div class="card-body">
-										<h5 class="card-title">${ row.title }</h5>
-										<a
-											href="../Book/book.do?command=bookView&idx=${ row.bookNum }"
-											class="btn btn-primary">Go somewhere</a>
-									</div>
-								</div>
-							</div>
-						</c:forEach>
-					</c:otherwise>
-				</c:choose>
-			</div>
-		</div>
-		<br>
 		<!-- 최신글 -->
 		<h3>최신글</h3>
 		<hr>
@@ -146,7 +127,7 @@
 										<h5 class="card-title">${ row.title }</h5>
 										<a
 											href="../Book/book.do?command=bookView&idx=${ row.bookNum }"
-											class="btn btn-primary">Go somewhere</a>
+											class="btn btn-primary">보러가기</a>
 									</div>
 								</div>
 							</div>
@@ -161,7 +142,7 @@
 		<hr>
 		<table border="1" class="table table-hover">
 			<thead>
-				<tr>
+				<tr align="center">
 					<th scope="col">제목</th>
 					<th scope="col">작성자</th>
 					<th scope="col">조회수</th>
@@ -177,13 +158,13 @@
 					</c:when>
 					<c:otherwise>
 						<c:forEach items="${ mainNoticeList }" var="row" varStatus="loop">
-							<tr>
-								<td>
-									<a href="../Notice/notice.do?command=view&idx=${ row.idx }">${ row.title }</a>
+							<tr align="center">
+								<td width="25%;"><a
+									href="../Notice/notice.do?command=view&idx=${ row.idx }">${ row.title }</a>
 								</td>
-								<td>관리자</td>
-								<td>${ row.visitCount }</td>
-								<td>${ row.postDate }</td>
+								<td width="25%;">관리자</td>
+								<td width="25%;">${ row.visitCount }</td>
+								<td width="25%;">${ row.postDate }</td>
 							</tr>
 						</c:forEach>
 					</c:otherwise>

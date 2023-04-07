@@ -40,7 +40,6 @@ public class BookWriteController1 implements Controller {
 		dto.setTitle(mr.getParameter("title"));
 		dto.setCountry(mr.getParameter("country"));
 		dto.setCity(mr.getParameter("city"));
-		dto.setBookDate(mr.getParameter("bookDate"));
 
 		// 원본 파일명과 저장된 파일 이름 설정
 		String fileName = mr.getFilesystemName("ofile");
@@ -61,7 +60,6 @@ public class BookWriteController1 implements Controller {
 
 		BookDAO dao = BookDAO.getInstance();
 		int result = dao.insertBook(dto);
-		dao.close();
 
 		if (result == 1) {
 			request.setAttribute("url", "/Book/book.do?command=bookList");

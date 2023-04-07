@@ -2,7 +2,6 @@
 
 body{
 	overflow:hidden;
-	background-color:#fcfcfc;
 	margin:0;
 	padding:0;
 }
@@ -28,7 +27,7 @@ body{
 }
 
 .flipbook-viewport .page{
-	width:461px;
+	width:-461px;
 	height:600px;
 	background-color:white;
 	background-repeat:no-repeat;
@@ -64,4 +63,26 @@ body{
 	-o-box-shadow:0 0 20px #ccc;
 	-ms-box-shadow:0 0 20px #ccc;
 	box-shadow:0 0 20px #ccc;
+}
+
+.flipbook .even .gradient{
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	background-image:url(../pics/right-border.png);
+	background-position:right top;
+	background-repeat: repeat-y;
+}
+
+.flipbook .odd .gradient{
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	background-image:url(../pics/left-border.png);
+	background-position:left top;
+	background-repeat: repeat-y;
 }

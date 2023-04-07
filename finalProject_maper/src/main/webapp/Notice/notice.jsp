@@ -9,7 +9,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
 	<!-- header -->
 	<%@ include file="/WEB-INF/views/Common/header.jsp"%>
 

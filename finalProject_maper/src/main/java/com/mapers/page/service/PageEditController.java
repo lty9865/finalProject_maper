@@ -38,7 +38,7 @@ public class PageEditController implements Controller {
 
 		String title = mr.getParameter("subTitle");
 		String content = mr.getParameter("content");
-		String postDate = mr.getParameter("postDate");
+		String postDate = mr.getParameter("pageDate");
 		int rate = Integer.parseInt(mr.getParameter("rate"));
 
 		PageDTO dto = new PageDTO();
@@ -69,7 +69,6 @@ public class PageEditController implements Controller {
 
 		PageDAO dao = PageDAO.getInstance();
 		int result = dao.updatePage(dto);
-		dao.close();
 
 		if (result == 1) {
 			request.setAttribute("url", "/Page/page.do?command=pageEdit&idx=" + bookNum);

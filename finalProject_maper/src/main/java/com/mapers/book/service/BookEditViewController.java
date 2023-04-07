@@ -14,13 +14,17 @@ public class BookEditViewController implements Controller {
 
 		BookDTO bookDTO = (BookDTO) request.getSession().getAttribute("bookDTO");
 
-		int idx = bookDTO.getBookNum();
-		BookDAO dao = BookDAO.getInstance();
-		BookDTO dto = dao.selectBook(idx);
-		request.setAttribute("dto", dto);
-		request.setAttribute("url", "/Book/book.do?command=bookEditView");
-
-		return "/Book/bookEdit.jsp";
+		if(bookDTO == null) {
+			return "/Common/logOutProcess.jsp";
+		}else {
+			int idx = bookDTO.getBookNum();
+			BookDAO dao = BookDAO.getInstance();
+			BookDTO dto = dao.selectBook(idx);
+			request.setAttribute("dto", dto);
+			request.setAttribute("url", "/Book/book.do?command=bookEditView");
+			
+			return "/Book/bookEdit.jsp";
+		}
 	}
 
 }

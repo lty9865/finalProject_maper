@@ -7,7 +7,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.mapers.book.model.BookDAO;
+import com.mapers.book.model.BookDTO;
 import com.mapers.common.Controller;
 
 @WebServlet("/Book/book.do")
@@ -27,8 +30,41 @@ public class DispatcherServlet extends HttpServlet {
 		// Post 방식 한글 처리
 		request.setCharacterEncoding("UTF-8");
 
-		// handlerRequest method 호출
-		this.HandleRequest(request, response);
+		// 좋아요 기능
+		if (request.getParameter("command").equals("like")) {
+			HttpSession session = request.getSession();
+			BookDTO bookDTO = (BookDTO) session.getAttribute("bookDTO");
+			BookDAO dao = BookDAO.getInstance();
+			if (bookDTO == null) {
+				response.sendRedirect("/Common/logOutProcess.jsp");
+			} else {
+
+				int bookNum = bookDTO.getBookNum();
+				String userId = (String) session.getAttribute("userId");
+				int likeCheck = (int) session.getAttribute("likeCheck");
+
+				int likeCount = bookDTO.getLikesCount();
+				if (likeCheck == 0) {
+					dao.insertLikeUser(bookNum, userId);
+					likeCount += 1;
+					response.getWriter().print(likeCount);
+					session.removeAttribute("likeCheck");
+					session.setAttribute("likeCheck", 1);
+				} else {
+					dao.deleteLikeUser(bookNum, userId);
+					likeCount -= 1;
+					response.getWriter().print(likeCount);
+					session.removeAttribute("likeCheck");
+					session.setAttribute("likeCheck", 0);
+				}
+				bookDTO.setLikesCount(likeCount);
+			}
+
+		} else {
+
+			// handlerRequest method 호출
+			this.HandleRequest(request, response);
+		}
 	}
 
 	/*

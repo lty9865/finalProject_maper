@@ -8,11 +8,14 @@
 <title>Insert title here</title>
 </head>
 <body>
-
 	<!-- header -->
 	<%@ include file="/WEB-INF/views/Common/header.jsp"%>
 
 	<!-- body -->
+	<div class="table maper-body" id="pageTitle">
+		<h2>공지사항</h2>
+		<hr>
+	</div>
 	<form action="../Notice/notice.do?command=editView&idx=${ param.idx }"
 		method="post">
 		<table class="maper-body table table-striped-columns">
@@ -63,12 +66,12 @@
 		</table>
 	</form>
 	<script type="text/javascript" src="../Resources/javascript/notice.js"></script>
-		<c:if test="${ empty sessionScope.userId }">
+	<c:if test="${ empty sessionScope.userId }">
 		<script type="text/javascript">
 			function CheckSession() {
 				if (sessionStorage.getItem("userId") == null) {
 					alert("로그인 정보가 만료되어 로그인페이지로 이동합니다.");
-					window.location = "/finalProject_maper_local/Common/logOutProcess.jsp";
+					window.location = "/Common/logOutProcess.jsp";
 				}
 			}
 

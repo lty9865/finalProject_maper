@@ -48,22 +48,16 @@ public class MainPageDAO {
 	public double bookRate(int bookNum) {
 		double result = 0.0;
 		String query = "SELECT AVG(RATE) AS RATE , BOOKNUM FROM PAGE WHERE BOOKNUM=" + bookNum + "GROUP BY BOOKNUM";
-		
+
 		try {
-			Connection conn = dataSource.getConnection();
+			if (conn == null) {
+				conn = dataSource.getConnection();
+			}
 			PreparedStatement pstmt = conn.prepareStatement(query);
 			ResultSet rs = pstmt.executeQuery();
 			if (rs.next()) {
 				result = rs.getDouble("RATE");
 			}
-
-			if (rs != null)
-				rs.close();
-			if (pstmt != null)
-				pstmt.close();
-			if (conn != null)
-				conn.close();
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("만족도 평균 값 조회 중 예외 발생");
@@ -115,7 +109,9 @@ public class MainPageDAO {
 		String query = "SELECT * FROM (SELECT * FROM NOTICE ORDER BY POSTDATE DESC) WHERE ROWNUM <= 3 ORDER BY NOTICENUM DESC";
 
 		try {
-			conn = dataSource.getConnection();
+			if (conn == null) {
+				conn = dataSource.getConnection();
+			}
 			pstmt = conn.prepareStatement(query);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {

@@ -23,7 +23,6 @@ public class PageDeleteController implements Controller {
 				FileUtil.deleteFile(request, "/Uploads/Page", saveFileName);
 				request.setAttribute("url", "/Page/page.do?command=pageList");
 			}
-			dao.close();
 
 		return "/Page/page.do?command=pageList";
 	}

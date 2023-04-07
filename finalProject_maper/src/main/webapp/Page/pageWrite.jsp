@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="../Common/link.jsp"%>
+<%
+response.setHeader("Pragma", "no-cache");
+response.setDateHeader("Expires", 0);
+response.setHeader("Cache-Control", "no-cache");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,13 +15,6 @@
 	href="${pageContext.request.contextPath}/Resources/css/star.css">
 </head>
 <body>
-	<p>
-		세션 : ${ sessionScope.userId } <br> 작성자: ${ bookDTO.userId } <br>
-		북넘버 : ${ bookDTO.bookNum } <br> 북제목 : ${ bookDTO.title } <br>
-		허용 : ${ sessionScope.allow } <br> 좋아요 : ${ bookDTO.likesCount } <br>
-		조회수 : ${ bookDTO.visitCount }
-	</p>
-
 	<!-- header -->
 	<%@ include file="/WEB-INF/views/Common/header.jsp"%>
 
@@ -35,10 +33,18 @@
 					<label class="main-inputbar">제목&nbsp;&nbsp;</label> <label
 						class="main-inputbar" style="width: 85%; padding-left: 20px;">${ bookDTO.title }</label>
 				</div>
-				<div class="mapers-book-inputbar" style="padding-left: 20px;">
-					<label class="main-inputbar" for="subTitle">부제목</label> <input
-						class="main-inputbar" style="width: 85%; padding-left: 20px;"
-						type="text" id="subTitle" name="subTitle">
+				<div class="parent">
+					<div class="mapers-book-inputbar child" style="padding-left: 20px;">
+						<label class="main-inputbar" for="subTitle">부제목</label> <input
+							class="main-inputbar" style="width: 80%; padding-left: 10px;"
+							type="text" id="subTitle" name="subTitle">
+					</div>
+					&nbsp;
+					<div class="mapers-book-inputbar child" style="padding-left: 20px;">
+						<label class="main-inputbar" for="date">일자</label> <input
+							class="main-inputbar" style="width: 80%; padding-left: 20px;"
+							type="date" id="date" name="pageDate">
+					</div>
 				</div>
 				<div class="input-group mb-3" id="fileUploads">
 					<label class="input-group-text" for="inputGroupFile01">Upload</label>
@@ -55,10 +61,12 @@
 					</div>
 				</div>
 				<div class="mapers-book-inputbar">
-					<textarea rows="20" cols="80" class="main-inputbar"
-						style="margin-left: 20px;" name="content"></textarea>
+					<textarea class="main-inputbar"
+						style="margin: 0 auto 0 10px; width: 780px; height: 300px; resize: none;"
+						name="content" maxlength="200"></textarea>
 				</div>
 			</div>
+			<br>
 			<c:choose>
 				<c:when test="${ empty sessionScope.userId }">
 					<button type="button" class="btn btn-primary"
@@ -75,7 +83,7 @@
 				</c:when>
 				<c:otherwise>
 					<button type="button" class="btn btn-primary"
-						onclick="location.href='../Page/page.do?command=pageList&idx=${ bookDTO.bookNum }';">돌아가기</button>
+						onclick="location.href='../Book/book.do?command=bookView&idx=${ bookDTO.bookNum }';">돌아가기</button>
 				</c:otherwise>
 			</c:choose>
 		</form>
@@ -88,7 +96,7 @@
 			function CheckSession() {
 				if (sessionStorage.getItem("userId") == null) {
 					alert("로그인 정보가 만료되어 로그인페이지로 이동합니다.");
-					window.location = "/finalProject_maper_local/Common/logOutProcess.jsp";
+					window.location = "/Common/logOutProcess.jsp";
 				}
 			}
 

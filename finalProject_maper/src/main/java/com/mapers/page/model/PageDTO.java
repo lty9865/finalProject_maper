@@ -7,8 +7,17 @@ public class PageDTO {
 	private String content;
 	private String postDate;
 	private int rate;
+	private int percent;
 	private String sfile;
 	private String ofile;
+
+	public int getPercent() {
+		return percent;
+	}
+
+	public void setPercent(int rate) {
+		this.percent = (int) ((double) rate / 5.0 * 100);
+	}
 
 	public int getPageNum() {
 		return pageNum;

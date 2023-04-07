@@ -32,7 +32,7 @@ public class BookListController implements Controller {
 
 		String mode = request.getParameter("mode");
 		String userId = null;
-		if( mode != null) {
+		if (mode != null) {
 			if (mode.equals("my")) {
 				userId = (String) session.getAttribute("userId");
 				session.setAttribute("my", "my");
@@ -75,6 +75,9 @@ public class BookListController implements Controller {
 		}
 		if (request.getSession().getAttribute("allow") != null) {
 			request.getSession().removeAttribute("allow");
+		}
+		if (request.getSession().getAttribute("likeCheck") != null) {
+			request.getSession().removeAttribute("likeCheck");
 		}
 
 		return "/Book/book.jsp";

@@ -9,7 +9,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
 	<!-- header -->
 	<%@ include file="/WEB-INF/views/Common/header.jsp"%>
 
@@ -46,7 +45,7 @@
 			function CheckSession() {
 				if (sessionStorage.getItem("userId") == null) {
 					alert("로그인 정보가 만료되어 로그인페이지로 이동합니다.");
-					window.location = "/finalProject_maper_local/Common/logOutProcess.jsp";
+					window.location = "/Common/logOutProcess.jsp";
 				}
 			}
 

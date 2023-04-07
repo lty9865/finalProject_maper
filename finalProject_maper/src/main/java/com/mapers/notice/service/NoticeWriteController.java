@@ -19,7 +19,6 @@ public class NoticeWriteController implements Controller {
 		NoticeDAO dao = NoticeDAO.getInstance();
 		int result = dao.insertNotice(dto);
 		
-		dao.close();
 		if(result == 1) {
 			System.out.println("공지사항을 성공적으로 등록하였습니다.");
 			request.setAttribute("url", "/Notice/notice.do?command=list");

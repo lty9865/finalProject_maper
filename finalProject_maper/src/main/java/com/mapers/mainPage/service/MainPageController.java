@@ -32,6 +32,8 @@ public class MainPageController implements Controller {
 		request.setAttribute("searchBook", searchBook);
 		request.setAttribute("mainNoticeList", mainNoticeList);
 		request.setAttribute("url", "/Webmain/mainPage.do?command=main");
+		
+		dao.close();
 
 		return "/Webmain/mainPage.jsp";
 	}

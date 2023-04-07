@@ -39,7 +39,6 @@ public class BookEditController implements Controller {
 		String title = mr.getParameter("title");
 		String country = mr.getParameter("country");
 		String city = mr.getParameter("city");
-		String bookDate = mr.getParameter("bookDate");
 		String prevOfile = mr.getParameter("prevOfile");
 		String prevSfile = mr.getParameter("prevSfile");
 
@@ -48,7 +47,6 @@ public class BookEditController implements Controller {
 		dto.setTitle(title);
 		dto.setCountry(country);
 		dto.setCity(city);
-		dto.setBookDate(bookDate);
 
 		// 원본 파일명과 저장된 파일 이름 설정
 		String fileName = mr.getFilesystemName("ofile");
@@ -74,7 +72,6 @@ public class BookEditController implements Controller {
 
 		BookDAO dao = BookDAO.getInstance();
 		int result = dao.updateBook(dto);
-		dao.close();
 
 		if (result == 1) {
 			request.setAttribute("url", "/Book/book.do?command=bookList");

@@ -27,7 +27,10 @@ public class BookViewController1 implements Controller {
 			}
 		}
 
+		int likeCheck = dao.likeCheck(idx, userId);
+
 		request.getSession().setAttribute("bookDTO", dto);
+		request.getSession().setAttribute("likeCheck", likeCheck);
 		request.setAttribute("url", "/Book/book.do?command=bookView&idx=" + idx);
 
 		return "/Book/bookView.jsp";

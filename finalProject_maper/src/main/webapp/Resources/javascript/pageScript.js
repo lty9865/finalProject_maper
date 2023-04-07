@@ -23,6 +23,11 @@ function pageBlank() {
 		pageWriteFrm.content.focus();
 		return false;
 	}
+	if (document.pageWriteFrm.content.value.length > 500) {
+		alert('너무 많은 내용을 입력하셨습니다.', '현재 ' + document.pageWriteFrm.content.value.length);
+		pageWriteFrm.content.focus();
+		return false;
+	}
 	if (document.pageWriteFrm.rate.value.length == 0) {
 		alert('만족도를 입력하세요.');
 		pageWriteFrm.rate.focus();

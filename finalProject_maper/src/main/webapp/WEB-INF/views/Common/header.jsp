@@ -9,7 +9,7 @@
 		<div class="maper-header-font">
 			<div class="left">
 				<a class="maper-header-font-1"
-					href="/finalProject_maper_local/Webmain/mainPage.do?command=main">MAPER</a>
+					href="${pageContext.request.contextPath}/Webmain/mainPage.do?command=main">MAPER</a>
 			</div>
 			<c:choose>
 				<c:when test="${ empty sessionScope.userId }">
@@ -35,7 +35,8 @@
 									</c:choose>
 									<c:choose>
 										<c:when test="${ empty sessionScope.userId }">
-											<li><a class="dropdown-item" onclick="LoginConfirmed()">내 책장</a></li>
+											<li><a class="dropdown-item" onclick="LoginConfirmed()">내
+													책장</a></li>
 										</c:when>
 										<c:otherwise>
 											<li><a class="dropdown-item"

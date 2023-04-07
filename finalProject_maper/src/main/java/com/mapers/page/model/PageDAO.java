@@ -40,6 +40,17 @@ public class PageDAO {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -53,7 +64,7 @@ public class PageDAO {
 		}
 
 		try {
-			if(conn != null) {
+			if (conn != null) {
 				conn.close();
 			}
 			conn = dataSource.getConnection();
@@ -65,6 +76,17 @@ public class PageDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("페이지 목록 조회 중 예외 발생");
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 		return totalCount;
@@ -86,7 +108,7 @@ public class PageDAO {
 		query += "   ORDER BY PAGENUM DESC " + "  ) Tb " + " ) " + " WHERE rNUM BETWEEN ? AND ?";
 
 		try {
-			if(conn != null) {
+			if (conn != null) {
 				conn.close();
 			}
 			conn = dataSource.getConnection();
@@ -104,6 +126,7 @@ public class PageDAO {
 				dto.setContent(rs.getString("CONTENT"));
 				dto.setPostDate(rs.getString("PAGEDATE"));
 				dto.setRate(rs.getInt("RATE"));
+				dto.setPercent(rs.getInt("RATE"));
 				dto.setSfile(rs.getString("SFILE"));
 				dto.setOfile(rs.getString("OFILE"));
 
@@ -112,6 +135,17 @@ public class PageDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("선택 게시물 조회 중 예외 발생");
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 		return pageList;
@@ -121,11 +155,11 @@ public class PageDAO {
 	public int insertPage(PageDTO dto) {
 		int result = 0;
 		try {
-			if(conn != null) {
+			if (conn != null) {
 				conn.close();
 			}
-			String query = "INSERT INTO PAGE(PAGENUM,BOOKNUM,TITLE,CONTENT,RATE,SFILE,OFILE)"
-					+ " VALUES(C##MAPERS.PAGE_SEQ.NEXTVAL,?,?,?,?,?,?)";
+			String query = "INSERT INTO PAGE(PAGENUM,BOOKNUM,TITLE,CONTENT,RATE,SFILE,OFILE,PAGEDATE)"
+					+ " VALUES(C##MAPERS.PAGE_SEQ.NEXTVAL,?,?,?,?,?,?,?)";
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, dto.getBookNum());
@@ -134,12 +168,24 @@ public class PageDAO {
 			pstmt.setDouble(4, dto.getRate());
 			pstmt.setString(5, dto.getSfile());
 			pstmt.setString(6, dto.getOfile());
+			pstmt.setString(7, dto.getPostDate());
 			result = pstmt.executeUpdate();
 
 			updateRate(dto.getBookNum());
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("페이지 입력 중 예외 발생");
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 		return result;
@@ -150,7 +196,7 @@ public class PageDAO {
 		PageDTO dto = new PageDTO();
 		String query = "SELECT * FROM PAGE WHERE PAGENUM=?";
 		try {
-			if(conn != null) {
+			if (conn != null) {
 				conn.close();
 			}
 			conn = dataSource.getConnection();
@@ -165,12 +211,24 @@ public class PageDAO {
 				dto.setContent(rs.getString("CONTENT"));
 				dto.setPostDate(rs.getString("PAGEDATE"));
 				dto.setRate(rs.getInt("RATE"));
+				dto.setPercent(rs.getInt("RATE"));
 				dto.setOfile(rs.getString("OFILE"));
 				dto.setSfile(rs.getString("SFILE"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("페이지 게시물 조회 중 예외 발생");
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 		return dto;
@@ -181,7 +239,7 @@ public class PageDAO {
 		int result = 0;
 		String query = "DELETE FROM PAGE WHERE PAGENUM=?";
 		try {
-			if(conn != null) {
+			if (conn != null) {
 				conn.close();
 			}
 			conn = dataSource.getConnection();
@@ -191,6 +249,17 @@ public class PageDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("페이지 삭제 중 예외 발생");
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return result;
 	}
@@ -200,7 +269,7 @@ public class PageDAO {
 		int totalCount = 0;
 		String query = "SELECT COUNT(*) FROM PAGE WHERE BOOKNUM=?";
 		try {
-			if(conn != null) {
+			if (conn != null) {
 				conn.close();
 			}
 			conn = dataSource.getConnection();
@@ -222,6 +291,17 @@ public class PageDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 		return result;
@@ -230,9 +310,9 @@ public class PageDAO {
 	// 지정한 페이지 게시물 수정 - 김연호
 	public int updatePage(PageDTO dto) {
 		int result = 0;
-		String query = "UPDATE PAGE" + " SET title=?, content=?, rate=?, ofile=?, sfile=?" + " WHERE PAGENUM=?";
+		String query = "UPDATE PAGE" + " SET title=?, content=?, rate=?, ofile=?, sfile=?, PAGEDATE=?" + " WHERE PAGENUM=?";
 		try {
-			if(conn != null	) {
+			if (conn != null) {
 				conn.close();
 			}
 
@@ -243,7 +323,8 @@ public class PageDAO {
 			pstmt.setInt(3, dto.getRate());
 			pstmt.setString(4, dto.getOfile());
 			pstmt.setString(5, dto.getSfile());
-			pstmt.setInt(6, dto.getPageNum());
+			pstmt.setString(6, dto.getPostDate());
+			pstmt.setInt(7, dto.getPageNum());
 
 			result = pstmt.executeUpdate();
 
@@ -251,6 +332,17 @@ public class PageDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("페이지 게시물 수정 중 예외 발생");
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 		return result;
@@ -261,10 +353,10 @@ public class PageDAO {
 		List<PageDTO> pageList = new Vector<PageDTO>();
 		String query = "SELECT * FROM PAGE WHERE BOOKNUM=? ORDER BY PAGENUM ASC";
 		try {
-			if(conn != null) {
+			if (conn != null) {
 				conn.close();
 			}
-			
+
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, idx);
@@ -278,6 +370,7 @@ public class PageDAO {
 				dto.setContent(rs.getString("CONTENT"));
 				dto.setPostDate(rs.getString("PAGEDATE"));
 				dto.setRate(rs.getInt("RATE"));
+				dto.setPercent(rs.getInt("RATE"));
 				dto.setSfile(rs.getString("SFILE"));
 				dto.setOfile(rs.getString("OFILE"));
 
@@ -286,6 +379,17 @@ public class PageDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("페이지 책 출력 중 예외 발생");
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 		return pageList;
@@ -296,7 +400,7 @@ public class PageDAO {
 		int result = 0;
 		String query = "UPDATE BOOK SET RATE=" + "(SELECT AVG(RATE) FROM PAGE WHERE BOOKNUM=?) WHERE BOOKNUM=?";
 		try {
-			if(conn != null) {
+			if (conn != null) {
 				conn.close();
 			}
 
@@ -308,6 +412,17 @@ public class PageDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("북 만족도 업데이트 중 예외 발생");
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 		return result;
