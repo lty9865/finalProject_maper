@@ -18,16 +18,12 @@ function loginCheck() {
 function idCheck() {
 	if (document.frm.userid.value == "") {
 		alert("아이디를 입력하세요");
-		document.frm.userid.focus();
+		frm.userid.focus();
 		return false;
 	}
+	return true;
 }
 
-function idok() {
-	opener.frm.userid.value = document.frm.userid.value;
-	opener.frm.reid.value = document.frm.userid.value;
-	self.close();
-}
 
 function joinCheck() {
 	if (document.frm.userid.value.length == "") {

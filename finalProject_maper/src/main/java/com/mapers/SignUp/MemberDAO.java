@@ -8,9 +8,8 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import com.mapers.SignUp.JoinController;
+import com.mapers.SignUp.SignUpController;
 import com.mapers.common.DataSourceManager;
-import com.mapers.myPage.Profile.model.ProfileDAO;
 
 public class MemberDAO {
 	private Connection conn = null;
@@ -81,7 +80,7 @@ public class MemberDAO {
 		   
 		   //아이디있는지 체크
 		   public int confirmID(String userid) {
-				int result = -1;
+				int resultId = -1;
 				String sql = "select userid from ACCOUNT where userid=?";
 
 				try {
@@ -91,9 +90,9 @@ public class MemberDAO {
 					pstmt.setString(1, userid);
 					rs = pstmt.executeQuery();
 					if (rs.next()) {
-						result = 1;
+						resultId = 1;			//아이디 사용 가능(db에 없는 아이디)
 					} else {
-						result = -1;
+						resultId = -1;			//아이디 사용 불가능(db에 저장되어있는 아이디)
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -108,7 +107,7 @@ public class MemberDAO {
 						e.printStackTrace();
 					}
 				}
-				return result;
+				return resultId;
 			}
 		   
 		   public int userCheck(String userid, String password) {
