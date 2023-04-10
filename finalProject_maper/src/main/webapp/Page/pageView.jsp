@@ -101,6 +101,14 @@ response.setHeader("Cache-Control", "no-cache");
 							</c:choose>
 						</form>
 					</td>
+					<td width="25%">
+						<!-- 신고 ajax -->
+						<form id="report_form" class="row">
+							<button type="button"
+								style="background-color: rgba(0, 0, 0, 0); border: none;"
+								onclick="return report()">신고</button>
+						</form>
+					</td>
 					<th width="3%"><img alt=""
 						src="../Resources/assets/img/baseimg/like.png"
 						style="width: 15px; height: 15px"></th>
@@ -239,6 +247,33 @@ response.setHeader("Cache-Control", "no-cache");
 					error:
 						function(request, status, error){
 						alert("좋아요 실패");
+					}
+			});
+			}
+		}
+	</script>
+	<!-- 신고 기능 -->
+	<script type="text/javascript">
+		function report(){
+			if(${empty sessionScope.userId}){
+					LoginConfirmed();
+			}else{
+				
+			$.ajax({
+				url : "../Book/book.do?command=report",
+				type : "POST",
+				date : {
+					bookNum : ${ bookDTO.bookNum },
+					userId : "${ sessionScope.userId }"
+					},
+					success:
+					function(data){
+					  location.reload();
+					},
+					
+					error:
+						function(request, status, error){
+						alert("신고 실패");
 					}
 			});
 			}

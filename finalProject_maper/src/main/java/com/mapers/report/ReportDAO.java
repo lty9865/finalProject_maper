@@ -4,30 +4,24 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
 import javax.sql.DataSource;
+
+import com.mapers.common.DataSourceManager;
 
 public class ReportDAO {
 	private Connection conn = null;
 	private PreparedStatement pstmt = null;
 	private ResultSet rs = null;
 
-	private ReportDAO() {
-	}
-
 	private static ReportDAO instance = new ReportDAO();
+	private DataSource dataSource;
+
+	private ReportDAO() {
+		dataSource = DataSourceManager.getInstance().getDataSource();
+	}
 
 	public static ReportDAO getInstance() {
 		return instance;
-	}
-
-	public Connection getConnection() throws Exception {
-		Context initContext = new InitialContext();
-		Context envContext = (Context) initContext.lookup("java:/comp/env");
-		DataSource ds = (DataSource) envContext.lookup("jdbc/myoracle");
-		conn = ds.getConnection();
-		return conn;
 	}
 
 	// 자원 반납
@@ -45,15 +39,16 @@ public class ReportDAO {
 		}
 	}
 
-	// 신고 리스트 개수 세기 - 김연호
-	public int countReport() {
+	// 해당 북 신고 리스트 개수 세기 - 김연호
+	public int countReport(int bookNum) {
 		int totalCount = 0;
 
-		String query = "SELECT COUNT(*) FROM REPORT";
+		String query = "SELECT COUNT(*) FROM REPORT WHERE BOOKNUM=?";
 
 		try {
-			conn = getConnection();
+			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, bookNum);
 			rs = pstmt.executeQuery();
 			rs.next();
 			totalCount = rs.getInt(1);
@@ -65,32 +60,32 @@ public class ReportDAO {
 	}
 
 	// 신고 기능 중복조회 - 김연호
-	public void searchReport(ReportDTO dto) {
-		String query = "SELECT * FROM REPORT WHERE BOOKNUM=? AND USERID=?";
+	public int searchReport(int bookNum, String userId) {
+		String query = "SELECT COUNT(*) FROM REPORT WHERE BOOKNUM=? AND USERID=?";
+		int result = 0;
 		try {
-			conn = getConnection();
+			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, dto.getBookNum());
-			pstmt.setString(2, dto.getUserId());
+			pstmt.setInt(1, bookNum);
+			pstmt.setString(2, userId);
 			rs = pstmt.executeQuery();
-			if (rs.next()) {
-				updateReport(dto);
-			} else {
-				insertReport(dto);
-			}
+			rs.next();
+			result = rs.getInt(1);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("중복 신고 게시물 조회 중 예외 발생");
 		}
+
+		return result;
 	}
 
 	// 신고 기능 update - 김연호
-	public int updateReport(ReportDTO dto) {
+	public int updateReport(int bookNum, String userId) {
 		int result = 0;
 		String query = "UPDATE REPORT SET REPORTCOUNT=REPORTCOUNT+1 WHERE BOOKNUM=? AND USERID=?";
 
 		try {
-			conn = getConnection();
+			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(query);
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
@@ -102,15 +97,15 @@ public class ReportDAO {
 	}
 
 	// 신고 기능 insert - 김연호
-	public int insertReport(ReportDTO dto) {
+	public int insertReport(int bookNum, String userId) {
 		int result = 0;
 		String query = "INSERT INTO REPORT(REPORTNUM,USERID,BOOKNUM)" + " VALUES(C##MAPERS.REPORT_SEQ.NEXTVAL,?,?)";
 
 		try {
-			conn = getConnection();
+			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, dto.getUserId());
-			pstmt.setInt(2, dto.getBookNum());
+			pstmt.setString(1, userId);
+			pstmt.setInt(2, bookNum);
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
