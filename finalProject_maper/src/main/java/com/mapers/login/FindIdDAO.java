@@ -7,7 +7,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import com.mapers.SignUp.MemberVO;
+import com.mapers.SignUp.MemberDTO;
 
 public class FindIdDAO{
 
@@ -47,9 +47,9 @@ public class FindIdDAO{
 	      }
 	   }
 	   
-	   public String FindId(MemberVO mVo) {
-		   String userid = null;
-		   String query = "SELECT userid FROM ACCOUNT WHERE LICENSEKEY = ?";
+	   public String FindId(MemberDTO mVo) {
+		   String userId = null;
+		   String query = "SELECT userId FROM ACCOUNT WHERE LICENSEKEY = ?";
 		   
 		   try {
 			   conn = getConnection();
@@ -60,11 +60,11 @@ public class FindIdDAO{
 			   rs = pstmt.executeQuery();
 			   
 			   if(rs.next()) {
-				   userid = rs.getString("userid");
-				   System.out.println(userid);
+				   userId = rs.getString("userId");
+				   System.out.println(userId);
 			   }
 		   }catch(Exception e) {
-			   System.out.println(userid);
+			   System.out.println(userId);
 			   e.printStackTrace();
 		   }finally {
 			   try {
@@ -74,6 +74,6 @@ public class FindIdDAO{
 				   e.printStackTrace();
 			   }
 		   }
-		   return userid;
+		   return userId;
 	   }
 	   }

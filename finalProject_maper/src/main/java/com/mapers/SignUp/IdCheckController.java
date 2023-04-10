@@ -10,20 +10,26 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-@WebServlet("/IdCheck.do")
+@WebServlet("/Member/SignUp/idCheck.do")
 public class IdCheckController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String userid = request.getParameter("userid");
+		request.setCharacterEncoding("UTF-8");
+		
+		String userId = request.getParameter("userId");
 		
 		MemberDAO mDao = MemberDAO.getInstance();
-		int result = mDao.confirmID(userid);
-		request.setAttribute("userid", userid);
+		int result = mDao.confirmID(userId);
+		
+
+		request.setAttribute("userId", userId);
 		request.setAttribute("result", result);
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("Member/SignUp/IdCheck.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/Member/SignUp/idCheck.jsp");
 		dispatcher.forward(request, response);
+		
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -1,39 +1,31 @@
 /**
  * 
  */
-function loginCheck() {
-	if (document.frm.userid.value.length == 0) {
-		alert("아이디를 입력하세요.");
-		frm.userid.focus();
-		return false;
-	}
-	if (document.frm.password.value == "") {
-		alert("비밀번호를 입력하세요.");
-		frm.pwd.focus();
-		return false;
-	}
-	return true;
-}
-
 function idCheck() {
-	if (document.frm.userid.value == "") {
-		alert("아이디를 입력하세요");
-		frm.userid.focus();
-		return false;
+	if (document.frm.userId.value == "") {
+		alert('아이디를 입력하여 주십시오.');
+		document.frm.userId.focus();
+		return;
 	}
-	return true;
+	var url = "idCheck.do?userId=" + document.frm.userId.value;
+	window.open(url, "_blank_1", "toolbar=no, menubar=no, scrollbars=yes, resizable=no, width=450, height=200");
 }
 
+function idok() {
+	opener.frm.userId.value = document.frm.userId.value;
+	opener.frm.reid.value = document.frm.userId.value;
+	self.close();
+}
 
 function joinCheck() {
-	if (document.frm.userid.value.length == "") {
+	if (document.frm.userId.value == "") {
 		alert("아이디를 써주세요.");
-		frm.userid.focus();
+		frm.userId.focus();
 		return false;
 	}
-	if (document.frm.userid.value.length < 5 || document.frm.userid.value.length > 12) {
+	if (document.frm.userId.value.length < 5 || document.frm.userId.value.length > 12) {
 		alert("아이디는 5자 이상 12자 이하로 입력해주세요.");
-		frm.userid.focus();
+		frm.userId.focus();
 		return false;
 	}
 	if (document.frm.password.value == "") {
@@ -52,7 +44,7 @@ function joinCheck() {
 		frm.email.focus();
 		return false;
 	}
-	
+
 	if (document.frm.year.value == "") {
 		alert("생년월일을 정확히 입력해주세요.");
 		frm.year.focus();
@@ -77,10 +69,8 @@ function joinCheck() {
 
 	if (document.frm.reid.value.length == 0) {
 		alert("중복 체크를 하지 않았습니다.");
-		frm.userid.focus();
+		frm.userId.focus();
 		return false;
 	}
-
 	return true;
 }
-

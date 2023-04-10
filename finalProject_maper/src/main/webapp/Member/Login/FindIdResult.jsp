@@ -9,11 +9,11 @@
 <body>
     <h1>아이디 찾기 결과</h1>
     
-    <% String userid = (String)request.getAttribute("userid"); %>
+    <% String userId = (String)request.getAttribute("userId"); %>
     <% String errMsg = (String)request.getAttribute("errMsg"); %>
     
-    <% if (userid != null) { %>
-        <p>회원님의 아이디는 <%=userid%>입니다.</p>
+    <% if (userId != null) { %>
+        <p>회원님의 아이디는 <%=userId%>입니다.</p>
     <% } else { %>
         <p><%=errMsg%></p>
     <% } %>

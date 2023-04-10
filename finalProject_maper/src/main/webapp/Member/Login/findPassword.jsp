@@ -25,9 +25,9 @@
 					<!-- username -->
 					<div class="maper-login-inputsize">
 						<div class="form-floating mb-3">
-							<input type="text" class="form-control" id="userid" name="userid"
-								placeholder="userid"> <label
-								for="userid">userId </label>
+							<input type="text" class="form-control" id="userId" name="userId"
+								placeholder="userId"> <label
+								for="userId">userId </label>
 						</div>
 
 						<!-- LicenseKey -->

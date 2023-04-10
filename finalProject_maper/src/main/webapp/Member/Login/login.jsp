@@ -7,7 +7,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Login</title>
-<script type="text/javascript" src="../../Resources/javascript/Member.js"></script>
 </head>
 <body class="maper-body-background">
 
@@ -22,8 +21,8 @@
 				<div class="maper-login-rounded">
 					<div class="maper-login-inputsize">
 						<div class="form-floating mb-3">
-							<input type="text" class="form-control" name="userid" value="${userid }"
-								placeholder="Enter UserName"> <label for="floatingInput">UserId</label>
+							<input type="text" class="form-control" name="userId" value="${userId }"
+								placeholder="Enter UserName"> <label for="floatingInput">userId</label>
 						</div>
 						<div class="form-floating">
 							<input type="password" class="form-control" name="password"
@@ -31,14 +30,14 @@
 						</div>
 						<div class="maper-login-buttonLocation">
 							<div class="d-grid gap-2 col-6 mx-auto">
-								<button type="submit" class="btn btn-primary" type="button" onclick="loginCheck()">Log
+								<button type="submit" class="btn btn-primary">Log
 									in</button>
 							</div>
 						</div>
 						<div class="maper-login-labels">
-							<a href="SignUp.do">회원가입</a>&nbsp;&nbsp;&nbsp; <a
-								href="findId.do">아이디찾기</a>&nbsp;&nbsp;&nbsp; <a
-								href="findPassword.do">패스워드찾기</a>
+							<a href="${pageContext.request.contextPath}/Member/SignUp/SignUp.jsp">회원가입</a>&nbsp;&nbsp;&nbsp; <a
+								href="${pageContext.request.contextPath}/Member/Login/findID.jsp">아이디찾기</a>&nbsp;&nbsp;&nbsp; <a
+								href="${pageContext.request.contextPath}/Member/Login/findPassword.jsp">패스워드찾기</a>
 						</div>
 					</div>
 				</div>

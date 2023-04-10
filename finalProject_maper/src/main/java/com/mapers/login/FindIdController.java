@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.mapers.SignUp.MemberVO;
+import com.mapers.SignUp.MemberDTO;
 //아이디 찾기 controller
 @WebServlet("/findId.do")
 public class FindIdController extends HttpServlet {
@@ -29,21 +29,21 @@ public class FindIdController extends HttpServlet {
 		
 		FindIdDAO fdao = FindIdDAO.getInstance();
 		
-		MemberVO mVo = new MemberVO();
+		MemberDTO mVo = new MemberDTO();
 		
 		mVo.setLicenseKey(licensekey);
 		
-		String userid = fdao.FindId(mVo);
-		System.out.print(userid);
+		String userId = fdao.FindId(mVo);
+		System.out.print(userId);
 		
-		if(userid != null) {
+		if(userId != null) {
 		
-		request.setAttribute("userid", userid);
+		request.setAttribute("userId", userId);
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/Member/Login/FindIdResult.jsp");
 		rd.forward(request, response);
 		}
-		else if(userid == null) {
+		else if(userId == null) {
 			request.setAttribute("errMsg", "라이센스 키를 다시 확인해주세요.");
 			
 			RequestDispatcher rd = request.getRequestDispatcher("/Member/Login/FindIdResult.jsp");

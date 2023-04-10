@@ -10,59 +10,52 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet("/SignUp.do")
+@WebServlet("/Member/SignUp/SignUp.do")
 public class SignUpController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.getRequestDispatcher("/Member/SignUp/SignUp.jsp").forward(request, response);
+
+		response.sendRedirect("/Member/SignUp/SignUp.jsp");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		// 다오 클래스 실행 후 성공화면으로 이동
 		request.setCharacterEncoding("UTF-8");
 
 		LisencekeyCreate lc = new LisencekeyCreate();
 
-		String userid = request.getParameter("userid");
+		MemberDAO mDao = MemberDAO.getInstance();
+
+		String userId = request.getParameter("userId");
 		String password = request.getParameter("password");
 		String confirmPassword = request.getParameter("confirmPassword");
-		String licensekey = lc.LicenceKey();
+		String licenseKey = lc.LicenceKey();
 		String email = request.getParameter("email");
 		String birth = request.getParameter("year") + "-" + request.getParameter("month") + "-"
 				+ request.getParameter("day");
 
-		MemberVO mVo = new MemberVO();
+		MemberDTO mDto = new MemberDTO();
 
-		mVo.setUserid(userid);
-		mVo.setPassword(password);
-		mVo.setConfirmPassword(confirmPassword);
-		mVo.setEmail(email);
-		mVo.setBirth(birth);
-		mVo.setLicenseKey(licensekey);
+		mDto.setUserId(userId);
+		mDto.setPassword(password);
+		mDto.setConfirmPassword(confirmPassword);
+		mDto.setEmail(email);
+		mDto.setBirth(birth);
+		mDto.setLicenseKey(licenseKey);
 
-		MemberDAO mDao = MemberDAO.getInstance();
+
+		int result = mDao.join(mDto);
 
 		HttpSession session = request.getSession();
 
-		int result = mDao.join(mVo);
-
-		// 가입 성공
-		if (result == 1) {
-			session.setAttribute("userid", mVo.getUserid());
-			request.setAttribute("licensekey", licensekey);
+		if (result > 0) {
+			session.setAttribute("userId", mDto.getUserId());
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/Member/SignUp/successSignUp.jsp");
 			dispatcher.forward(request, response);
-
-		} else {
-			request.setAttribute("falseMsg", "회원 가입에 실패했습니다.");
-
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/Member/SignUp/SignUp.jsp");
-			dispatcher.forward(request, response);
 		}
-
 	}
 }

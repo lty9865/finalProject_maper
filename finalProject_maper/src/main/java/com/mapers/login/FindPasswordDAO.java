@@ -8,7 +8,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import com.mapers.SignUp.MemberVO;
+import com.mapers.SignUp.MemberDTO;
 //비밀번호 찾기
 public class FindPasswordDAO{
 
@@ -48,7 +48,7 @@ public class FindPasswordDAO{
 	      }
 	   }
 	   
-	   public String FindPassword(MemberVO mVo) {
+	   public String FindPassword(MemberDTO mVo) {
 		   String password = null;
 		   String query = "SELECT PASSWORD FROM ACCOUNT WHERE USERID=? and LICENSEKEY=?";
 		   
@@ -56,11 +56,11 @@ public class FindPasswordDAO{
 			   conn = getConnection();
 			   
 			   pstmt = conn.prepareStatement(query);
-			   pstmt.setString(1, mVo.getUserid());	
+			   pstmt.setString(1, mVo.getUserId());	
 			   pstmt.setString(2, mVo.getLicenseKey());
 			   rs = pstmt.executeQuery();
 			   
-			   System.out.println(mVo.getUserid());
+			   System.out.println(mVo.getUserId());
 			   System.out.println(mVo.getLicenseKey());
 			   
 			   if(rs.next()) {

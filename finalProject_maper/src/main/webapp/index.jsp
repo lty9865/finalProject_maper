@@ -20,7 +20,7 @@ session.setAttribute("userId", "admins_1");
 		<%=application.getAttribute("userId")%>
 	</p>
 
-	<a href="login.do">로그인 페이지로 가기</a>
+	<a href="${pageContext.request.contextPath}/Member/Login/login.jsp">로그인 페이지로 가기</a>
 	<br>
 	<a href="Notice/notice.do" onclick="return LoginConfirmed()">공지사항
 		페이지로 가기</a>
