@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.mapers.SignUp.MemberDTO;
 //비밀번호 찾기 controller
-@WebServlet("/findPassword.do")
+@WebServlet("/Member/Login/findPassword.do")
 public class FindPasswordController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -29,16 +29,14 @@ public class FindPasswordController extends HttpServlet {
 		
 		FindPasswordDAO fdao = FindPasswordDAO.getInstance();
 		
-		MemberDTO mVo = new MemberDTO();
+		MemberDTO mDto = new MemberDTO();
 		
-		mVo.setUserId(userId);
-		mVo.setLicenseKey(licensekey);
+		mDto.setUserId(userId);
+		mDto.setLicenseKey(licensekey);
 		
-		String password = fdao.FindPassword(mVo);
+		String password = fdao.FindPassword(mDto);
 		
 		request.setAttribute("password", password);
-		
-		System.out.println(password);
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/Member/Login/FindPasswordResult.jsp");
 		rd.forward(request, response);

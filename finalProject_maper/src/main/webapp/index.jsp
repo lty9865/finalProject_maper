@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%
-session.setAttribute("userId", "admins_1");
-%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,12 +11,7 @@ session.setAttribute("userId", "admins_1");
 <script type="text/javascript" src="../Common/LoginConfirmed.js"></script>
 </head>
 <body>
-	<p>
-		세션 :
-		<%=session.getAttribute("userId")%>
-		어플리케이션 :
-		<%=application.getAttribute("userId")%>
-	</p>
+
 
 	<a href="${pageContext.request.contextPath}/Member/Login/login.jsp">로그인 페이지로 가기</a>
 	<br>

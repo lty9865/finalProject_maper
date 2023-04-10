@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.mapers.SignUp.MemberDTO;
 //아이디 찾기 controller
-@WebServlet("/findId.do")
+@WebServlet("/Member/Login/findId.do")
 public class FindIdController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -25,15 +25,14 @@ public class FindIdController extends HttpServlet {
 		
 		request.setCharacterEncoding("UTF-8");
 		
-		String licensekey = request.getParameter("licensekey");
+		String licenseKey = request.getParameter("licenseKey");
+		
+		System.out.println(licenseKey);
 		
 		FindIdDAO fdao = FindIdDAO.getInstance();
 		
-		MemberDTO mVo = new MemberDTO();
+		String userId = fdao.FindId(licenseKey);
 		
-		mVo.setLicenseKey(licensekey);
-		
-		String userId = fdao.FindId(mVo);
 		System.out.print(userId);
 		
 		if(userId != null) {

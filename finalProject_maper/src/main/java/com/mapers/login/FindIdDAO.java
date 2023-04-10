@@ -7,55 +7,55 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import com.mapers.SignUp.MemberDAO;
 import com.mapers.SignUp.MemberDTO;
+import com.mapers.common.DataSourceManager;
 
-public class FindIdDAO{
+public class FindIdDAO {
+	private Connection conn = null;
+	private PreparedStatement pstmt = null;
+	private ResultSet rs = null;
 
-	   private Connection conn = null;
-	   private PreparedStatement pstmt = null;
-	   private ResultSet rs = null;
+	// singleton pattern
+	private static FindIdDAO instance = new FindIdDAO();
+	private DataSource dataSource;
 
-	  public FindIdDAO() {
-	   }
+	private FindIdDAO() {
+		dataSource = DataSourceManager.getInstance().getDataSource();
+	}
 
-	   private static FindIdDAO instance = new FindIdDAO();
+	public static FindIdDAO getInstance() {
+		return instance;
+	}
 
-	   public static FindIdDAO getInstance() {
-	      return instance;
-	   }
+	// Connection을 dbcp에 반납
+	public void closeAll() {
 
-	   public Connection getConnection() throws Exception {
-	      Context initContext = new InitialContext();
-	      Context envContext = (Context) initContext.lookup("java:/comp/env");
-	      DataSource ds = (DataSource) envContext.lookup("jdbc/myoracle");
-	      conn = ds.getConnection();
-	      return conn;
-	   }
+		try {
+
+			if (rs != null)
+				rs.close();
+			if (pstmt != null)
+				pstmt.close();
+			if (conn != null)
+				conn.close();
+
+			System.out.println("DB Connection Pool Resource Dismissed!");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	   
-	   // 자원 반납
-	   public void close() {
-	      try {
-	         if (rs != null)
-	            rs.close();
-	         if (pstmt != null) 
-	            pstmt.close();
-	         if (conn != null)
-	            conn.close();
-	      
-	      } catch (Exception e) {
-	         e.printStackTrace();
-	      }
-	   }
-	   
-	   public String FindId(MemberDTO mVo) {
+	   public String FindId(String licenseKey) {
 		   String userId = null;
-		   String query = "SELECT userId FROM ACCOUNT WHERE LICENSEKEY = ?";
+		   String query = "SELECT USERID FROM ACCOUNT WHERE LICENSEKEY = ?";
 		   
 		   try {
-			   conn = getConnection();
+			   conn = dataSource.getConnection();
 			   
 			   pstmt = conn.prepareStatement(query);
-			   pstmt.setString(1, mVo.getLicenseKey());
+			   pstmt.setString(1, licenseKey);
 			   
 			   rs = pstmt.executeQuery();
 			   

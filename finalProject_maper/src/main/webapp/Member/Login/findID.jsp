@@ -17,7 +17,7 @@
 		</div>
 	</div>
 	<!-- body -->
-	<form action="FindId.do" method="post" name="frm">
+	<form action="findId.do" method="post" name="frm">
 		<div class="maper-body">
 			<div class="maper-body-login">
 				<p class="maper-fontsize-1">Find ID</p>
@@ -29,7 +29,7 @@
 							<tr>
 								<td>licensekey</td>
 
-								<td><input type="text" name="licensekey" id="licensekey" class="form-control" size="20"></td>
+								<td><input type="text" name="licenseKey" id="licenseKey" class="form-control" size="20"></td>
 							</tr>
 
 							<!-- ��ư -->

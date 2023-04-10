@@ -53,6 +53,7 @@ public class SignUpController extends HttpServlet {
 
 		if (result > 0) {
 			session.setAttribute("userId", mDto.getUserId());
+			request.setAttribute("licenseKey", mDto.getLicenseKey());
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/Member/SignUp/successSignUp.jsp");
 			dispatcher.forward(request, response);

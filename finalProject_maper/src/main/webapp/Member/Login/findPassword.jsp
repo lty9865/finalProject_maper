@@ -16,7 +16,7 @@
 		</div>
 	</div>
 	<!-- body -->
-	<form action="FindPassword.do" method="post" name="frm">
+	<form action="findPassword.do" method="post" name="frm">
 		<div class="maper-body">
 			<div class="maper-body-login">
 				<p class="maper-fontsize-1">find PASSWORD</p>
@@ -30,17 +30,17 @@
 								for="userId">userId </label>
 						</div>
 
-						<!-- LicenseKey -->
+						<!-- licenseKey -->
 						<div class="form-floating">
-							<input type="text" class="form-control" name="licensekey" id="licensekey"
-								placeholder="licensekey"> <label
-								for="licensekey">licensekey</label>
+							<input type="text" class="form-control" name="licenseKey" id="licenseKey"
+								placeholder="licenseKey"> <label
+								for="licenseKey">licenseKey</label>
 						</div>
 
 						<!-- button -->
 						<div class="maper-login-buttonLocation">
 							<div class="d-grid gap-2 col-6 mx-auto">
-								<button type="submit" class="btn btn-primary" type="button" onclick="">ok</button>
+								<button type="submit" class="btn btn-primary">ok</button>
 							</div>
 						</div>
 					</div>
