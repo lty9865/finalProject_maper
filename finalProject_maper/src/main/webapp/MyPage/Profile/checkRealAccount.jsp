@@ -18,8 +18,8 @@
 	<h2>Check Real Account</h2>
 	<hr>
 	<form action="${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyProfile.checkRealAccount" method="post">
-		<p><strong>User ID:</strong> ${sessionScope.userId}</p>
-		<p><strong>Password:</strong> <input type="password" name="password"></p>
+		<p><strong>아이디:</strong> ${sessionScope.userId}</p>
+		<p><strong>비밀번호:</strong> <input type="password" name="password"></p>
 		<input type="submit" value="확인">
 		<hr>
 	</form>

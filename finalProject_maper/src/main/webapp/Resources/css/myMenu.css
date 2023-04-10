@@ -1,0 +1,35 @@
+@charset "UTF-8";
+
+.folder-myPage-horizontal-menu {
+  list-style-type: none;
+  display: flex;
+  border-bottom: 1px solid #dee2e6;
+  padding-left: 0;
+}
+
+.mapper-myPage-menu-item {
+  margin-bottom: -1px;
+}
+
+.mapper-myPage-menu-item a {
+  display: inline-block;
+  padding: 8px 16px;
+  margin-right: 4px;
+  text-decoration: none;
+  color: #495057;
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+}
+
+.mapper-myPage-menu-item a.selected {
+  color: #495057;
+  background-color: #fff;
+  border-color: #dee2e6 #dee2e6 #fff;
+}
+
+.mapper-myPage-menu-item a:hover {
+  text-decoration: none;
+  background-color: #e9ecef;
+}

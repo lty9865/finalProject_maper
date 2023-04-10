@@ -16,10 +16,10 @@
   <%@ include file="/WEB-INF/views/Common/header.jsp"%>
 
   <!-- body/menu -->
-  <jsp:include page="../menu.jsp" />
+  <jsp:include page="/MyPage/adminsMenu.jsp" />
 
   <!-- body/main -->
-  <form action="${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyRequest.requestEditProcess" method="POST">
+  <form action="${pageContext.request.contextPath}/MyPage/MyPageFront?command=Admins.requestReplyEditProcess" method="POST">
     <input type="hidden" name="requestNum" value="${rDTO.requestNum}">
     <table class="table">
       <tr>

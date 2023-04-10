@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/Common/link.jsp" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,8 +12,8 @@
     <div class="folder-myPage-menu-container">
       <ul class="folder-myPage-horizontal-menu">
         <li class="mapper-myPage-menu-item">
-          <a href="${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyProfile" class="<c:if test="${selectedMenuItem == 'MyProfile'}">selected</c:if>">
-            내 정보
+          <a href="${pageContext.request.contextPath}/MyPage/MyPageFront?command=Admins.memberBoard">
+            회원 리스트
           </a>
         </li>
       </ul>
@@ -23,8 +21,8 @@
     <div class="folder-myPage-menu-container">
       <ul class="folder-myPage-horizontal-menu">
         <li class="mapper-myPage-menu-item">
-          <a href="${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyRequest&page=1" class="<c:if test="${selectedMenuItem == 'MyRequest'}">selected</c:if>">
-            내 문의
+          <a href="${pageContext.request.contextPath}/MyPage/MyPageFront?command=Admins.requestBoard">
+            문의 리스트
           </a>
         </li>
       </ul>
@@ -32,8 +30,8 @@
     <div class="folder-myPage-menu-container">
       <ul class="folder-myPage-horizontal-menu">
         <li class="mapper-myPage-menu-item">
-          <a href="${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyLike" class="<c:if test="${selectedMenuItem == 'MyLike'}">selected</c:if>">
-            내 마음에 든 책
+          <a href="${pageContext.request.contextPath}/MyPage/MyPageFront?command=Admins.reportBoard">
+          신고 리스트
           </a>
         </li>
       </ul>

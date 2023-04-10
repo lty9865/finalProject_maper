@@ -24,7 +24,11 @@
     <jsp:include page="../menu.jsp" />
 
     <!-- body/main -->
-    <table class="table table-hover boardlist">
+    <div class="maper-body">
+		<h2>내가 넣은 문의</h2>
+		<hr><hr>
+    </div>
+    <table class="table maper-body table-hover boardlist">
         <thead>
             <tr align="center" class="warning header-row">
                 <th>문의 번호</th>
@@ -38,16 +42,18 @@
                 <tr align="center" class="header-row">
                     <td>${post.requestNum}</td>
                     <td>
-                    	<a href="${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyRequest.requestPostView&requestNum=${post.requestNum}">
-		                    ${post.title}
-                    	</a>
-                    </td>
+						<c:url value="${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyRequest.requestTitleClick" var="titleClickUrl">
+							<c:param name="requestNum" value="${post.requestNum}" />
+						</c:url> 
+						<a href="${titleClickUrl}">${post.title}</a>
+					</td>
                     <td>${post.postDate}</td>
                     <td>${post.status == 1 ? "진행 중" : "답변 완료"}</td>
                 </tr>
             </c:forEach>
         </tbody>
     </table>
+    <br>
 
 	<!-- Paging Process -->
     <div class="pagingArea">

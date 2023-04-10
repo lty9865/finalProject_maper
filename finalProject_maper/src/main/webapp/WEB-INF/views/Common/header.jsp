@@ -30,13 +30,12 @@
 											<li><a class="dropdown-item" onclick="LoginConfirmed()">마이페이지</a></li>
 										</c:when>
 										<c:otherwise>
-											<li><a class="dropdown-item" href="#">마이페이지</a></li>
+											<li><a class="dropdown-item" href="${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyProfile">마이페이지</a></li>
 										</c:otherwise>
 									</c:choose>
 									<c:choose>
 										<c:when test="${ empty sessionScope.userId }">
-											<li><a class="dropdown-item" onclick="LoginConfirmed()">내
-													책장</a></li>
+											<li><a class="dropdown-item" onclick="LoginConfirmed()">내 책장</a></li>
 										</c:when>
 										<c:otherwise>
 											<li><a class="dropdown-item"
@@ -53,5 +52,6 @@
 			</c:choose>
 		</div>
 	</div>
+	<br>
 </body>
 </html>
