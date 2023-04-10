@@ -15,15 +15,20 @@
 	<jsp:include page="../menu.jsp"/>
 	
 	<!-- body -->
-	<h2>Check Real Account</h2>
-	<hr>
-	<form action="${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyProfile.checkRealAccount" method="post">
-		<p><strong>아이디:</strong> ${sessionScope.userId}</p>
-		<p><strong>비밀번호:</strong> <input type="password" name="password"></p>
-		<input type="submit" value="확인">
+	<div class="maper-body">
+		<h2>계정 정보 확인</h2>
 		<hr>
-	</form>
-	
+		<form action="${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyProfile.checkRealAccount" method="post">
+			<p>
+				<span>
+					<strong>아이디:</strong> ${sessionScope.userId}
+				</span>
+			</p>
+			<p><strong>비밀번호:</strong> <input type="password" name="password"></p>
+			<input type="submit" value="확인" class="custom-button">
+			<hr>
+		</form>
+	</div>
 	<!-- notification message for wrong password -->
 	<c:if test="${not empty errMsg}">
 		<script>

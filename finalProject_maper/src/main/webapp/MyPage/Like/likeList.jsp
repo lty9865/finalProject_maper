@@ -5,56 +5,66 @@
 <head>
 <meta charset="UTF-8">
 <title>My Like List</title>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/Resources/css/myPage.css">
+<style>
+    .table.boardlist td {
+        text-align: center;
+        vertical-align: middle;
+    }
+</style>
 </head>
 <body>
-	<!-- header -->
+    <!-- header -->
     <%@ include file="/WEB-INF/views/Common/header.jsp"%>
 
     <!-- body/menu -->
     <jsp:include page="../menu.jsp" />
 
     <!-- body/main -->
-    <h1>My Like List</h1>
-	<!-- Display errorMsg if it exists -->
-	<c:if test="${not empty errorMsg}">
-		<div class="alert alert-danger" role="alert">${errorMsg}</div>
-	</c:if>
-	<hr>
-	<table border="1">
-	    <thead>
-	        <tr>
-	            <th>이미지</th>
-	            <th>제목</th>
-	            <th>작성자</th>
-	            <th>좋아요</th>
-	        </tr>
-	    </thead>
-	    <tbody>
-            <c:forEach var="dto" items="${likeList}">
-                <tr>
-                    <td>
-                        <c:choose>
-                            <c:when test="${dto.sfile != null}">
-                                <img src="${pageContext.request.contextPath}/Uploads/Profile/${dto.sfile}" alt="Book Image" width="50" height="50">
-                            </c:when>
-                            <c:otherwise>
-                                <img src="${pageContext.request.contextPath}/Uploads/Profile/${dto.ofile}" alt="Book Image" width="50" height="50">
-                            </c:otherwise>
-                        </c:choose>
-                    </td>
-                    <td>
-                        <a href="${pageContext.request.contextPath}/MyPage/MyPage/MyPageFront?command=MyLike.likedBookView&bookNum=${dto.bookNum}">
-                            ${dto.title}
-                        </a>
-                        <!-- Include the bookNum value as a hidden field -->
-                        <input type="hidden" name="listNum" value="${dto.listNum}">
-                        <input type="hidden" name="bookNum" value="${dto.bookNum}">
-                    </td>
-                    <td>${dto.userId}</td>
+    <div class="maper-body">
+        <h1>My Like List</h1>
+		<!-- Display errorMsg if it exists -->
+		<c:if test="${not empty errorMsg}">
+            <div class="alert alert-danger" role="alert">${errorMsg}</div>
+        </c:if>
+        <hr>
+        <table class="table maper-body table-hover boardlist">
+            <thead>
+                <tr align="center" class="warning header-row">
+                    <th>이미지</th>
+                    <th>제목</th>
+                    <th>페이지</th>
+                    <th>작성자</th>
                 </tr>
-            </c:forEach>
-	    </tbody>
-	</table>
+            </thead>
+            <tbody>
+	            <c:forEach var="dto" items="${likeList}">
+	                <tr>
+	                    <td>
+	                        <c:choose>
+	                            <c:when test="${dto.sfileBook != null}">
+	                                <img src="${pageContext.request.contextPath}/Uploads/Profile/${dto.sfileBook}" alt="Book Image" width="50" height="50">
+	                            </c:when>
+	                            <c:otherwise>
+	                                <img src="${pageContext.request.contextPath}/Uploads/Profile/${dto.ofileBook}" alt="Book Image" width="50" height="50">
+	                            </c:otherwise>
+	                        </c:choose>
+	                    </td>
+	                    <td>
+	                        <a href="${pageContext.request.contextPath}/MyPage/MyPage/MyPageFront?command=MyLike.likedBookView&bookNum=${dto.bookNum}">
+	                            ${dto.title}
+	                        </a>
+	                        <!-- Include the bookNum value as a hidden field -->
+	                        <input type="hidden" name="listNum" value="${dto.listNum}">
+	                        <input type="hidden" name="bookNum" value="${dto.bookNum}">
+	                    </td>
+	                    <td>${dto.pageNo}</td>
+	                    <td>${dto.userId}</td>
+	                </tr>
+	            </c:forEach>
+		    </tbody>
+		</table>
+	</div>
     
 	<!-- Pagination -->
 	<div class="pagingArea">

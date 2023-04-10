@@ -29,29 +29,31 @@
 	<jsp:include page="/MyPage/adminsMenu.jsp" />
 
 	<!-- body/main -->
-	<h3 align="left">Details of ${wDTO.bookTitle}</h3>
-	<ul class="list-group detailList">
-		<li class="list-group-item"><strong>신고 번호</strong></li>
-		<li class="list-group-item">${wDTO.reportNum}</li>
-		<li class="list-group-item"><strong>책 제목</strong></li>
-		<li class="list-group-item">${wDTO.bookTitle}</li>
-		<li class="list-group-item"><strong>작성자</strong></li>
-		<li class="list-group-item">${wDTO.userId}</li>
-		<li class="list-group-item"><strong>신고 횟수</strong></li>
-		<li class="list-group-item"><pre>${wDTO.count}</pre></li>
-
-		<c:if test="${fn:substringBefore(sessionScope.userId_admins, '_') == 'admins' and fn:substringAfter(sessionScope.userId_admins, '_') == '1'}">
-			<div class="text-end">
-				<form id="deleteForm" class="d-inline-block"
-					action="${pageContext.request.contextPath}/MyPage/MyPageFront?command=Admins.reportDelete"
-					method="POST">
-					<input type="hidden" name="reportNum" value="${wDTO.reportNum}" />
-					<input type="button" class="btn btn-danger" value="처리 완료"
-						onclick="confirmDelete();" />
-				</form>
-			</div>
-		</c:if>
-	</ul>
+	<div class="maper-body">
+		<h3 align="left">Details of ${wDTO.bookTitle}</h3>
+		<ul class="list-group detailList">
+			<li class="list-group-item"><strong>신고 번호</strong></li>
+			<li class="list-group-item">${wDTO.reportNum}</li>
+			<li class="list-group-item"><strong>책 제목</strong></li>
+			<li class="list-group-item">${wDTO.bookTitle}</li>
+			<li class="list-group-item"><strong>작성자</strong></li>
+			<li class="list-group-item">${wDTO.userId}</li>
+			<li class="list-group-item"><strong>신고 횟수</strong></li>
+			<li class="list-group-item"><pre>${wDTO.count}</pre></li>
+	
+			<c:if test="${fn:substringBefore(sessionScope.userId_admins, '_') == 'admins' and fn:substringAfter(sessionScope.userId_admins, '_') == '1'}">
+				<div class="text-end">
+					<form id="deleteForm" class="d-inline-block"
+						action="${pageContext.request.contextPath}/MyPage/MyPageFront?command=Admins.reportDelete"
+						method="POST">
+						<input type="hidden" name="reportNum" value="${wDTO.reportNum}" />
+						<input type="button" class="btn btn-danger" value="처리 완료"
+							onclick="confirmDelete();" />
+					</form>
+				</div>
+			</c:if>
+		</ul>
+	</div>
 
 	<!-- footer -->
 	<%@ include file="/WEB-INF/views/Common/footer.jsp"%>

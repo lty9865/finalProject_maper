@@ -29,51 +29,53 @@
 	<jsp:include page="../menu.jsp" />
 
 	<!-- body/main -->
-	<h3 align="left">Details of ${rDTO.title}</h3>
-	<ul class="list-group detailList">
-		<li class="list-group-item"><strong>문의 번호</strong></li>
-		<li class="list-group-item">${rDTO.requestNum}</li>
-		<li class="list-group-item"><strong>제목</strong></li>
-		<li class="list-group-item">${rDTO.title}</li>
-		<li class="list-group-item"><strong>작성자</strong></li>
-		<li class="list-group-item">${rDTO.userId}</li>
-		<li class="list-group-item"><strong>작성일</strong></li>
-		<li class="list-group-item">${rDTO.postDate}</li>
-		<li class="list-group-item"><strong>내용</strong></li>
-		<li class="list-group-item"><pre>${rDTO.content}</pre></li>
-
-		<c:if test="${rDTO.userId == sessionScope.userId}">
-			<div class="text-end">
-				<form id="editForm" class="d-inline-block"
-					action="${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyRequest.requestEdit"
-					method="POST">
-					<input type="hidden" name="requestNum" value="${rDTO.requestNum}" />
-					<input type="hidden" name="title" value="${rDTO.title}" /> <input
-						type="hidden" name="postDate" value="${rDTO.postDate}" /> <input
-						type="hidden" name="content" value="${rDTO.content}" /> <input
-						type="submit" class="btn btn-info" value="수정하기"
-						onclick="return confirmEdit();" />
-				</form>
-				<form id="deleteForm" class="d-inline-block"
-					action="${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyRequest.requestDelete"
-					method="POST">
-					<input type="hidden" name="requestNum" value="${rDTO.requestNum}" />
-					<input type="button" class="btn btn-danger" value="삭제하기"
-						onclick="confirmDelete();" />
-				</form>
-			</div>
-		</c:if>
-		<c:if test="${fn:substringBefore(sessionScope.userId, '_') == 'admins' and fn:substringAfter(sessionScope.userId, '_') == '1'}">
-			<div class="text-end">
-				<form id="replyForm" class="d-inline-block"
-					action="${pageContext.request.contextPath}/MyPage/MyPageFront?command=Admins.requestReply"
-					method="POST">
-					<input type="hidden" name="requestNum" value="${rDTO.requestNum}" />
-					<input type="submit" class="btn btn-primary" value="답변하기" />
-				</form>
-			</div>
-		</c:if>
-	</ul>
+	<div class="maper-body">
+		<h3 align="left">Details of ${rDTO.title}</h3>
+		<ul class="list-group detailList">
+			<li class="list-group-item"><strong>문의 번호</strong></li>
+			<li class="list-group-item">${rDTO.requestNum}</li>
+			<li class="list-group-item"><strong>제목</strong></li>
+			<li class="list-group-item">${rDTO.title}</li>
+			<li class="list-group-item"><strong>작성자</strong></li>
+			<li class="list-group-item">${rDTO.userId}</li>
+			<li class="list-group-item"><strong>작성일</strong></li>
+			<li class="list-group-item">${rDTO.postDate}</li>
+			<li class="list-group-item"><strong>내용</strong></li>
+			<li class="list-group-item"><pre>${rDTO.content}</pre></li>
+	
+			<c:if test="${rDTO.userId == sessionScope.userId}">
+				<div class="text-end">
+					<form id="editForm" class="d-inline-block"
+						action="${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyRequest.requestEdit"
+						method="POST">
+						<input type="hidden" name="requestNum" value="${rDTO.requestNum}" />
+						<input type="hidden" name="title" value="${rDTO.title}" /> <input
+							type="hidden" name="postDate" value="${rDTO.postDate}" /> <input
+							type="hidden" name="content" value="${rDTO.content}" /> <input
+							type="submit" class="btn btn-info" value="수정하기"
+							onclick="return confirmEdit();" />
+					</form>
+					<form id="deleteForm" class="d-inline-block"
+						action="${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyRequest.requestDelete"
+						method="POST">
+						<input type="hidden" name="requestNum" value="${rDTO.requestNum}" />
+						<input type="button" class="custom-button" value="삭제하기"
+							onclick="confirmDelete();" />
+					</form>
+				</div>
+			</c:if>
+			<c:if test="${fn:substringBefore(sessionScope.userId, '_') == 'admins' and fn:substringAfter(sessionScope.userId, '_') == '1'}">
+				<div class="text-end">
+					<form id="replyForm" class="d-inline-block"
+						action="${pageContext.request.contextPath}/MyPage/MyPageFront?command=Admins.requestReply"
+						method="POST">
+						<input type="hidden" name="requestNum" value="${rDTO.requestNum}" />
+						<input type="submit" class="custom-button" value="답변하기" />
+					</form>
+				</div>
+			</c:if>
+		</ul>
+	</div>
 
 	<!-- footer -->
 	<%@ include file="/WEB-INF/views/Common/footer.jsp"%>

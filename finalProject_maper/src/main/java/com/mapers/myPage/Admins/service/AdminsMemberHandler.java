@@ -1,4 +1,4 @@
-package com.mapers.myPage.Request.service;
+package com.mapers.myPage.Admins.service;
 
 import java.util.List;
 
@@ -7,20 +7,26 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.mapers.common.Controller;
-import com.mapers.myPage.Request.model.RequestDAO;
-import com.mapers.myPage.Request.model.RequestDTO;
+import com.mapers.myPage.Admins.model.AdminsDAO;
+import com.mapers.SignUp.MemberVO;
 
-public class MyRequestHandler implements Controller {
-    private static final int RECORDS_PER_PAGE = 10;
+public class AdminsMemberHandler implements Controller {
+	private static final int RECORDS_PER_PAGE = 10;
+	
+	@Override
+	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		request.setCharacterEncoding("UTF-8");
 
-    @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        RequestDAO rDAO = RequestDAO.getInstance();
-
-        request.setCharacterEncoding("UTF-8");
+        AdminsDAO aDAO = AdminsDAO.getInstance();
 
         HttpSession session = request.getSession();
-        String userId = (String) session.getAttribute("userId");
+        String userId = (String) session.getAttribute("userId"); // admins_1
+        String[] userIdPart = userId.split("_");
+        
+        for (int i=0; i<userIdPart.length; i++) {
+        	System.out.println(userIdPart[i] + " ");
+        }
+        
         session.setAttribute("userId", userId);
 
         Integer totalPostCount = (Integer) session.getAttribute("totalPostCount");
@@ -32,7 +38,7 @@ public class MyRequestHandler implements Controller {
             page = Integer.parseInt(pageStr);
         }
 
-        int currentTotalCount = rDAO.getTotalPostCount();
+        int currentTotalCount = aDAO.getMemberTotalPostCount();
         if (totalPostCount == null || totalPostCount != currentTotalCount) {
             session.setAttribute("totalPostCount", currentTotalCount);
         }
@@ -40,10 +46,12 @@ public class MyRequestHandler implements Controller {
         int pageNo = page;
         int postsPerPage = RECORDS_PER_PAGE;
 
-        List<RequestDTO> rDTO = rDAO.getAllList(pageNo, postsPerPage, userId);
+        List<MemberVO> mDTO = aDAO.getAllMemberList(pageNo, postsPerPage);
+        aDAO.closeAll();
+        
         int totalPages = (int) Math.ceil((double) currentTotalCount / postsPerPage);
         
-        request.setAttribute("requestList", rDTO);
+        request.setAttribute("memberBoard", mDTO);
         request.setAttribute("totalPages", totalPages);
         request.setAttribute("page", page);
 
@@ -51,10 +59,8 @@ public class MyRequestHandler implements Controller {
         response.setHeader("Pragma", "no-cache"); // HTTP 1.0
         response.setHeader("Expires", "0"); // Proxies
 
-        request.setAttribute("url", "${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyRequest");
+        request.setAttribute("url", "${pageContext.request.contextPath}/MyPage/MyPageFront?command=Admins.memberBoard");
 
-        request.setAttribute("selectedMenuItem", "MyRequest");
-        
-        return "/MyPage/Request/requestList.jsp";
-    }
+        return "/MyPage/Admins/adminsMemberList.jsp";
+	}
 }

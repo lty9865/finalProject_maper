@@ -80,5 +80,4 @@ public class RequestDTO {
 	public void setLicenseKey(String licenseKey) {
 		this.licenseKey = licenseKey;
 	}
-
 }

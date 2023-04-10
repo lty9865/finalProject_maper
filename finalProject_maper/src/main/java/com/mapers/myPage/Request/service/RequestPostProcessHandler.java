@@ -3,12 +3,15 @@ package com.mapers.myPage.Request.service;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.mapers.common.Controller;
+import com.mapers.myPage.Request.model.ConversationDAO;
 import com.mapers.myPage.Request.model.RequestDAO;
 import com.mapers.myPage.Request.model.RequestDTO;
 
@@ -18,18 +21,37 @@ public class RequestPostProcessHandler implements Controller {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request.setCharacterEncoding("UTF-8");
-
+        
+        ConversationDAO convDAO = ConversationDAO.getInstance();
+        
         HttpSession session = request.getSession();
 
-        String sessionUserId = (String) session.getAttribute("userId");
-        session.setAttribute("userId", sessionUserId);
+        String userId = (String) session.getAttribute("userId");
+        session.setAttribute("userId", userId);
 
         String title = request.getParameter("title");
-        String userId = request.getParameter("userId");
+        String originalTitle = request.getParameter("originalTitle");
+
+        if (originalTitle != null && !originalTitle.isEmpty()) {
+            if (originalTitle.startsWith("RE:")) {
+                Pattern pattern = Pattern.compile("^RE(#[0-9]+)?: ");
+                Matcher matcher = pattern.matcher(originalTitle);
+                if (matcher.find()) {
+                    title = matcher.replaceFirst("");
+                } else {
+                    title = originalTitle;
+                }
+                int numberOfReplies = convDAO.getNumberOfRepliesForTitle(title);
+                title = "RE#" + (numberOfReplies + 1) + ": " + title;
+            } else {
+                title = originalTitle;
+            }
+        }
+        
         String content = request.getParameter("content");
 
         Date postDate = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String postDateString = dateFormat.format(postDate);
 
         RequestDTO rDTO = new RequestDTO();
@@ -52,7 +74,7 @@ public class RequestPostProcessHandler implements Controller {
             int pageNo = page;
             int postsPerPage = RECORDS_PER_PAGE;
 
-            ArrayList<RequestDTO> requestList = RequestDAO.getInstance().getAllList(pageNo, postsPerPage, sessionUserId);
+            ArrayList<RequestDTO> requestList = RequestDAO.getInstance().getAllList(pageNo, postsPerPage, userId);
 
             int totalPages = (int) Math.ceil((double) currentTotalCount / RECORDS_PER_PAGE);
 
@@ -68,5 +90,3 @@ public class RequestPostProcessHandler implements Controller {
         }
     }
 }
-
-

@@ -3,40 +3,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>My Page</title>
-  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/Resources/css/myPage.css">
+<meta charset="UTF-8">
+<title>My Page</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+<style>
+	.nav {
+		--bs-nav-link-color: #0078ff;	
+	}	
+</style>
 </head>
 <body>
-  <div class="container maper-body myPage-menu-wrapper">
-    <div class="folder-myPage-menu-container">
-      <ul class="folder-myPage-horizontal-menu">
-        <li class="mapper-myPage-menu-item">
-          <a href="${pageContext.request.contextPath}/MyPage/MyPageFront?command=Admins.memberBoard">
-            회원 리스트
-          </a>
-        </li>
-      </ul>
-    </div>
-    <div class="folder-myPage-menu-container">
-      <ul class="folder-myPage-horizontal-menu">
-        <li class="mapper-myPage-menu-item">
-          <a href="${pageContext.request.contextPath}/MyPage/MyPageFront?command=Admins.requestBoard">
-            문의 리스트
-          </a>
-        </li>
-      </ul>
-    </div>
-    <div class="folder-myPage-menu-container">
-      <ul class="folder-myPage-horizontal-menu">
-        <li class="mapper-myPage-menu-item">
-          <a href="${pageContext.request.contextPath}/MyPage/MyPageFront?command=Admins.reportBoard">
-          신고 리스트
-          </a>
-        </li>
-      </ul>
-    </div>
-  </div>
+  <ul class="nav maper-body nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/MyPage/MyPageFront?command=Admins.memberBoard">회원 리스트</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="${pageContext.request.contextPath}/MyPage/MyPageFront?command=Admins.requestBoard">문의 리스트</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="${pageContext.request.contextPath}/MyPage/MyPageFront?command=Admins.reportBoard">신고 리스트</a>
+    </li>
+  </ul>
   <br>
 </body>
 </html>

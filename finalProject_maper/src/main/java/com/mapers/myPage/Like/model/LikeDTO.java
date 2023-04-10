@@ -1,38 +1,35 @@
 package com.mapers.myPage.Like.model;
 
 public class LikeDTO {
-	private int bookNum;
-	private String bookImg;
+	private int listNum;
 	private String userId;
+	private int bookNum;
 	private String title;
-	private String postDate;
+	private String ofileBook;
+	private String sfileBook;
+	private int pageNo;
 	
 	public LikeDTO() {
 		super();
 	}
 	
-	public LikeDTO(String bookImg, String userId, String title, String postDate) {
+	public LikeDTO(int listNum, String userId, int bookNum, String title, String ofileBook, String sfileBook, int pageNo) {
 		super();
-		this.bookImg = bookImg;
+		this.listNum = listNum;
 		this.userId = userId;
-		this.title = title;
-		this.postDate = postDate;
-	}
-
-	public int getBookNum() {
-		return bookNum;
-	}
-	
-	public void setBookNum(int bookNum) {
 		this.bookNum = bookNum;
-	}
-	
-	public String getBookImg() {
-		return bookImg;
+		this.title = title;
+		this.ofileBook = ofileBook;
+		this.sfileBook = sfileBook;
+		this.pageNo = pageNo;
 	}
 
-	public void setBookImg(String bookImg) {
-		this.bookImg = bookImg;
+	public int getListNum() {
+		return listNum;
+	}
+
+	public void setListNum(int listNum) {
+		this.listNum = listNum;
 	}
 
 	public String getUserId() {
@@ -43,6 +40,30 @@ public class LikeDTO {
 		this.userId = userId;
 	}
 
+	public int getBookNum() {
+		return bookNum;
+	}
+
+	public void setBookNum(int bookNum) {
+		this.bookNum = bookNum;
+	}
+
+	public String getOfileBook() {
+		return ofileBook;
+	}
+
+	public void setOfileBook(String ofileBook) {
+		this.ofileBook = ofileBook;
+	}
+
+	public String getSfileBook() {
+		return sfileBook;
+	}
+
+	public void setSfileBook(String sfileBook) {
+		this.sfileBook = sfileBook;
+	}
+
 	public String getTitle() {
 		return title;
 	}
@@ -51,11 +72,13 @@ public class LikeDTO {
 		this.title = title;
 	}
 
-	public String getPostDate() {
-		return postDate;
+	public int getPageNo() {
+		return pageNo;
 	}
 
-	public void setPostDate(String postDate) {
-		this.postDate = postDate;
+	public void setPageNo(int pageNo) {
+		this.pageNo = pageNo;
 	}
+	
+
 }

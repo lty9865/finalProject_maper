@@ -123,8 +123,14 @@
 
 .blue-line {
     border: 0;
-    border-top: 3px solid #0078ff; 
+    border-top: 5px solid #0078ff; 
     margin: 10px 0;
+}
+
+.title-line {
+	border: 0;
+	border-top: 3px solid #0055CC;
+	margin: 10px 0;
 }
 
 .custom-button {
@@ -192,13 +198,22 @@
 }
 
 .write-button {
-	position: absolute;
-	right: 0;
+	position: right;
+	align-items: center;
 }
 
 .btn.btn-primary {
+	background-color: green;
+    border: none;
+    color: white;
+    text-align: right;
+    display: inline-block;
+    font-size: 14px;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 	min-width: 80 px;
-	text-align: center;
 }
 
 .current-page {
@@ -214,16 +229,18 @@
     background-color: white;
 }
 
-.pagination .page-item.active .page-link {
-    color: blue;
-    background-color: white;
-}
-
 .pagingArea ul {
     display: inline-flex;
     text-align: center;
 }
 
-.pagination .visited-page {
+.pagination .page-item.active .page-link.visited-page {
     color: darkviolet;
+    font-weight: bold;
+}
+
+/* myPage - My Like */
+.table.boardlist td {
+    text-align: center;
+    vertical-align: middle;
 }

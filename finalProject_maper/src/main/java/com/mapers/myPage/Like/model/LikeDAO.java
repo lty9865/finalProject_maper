@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
 import javax.sql.DataSource;
 
@@ -46,40 +45,49 @@ public class LikeDAO {
 	}	
 	
 	// 마이 페이지, 문의사항 리스트 조회(검색 기능 추가) - 박강필
-	public List<LikeDTO> liketList(Map<String, Object> map) {
-		List<LikeDTO> kList = new Vector<LikeDTO>();
+	public List<LikeDTO> liketList(Map<String, Object> map, String userId) {
+		List<LikeDTO> kList = new ArrayList<LikeDTO>();
 		
-		String sql = " "
-				   + "select * from ( "
-				   + "	select Tb.* rownum rNum from ( "
-				   + "		select * from likes ";
-		
-		// 검색 조건
+		String sql = "SELECT * FROM ( "
+		           + "    SELECT Tb.*, ROWNUM rNum FROM ( "
+		           + "        SELECT k.*, b.title, b.ofile, b.sfile "
+		           + "        FROM LIKELIST k, BOOK b "
+		           + "        WHERE k.BOOKNUM = b.BOOKNUM AND k.USERID = ? ";
+
+		// search requirement
 		if (map.get("searchWord") != null) {
-			sql += " where " + map.get("searchField")
-				 + " like '%" + map.get("searchWorld") + "%' ";
+		    sql += " AND " + map.get("searchField")
+		         + " LIKE '%" + map.get("searchWord") + "%' ";
 		}
-		
-		sql += "		order by booknum desc "
-			 + "		) Tb " 
-			 + "	) " 
-			 + " WHERE rNum BETWEEN ? AND ?";
+
+		sql += "        ORDER BY k.LISTNUM DESC "
+		     + "    ) Tb "
+		     + ") "
+		     + "WHERE rNum BETWEEN ? AND ?";
 		
 		try {
+
+			if (conn != null) {
+				conn.close();
+			}
 			
 			conn = dataSource.getConnection();
 			
 			psmt = conn.prepareStatement(sql);
-			psmt.setString(1, map.get("start").toString());
-			psmt.setString(2, map.get("end").toString());
+			psmt.setString(1, userId);
+			psmt.setString(2, map.get("start").toString());
+			psmt.setString(3, map.get("end").toString());
 			
 			rs = psmt.executeQuery();
 			while(rs.next()) {
 				LikeDTO dto = new LikeDTO();
-				dto.setBookNum(rs.getInt("booknum"));
+				
+				dto.setListNum(rs.getInt("listnum"));
 				dto.setUserId(rs.getString("userid"));
-				dto.setTitle(rs.getString("title"));
-				dto.setPostDate(rs.getString("postdate"));
+				dto.setBookNum(rs.getInt("booknum"));
+				
+				dto.setOfileBook(rs.getString("ofile"));
+				dto.setSfileBook(rs.getString("sfile"));
 				
 				kList.add(dto);
 			}
@@ -96,13 +104,14 @@ public class LikeDAO {
 	public ArrayList<LikeDTO> getAllList(int pageNo, int postsPerPage, String userId) {
 	    ArrayList<LikeDTO> kList = new ArrayList<LikeDTO>();
 
-	    String sql = "SELECT * FROM ("
-	               + " SELECT a.*, ROWNUM rnum FROM ("
-	               + " 	SELECT * FROM likes "
-	               + " 	WHERE userid = ? "
-	               + " 	ORDER BY booknum DESC) a "
-	               + " WHERE ROWNUM <= ?) "
-	               + "WHERE rnum > ?";
+	    String sql = "SELECT a.*, b.ofile, b.sfile, a.rnum FROM ("
+	               + " SELECT k.*, ROWNUM rnum FROM ("
+	               + "  	SELECT k.* FROM LIKELIST k, BOOK b "
+	               + "  	WHERE k.BOOKNUM = b.BOOKNUM AND k.USERID = ? "
+	               + "  	ORDER BY k.listnum DESC) k "
+	               + " WHERE ROWNUM <= ?) a "
+	               + " INNER JOIN BOOK b ON a.BOOKNUM = b.BOOKNUM "
+	               + "WHERE a.rnum > ?";
 
 	    try {
 	    	
@@ -121,12 +130,12 @@ public class LikeDAO {
 	        while (rs.next()) {
 	            LikeDTO kDTO = new LikeDTO();
 	            
-	            kDTO.setBookNum(rs.getInt("booknum"));
-	            kDTO.setBookImg(rs.getString("bookimg"));
-	            kDTO.setTitle(rs.getString("title"));
+	            kDTO.setListNum(rs.getInt("listnum"));
 	            kDTO.setUserId(rs.getString("userid"));
-	            kDTO.setPostDate(rs.getString("postdate"));
-
+				kDTO.setBookNum(rs.getInt("booknum"));
+				kDTO.setOfileBook(rs.getString("ofile"));
+				kDTO.setSfileBook(rs.getString("sfile"));
+				
 	            kList.add(kDTO);
 	        }
 
@@ -138,13 +147,17 @@ public class LikeDAO {
 	    return kList;
 	}
 	
-	// 마이 페이지, 좋아요한 글 전체 포스팅 개수 리턴
+	// 마이 페이지, 좋아요한 책 개수 리턴 - 박강필
 	public int getTotalPostCount(String userId) {
 		int totalPostCount = 0;
 
-		String sql = " select count(*) from likes where userid=? ";
+		String sql = " select count(*) from likelist where userid=? ";
 		
 		try {
+
+			if (conn != null) {
+				conn.close();
+			}
 			
 			conn = dataSource.getConnection();
 			
@@ -165,20 +178,26 @@ public class LikeDAO {
 	}
 	
 	// 마이 페이지, 좋아요한 책 개수 세기(검색 기능 포함) - 박강필
-	public int countTotalLike(Map<String, Object> map) {
+	public int countTotalLike(Map<String, Object> map, String userId) {
 		int totalLikeCount = 0;
 		
-		String sql = " select count(*) from likes";
+		String sql = " select count(*) from likelist where userid = ?";
 		
 		if(map.get("searchWord") != null) {
 			sql += " where " + map.get("searchField") + " like '%" + map.get("searchWord") + "%' ";
 		}
 		
 		try {
+
+			if (conn != null) {
+				conn.close();
+			}
 			
 			conn = dataSource.getConnection();
 			
 			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, userId);
+			
 			rs = psmt.executeQuery();
 			if (rs.next()) {
 				totalLikeCount = rs.getInt(1);
@@ -193,12 +212,16 @@ public class LikeDAO {
 	}
 	
 	// 마이 페이지, 좋아요한 책 상세보기 - 박강필
-	public LikeDTO viewRequest(int bookNum, String userId) {
+	public LikeDTO viewLike(int bookNum, String userId) {
 		LikeDTO dto = new LikeDTO();
 		
-		String sql = "select * from likes where booknum=? and userid=? ";
+		String sql = "select * from likelist where booknum=? and userid=? ";
 		
 		try {
+
+			if (conn != null) {
+				conn.close();
+			}
 			
 			conn = dataSource.getConnection();
 			
@@ -210,8 +233,8 @@ public class LikeDAO {
 			while (rs.next()) {
 				dto.setBookNum(rs.getInt("bookNum"));
 				dto.setUserId(rs.getString("userId"));
-				dto.setTitle(rs.getString("title"));
-				dto.setPostDate(rs.getString("postDate"));
+				dto.setOfileBook(rs.getString("ofile"));
+				dto.setSfileBook(rs.getString("sfile"));
 			}
 			
 		} catch (Exception e) {
@@ -223,17 +246,22 @@ public class LikeDAO {
 	}
 
 	// 마이 페이지, 좋아요 삭제 - 박강필
-	public int deleteRequest(int requestNum) {
+	public int deleteLike(int bookNum, String userId) {
 		int result = 0;
 		
-		String sql = "delete from likes where requestnum=?";
+		String sql = "delete from likelist where booknum=? and userid = ?";
 		
 		try {
+			
+			if (conn != null) {
+				conn.close();
+			}
 			
 			conn = dataSource.getConnection();
 			
 			psmt = conn.prepareStatement(sql);
-			psmt.setInt(1, requestNum);
+			psmt.setInt(1, bookNum);
+			psmt.setString(1, userId);
 			
 			result = psmt.executeUpdate();
 			

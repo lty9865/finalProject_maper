@@ -25,7 +25,7 @@ public class CheckRealAccountHandler implements Controller {
 
         ProfileDTO pDTO = ProfileDAO.getInstance().getProfile(userId, password);
         if (pDTO == null) {
-            request.setAttribute("errMsg", "비밀번호가 일치하지 않습니다.");
+            request.setAttribute("errMsg", "비밀번호를 입력해주세요.");
             request.setAttribute("url", "${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyProfile.checkRealAccount");
             session.setAttribute("userId", userId);
 
@@ -36,7 +36,8 @@ public class CheckRealAccountHandler implements Controller {
             request.setAttribute("password", password);
             request.setAttribute("email", pDTO.getEmail());
             request.setAttribute("birth", pDTO.getBirth());
-            request.setAttribute("image", pDTO.getProfileImg());
+            request.setAttribute("ofile", pDTO.getOfile());
+            request.setAttribute("sfile", pDTO.getSfile());
 
             String relativeUrl = "${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyProfile.profileEdit";
             request.setAttribute("url", relativeUrl);

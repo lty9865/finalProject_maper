@@ -1,4 +1,4 @@
-package com.mapers.myPage.Request.service;
+package com.mapers.myPage.Admins.service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -8,28 +8,33 @@ import com.mapers.common.Controller;
 import com.mapers.myPage.Request.model.RequestDAO;
 import com.mapers.myPage.Request.model.RequestDTO;
 
-public class RequestPostViewHandler implements Controller {
+public class AdminsRequestReplyViewHandler implements Controller {
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("UTF-8");
 		
 		HttpSession session = request.getSession();
-		
+		String userId = (String) session.getAttribute("userId");
+        String[] userIdPart = userId.split("_");
+        String userIdFront = userIdPart[0];
+        if (userIdFront == null || userIdFront.isEmpty()) {
+        	userIdFront = "admins";
+        }
+        int adminCon = Integer.parseInt(userIdPart[1]);
+        if (adminCon != 1) {
+        	adminCon = 1;
+        }
+        session.setAttribute("userId", userId);
+        
 		int requestNum = Integer.parseInt(request.getParameter("requestNum"));
 		
-		String userId = (String) session.getAttribute("userId");
-		String[] userIdPart = userId.split("_");
-//		int adminCon = Integer.parseInt(userState[1]);
-		// 0 : 일반 회원, 1: 관리자
-		
 		// 게시글 상세보기
-		RequestDTO rDTO = RequestDAO.getInstance().viewRequest(requestNum, userIdPart[0]);
+		RequestDTO rDTO = RequestDAO.getInstance().viewRequest(requestNum, userIdFront);
 		
 		// 상세보기 정보 공유
 		request.setAttribute("requestNum", requestNum);
         request.setAttribute("rDTO", rDTO);
-		session.setAttribute("userId", userId);
 		// url에 상세보기 페이지로 이동
 		request.setAttribute("url", "${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyRequest.requestPostView");
 		

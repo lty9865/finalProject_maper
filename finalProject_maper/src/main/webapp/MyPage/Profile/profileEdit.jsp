@@ -7,13 +7,12 @@
 <meta charset="UTF-8">
 <title>My Page - Edit Profile</title>
 <link rel="stylesheet" href="../Resources/css/myPage.css">
-<style>
-    .blue-line {
-        border: 0;
-        border-top: 1px solid blue;
-        margin: 10px 0;
-    }
-</style>
+<script>
+	function submitForms() {
+	    document.getElementById('image-upload-form').submit();
+	    document.getElementById('profile-edit-form').submit();
+	}
+</script>
 </head>
 <body>
     <!-- header -->
@@ -24,6 +23,8 @@
         <div class="top-area">
             <jsp:include page="../menu.jsp"/>
         </div>
+		<h2>프로필 수정</h2>
+		<hr class="title-line">
         <div class="bottom-area">
             <div class="left-area">
                 <p class="field"><strong>프로필 사진:</strong></p>
@@ -33,7 +34,7 @@
 				</form>
             </div>
             <div class="right-area">
-                <form action="${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyProfile.profileEditProcess" method="post" enctype="multipart/form-data">
+                <form id="profile-edit-form" action="${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyProfile.profileEditProcess" method="post" enctype="multipart/form-data">
                     <h1 class="title">${userId}</h1>
                     <hr class="blue-line">
 
@@ -73,13 +74,20 @@
                     <hr class="blue-line">
                     <br>
                     
-                    <input type="submit" value="정보 수정" class="custom-button">
+                    <input type="submit" value="정보 수정" class="custom-button" onclick="submitForm();">
 					<input type="button" value="돌아가기" onclick="location.href='${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyProfile'" class="custom-button">
 					<button type="button" onclick="location.href='${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyProfile.profileDelete';" class="custom-button">계정 삭제</button>
                 </form>
             </div>
         </div>
     </div>
+    
+    <!-- the result of edit -->
+    <c:if test="${not empty msg}">
+        <script type="text/javascript">
+            alert("{${msg}")
+        </script>
+    </c:if>
 
     <!-- footer -->
     <%@ include file="/WEB-INF/views/Common/footer.jsp" %>

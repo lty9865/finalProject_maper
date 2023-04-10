@@ -7,13 +7,6 @@
 <meta charset="UTF-8">
 <title>My Page - My Profile</title>
 <link rel="stylesheet" href="../Resources/css/myPage.css">
-<style>
-    .blue-line {
-        border: 0;
-        border-top: 1px solid blue;
-        margin: 10px 0;
-    }
-</style>
 </head>
 <body>
     <!-- header -->
@@ -24,10 +17,8 @@
         <div class="top-area">
             <jsp:include page="../menu.jsp" />
         </div>
-        <div class="maper-body">
-                <hr>
-                <hr>
-            </div>
+        <br>
+        <br>
         <div class="bottom-area">
             <div class="left-area">
                 <div class="profile-img">
@@ -72,7 +63,7 @@
                 <form
                     action="${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyProfile.checkRealAccount"
                     method="post">
-                    <input type="submit" value="내 정보 수정">
+                    <input type="submit" value="내 정보 수정" class="custom-button">
                 </form>
             </div>
         </div>

@@ -1,7 +1,8 @@
 package com.mapers.myPage.Profile.model;
 
 public class ProfileDTO {
-	private String profileImg;
+	private String sfile;
+	private String ofile;
     private String userId;
     private String password;
     private String email;
@@ -12,11 +13,12 @@ public class ProfileDTO {
     public ProfileDTO() {
         super();
     }
-
-    public ProfileDTO(String profileImg, String userId, String password, String email, String birth, int admins,
-			String licenseKey) {
+    
+	public ProfileDTO(String sfile, String ofile, String userId, String password, String email, String birth,
+			int admins, String licenseKey) {
 		super();
-		this.profileImg = profileImg;
+		this.sfile = sfile;
+		this.ofile = ofile;
 		this.userId = userId;
 		this.password = password;
 		this.email = email;
@@ -28,13 +30,6 @@ public class ProfileDTO {
     public ProfileDTO(String id, String password) {
     }
 
-    public String getProfileImg() {
-        return profileImg;
-    }
-
-    public void setProfileImg(String profileImg) {
-        this.profileImg = profileImg;
-    }
 
     public String getUserId() {
         return userId;
@@ -83,4 +78,29 @@ public class ProfileDTO {
     public void setLicenseKey(String licenseKey) {
         this.licenseKey = licenseKey;
     }
+
+
+	public String getSfile() {
+		return sfile;
+	}
+
+
+	public void setSfile(String sfile) {
+		this.sfile = sfile;
+	}
+
+
+	public String getOfile() {
+		return ofile;
+	}
+
+
+	public void setOfile(String ofile) {
+		this.ofile = ofile;
+	}
+
+
+	public String getLicenseKey() {
+		return licenseKey;
+	}
 }

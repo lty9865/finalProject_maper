@@ -18,28 +18,29 @@
     <div class="maper-body">
 		<h2>회원 관리</h2>
 		<hr><hr>
-    </div>
-    <table class="table maper-body table-hover boardlist">
-        <thead>
-            <tr align="center" class="warning header-row">
-                <th>아이디</th>
-                <th>이메일</th>
-                <th>생년월일</th>
-                <th>가입 여부</th>
-                <th>탈퇴일자</th>
-            </tr>
-        </thead>
-        <tbody>
-            <c:forEach items="${requestScope.memberBoard}" var="post">
-                <tr align="center" class="header-row">
-                    <td>${post.userId}</td>
-                    <td>${post.email}</td>
-                    <td>${post.birth}</td>
-                </tr>
-            </c:forEach>
-        </tbody>
-    </table>
-    <br>
+    
+	    <table class="table maper-body table-hover boardlist">
+	        <thead>
+	            <tr align="center" class="warning header-row">
+	                <th>아이디</th>
+	                <th>이메일</th>
+	                <th>생년월일</th>
+	                <th>가입 여부</th>
+	                <th>탈퇴일자</th>
+	            </tr>
+	        </thead>
+	        <tbody>
+	            <c:forEach items="${requestScope.memberBoard}" var="post">
+	                <tr align="center" class="header-row">
+	                    <td>${post.userId}</td>
+	                    <td>${post.email}</td>
+	                    <td>${post.birth}</td>
+	                </tr>
+	            </c:forEach>
+	        </tbody>
+	    </table>
+	    <br>
+	</div>
 
 	<!-- Paging Process -->
     <div class="pagingArea">

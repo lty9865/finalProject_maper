@@ -5,7 +5,21 @@ public class ReportDTO {
 	private int bookNum;
 	private String userId;
 	private int count;
+	private String bookTitle;
 
+	public ReportDTO() {
+		super();
+	}
+	
+	public ReportDTO(int reportNum, int bookNum, String userId, int count, String bookTitle) {
+		super();
+		this.reportNum = reportNum;
+		this.bookNum = bookNum;
+		this.userId = userId;
+		this.count = count;
+		this.bookTitle = bookTitle;
+	}
+	
 	public int getReportNum() {
 		return reportNum;
 	}
@@ -36,6 +50,14 @@ public class ReportDTO {
 
 	public void setCount(int count) {
 		this.count = count;
+	}
+
+	public String getBookTitle() {
+		return bookTitle;
+	}
+
+	public void setBookTitle(String bookTitle) {
+		this.bookTitle = bookTitle;
 	}
 
 }

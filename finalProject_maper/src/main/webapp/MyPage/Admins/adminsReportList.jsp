@@ -18,32 +18,32 @@
     <div class="maper-body">
 		<h2>접수된 신고 관리</h2>
 		<hr><hr>
-    </div>
-    <table class="table maper-body table-hover boardlist">
-        <thead>
-            <tr align="center" class="warning header-row">
-                <th>신고 번호</th>
-                <th>제목</th>
-                <th>작성자</th>
-                <th>신고 횟수</th>
-            </tr>
-        </thead>
-        <tbody>
-            <c:forEach items="${requestScope.reportBoard}" var="post">
-                <tr align="center" class="header-row">
-                    <td>${post.reportNum}</td>
-                    <td>
-                    	<a href="${pageContext.request.contextPath}/MyPage/MyPageFront?command=Admins.reportPostView&reportNum=${post.reportNum}">
-		                    ${post.bookTitle}
-                    	</a>
-                    </td>
-                    <td>${post.userId}</td>
-                    <td>${post.count}</td>
-                </tr>
-            </c:forEach>
-        </tbody>
-    </table>
-    <br>
+	    <table class="table maper-body table-hover boardlist">
+	        <thead>
+	            <tr align="center" class="warning header-row">
+	                <th>신고 번호</th>
+	                <th>제목</th>
+	                <th>작성자</th>
+	                <th>신고 횟수</th>
+	            </tr>
+	        </thead>
+	        <tbody>
+	            <c:forEach items="${requestScope.reportBoard}" var="post">
+	                <tr align="center" class="header-row">
+	                    <td>${post.reportNum}</td>
+	                    <td>
+	                    	<a href="${pageContext.request.contextPath}/MyPage/MyPageFront?command=Admins.reportPostView&reportNum=${post.reportNum}">
+			                    ${post.bookTitle}
+	                    	</a>
+	                    </td>
+	                    <td>${post.userId}</td>
+	                    <td>${post.count}</td>
+	                </tr>
+	            </c:forEach>
+	        </tbody>
+	    </table>
+	    <br>
+	</div>
 
 	<!-- Paging Process -->
     <div class="pagingArea">

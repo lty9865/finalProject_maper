@@ -136,7 +136,8 @@ public class ProfileDAO {
 				dto.setPassword(rs.getString("password"));
 				dto.setEmail(rs.getString("usermail"));
 				dto.setBirth(rs.getString("birth"));
-				dto.setProfileImg(rs.getString("images"));
+				dto.setOfile(rs.getString("ofile"));
+				dto.setSfile(rs.getString("sfile"));
 			}
 		
 		} catch (Exception e) {
@@ -173,7 +174,8 @@ public class ProfileDAO {
 				dto.setPassword(rs.getString("password"));
 				dto.setEmail(rs.getString("usermail"));
 				dto.setBirth(rs.getString("birth"));
-				dto.setProfileImg(rs.getString("images"));
+				dto.setOfile(rs.getString("ofile"));
+				dto.setSfile(rs.getString("sfile"));
 			}
 		
 		} catch (Exception e) {

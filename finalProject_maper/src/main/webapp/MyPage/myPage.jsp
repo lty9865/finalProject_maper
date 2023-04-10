@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ include file="/Common/link.jsp" %>
 <%
-	String userId = "test1";
+	String userId = "admins_1";
 	session.setAttribute("userId", userId);
 %>
 
@@ -18,14 +18,13 @@
     
     <!-- body/menu -->
     <c:choose>
-    <c:when test="${sessionScope.userId == 'admins_1'}">
-        <jsp:include page="/MyPage/adminsMenu.jsp"/>
-    </c:when>
-    <c:otherwise>
-        <jsp:include page="/MyPage/menu.jsp"/>
-    </c:otherwise>
-</c:choose>
-    
+	    <c:when test="${sessionScope.userId == 'admins_1'}">
+	        <jsp:include page="/MyPage/adminsMenu.jsp"/>
+	    </c:when>
+	    <c:otherwise>
+	        <jsp:include page="/MyPage/menu.jsp"/>
+	    </c:otherwise>
+	</c:choose>
     
     <!-- footer -->
     <%@ include file="/WEB-INF/views/Common/footer.jsp" %>

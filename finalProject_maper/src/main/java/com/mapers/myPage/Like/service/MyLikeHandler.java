@@ -48,6 +48,8 @@ public class MyLikeHandler implements Controller {
 
         request.setAttribute("url", "${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyLike");
 
+        request.setAttribute("selectedMenuItem", "MyLike");
+        
         return "/MyPage/Like/likeList.jsp";
     }
 }

@@ -21,34 +21,34 @@
 	<div class="maper-body">
 		<h2>접수된 문의 관리</h2>
 		<hr><hr>
-    </div>
-	<table class="table maper-body table-hover boardlist">
-		<thead>
-			<tr align="center" class="warning header-row">
-				<th>문의 번호</th>
-				<th>문의 제목</th>
-				<th>작성자</th>
-				<th>문의 일자</th>
-				<th>진행 상태</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach items="${requestScope.requestBoard}" var="post">
-				<tr align="center" class="header-row">
-					<td>${post.requestNum}</td>
-					<td>
-						<c:url value="/MyPage/MyPageFront?command=MyRequest.requestTitleClick" var="titleClickUrl">
-							<c:param name="requestNum" value="${post.requestNum}" />
-						</c:url> 
-						<a href="${titleClickUrl}">${post.title}</a></td>
-					<td>${post.userId}</td>
-					<td>${post.postDate}</td>
-					<td>${post.status == 1 ? "진행 중" : "답변 완료"}</td>
+		<table class="table maper-body table-hover boardlist">
+			<thead>
+				<tr align="center" class="warning header-row">
+					<th>문의 번호</th>
+					<th>문의 제목</th>
+					<th>작성자</th>
+					<th>문의 일자</th>
+					<th>진행 상태</th>
 				</tr>
-			</c:forEach>
-		</tbody>
-	</table>
-	<br>
+			</thead>
+			<tbody>
+				<c:forEach items="${requestScope.requestBoard}" var="post">
+					<tr align="center" class="header-row">
+						<td>${post.requestNum}</td>
+						<td>
+							<c:url value="/MyPage/MyPageFront?command=MyRequest.requestTitleClick" var="titleClickUrl">
+								<c:param name="requestNum" value="${post.requestNum}" />
+							</c:url> 
+							<a href="${titleClickUrl}">${post.title}</a></td>
+						<td>${post.userId}</td>
+						<td>${post.postDate}</td>
+						<td>${post.status == 1 ? "진행 중" : "답변 완료"}</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+		<br>
+	</div>
 
 	<!-- Paging Process -->
 	<div class="pagingArea">
