@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="../Common/link.jsp"%>
+<%
+response.setHeader("Pragma","no-cache"); 
+response.setDateHeader("Expires",0); 
+response.setHeader("Cache-Control", "no-cache");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,14 +13,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-	<p>
-		세션 : ${ sessionScope.userId } <br> 작성자: ${ bookDTO.userId } <br>
-		북넘버 : ${ bookDTO.bookNum } <br> 북제목 : ${ bookDTO.title } <br>
-		허용 : ${ sessionScope.allow } <br> 좋아요 : ${ bookDTO.likesCount } <br>
-		조회수 : ${ bookDTO.visitCount }<br> my: ${ sessionScope.my }
-	</p>
-
 	<!-- header -->
 	<%@ include file="/WEB-INF/views/Common/header.jsp"%>
 
@@ -48,7 +45,7 @@
 										<h5 class="card-title">${ row.title }</h5>
 										<a
 											href="../Book/book.do?command=bookView&idx=${ row.bookNum }"
-											class="btn btn-primary">Go somewhere</a>
+											class="btn btn-primary">보러가기</a>
 									</div>
 								</div>
 							</div>

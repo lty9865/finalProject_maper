@@ -14,13 +14,12 @@
 
 	<!-- body -->
 	<div class="table maper-body" id="pageTitle">
-		<h2>공지사항 수정</h2>
+		<h2>공지사항 작성</h2>
 		<hr>
 	</div>
 	<div class="maper-body">
 		<form name="writeFrm" method="post"
-			action="../Notice/notice.do?command=write"
-			onsubmit="return noticeBlank()">
+			action="../Notice/notice.do?command=write">
 			<div class="maper-body">
 				<div class="maper-book-write" style="margin: 15px auto;">
 					<input type="text" class="form-control" name="title"
@@ -29,28 +28,32 @@
 					<textarea class="form-control" rows="10" name="contents"></textarea>
 					<div style="height: 10px;"></div>
 					<div align="center" style="margin-top: 15px;">
-						<input type="submit" class="btn btn-primary btn-lg"
-							style="width: 120px;" value="작성완료" onclick="LoginConfirmed()" />
-						<button type="button" onclick="" class="btn btn-primary btn-lg"
-							style="width: 120px;"
-							onclick="location.href='../Notice/notice.do?command=list'">Cancel</button>
+						<c:choose>
+							<c:when test="${ empty sessionScope.userId }">
+								<button type="button" class="btn btn-primary btn-lg"
+									style="width: 120px;" onclick="emptySession()">작성완료</button>
+							</c:when>
+							<c:otherwise>
+								<button type="submit" class="btn btn-primary btn-lg"
+									style="width: 120px;" onclick="return noticeBlank()">작성완료</button>
+							</c:otherwise>
+						</c:choose>
+						<c:choose>
+							<c:when test="${ empty sessionScope.userId }">
+								<button type="button" class="btn btn-primary btn-lg"
+									style="width: 120px;" onclick="emptySession()">Cancel</button>
+							</c:when>
+							<c:otherwise>
+								<button type="button" class="btn btn-primary btn-lg"
+									style="width: 120px;"
+									onclick="noticeDelete()">Cancel</button>
+							</c:otherwise>
+						</c:choose>
 					</div>
 				</div>
 			</div>
 		</form>
 	</div>
 	<script type="text/javascript" src="../Resources/javascript/notice.js"></script>
-	<c:if test="${ empty sessionScope.userId }">
-		<script type="text/javascript">
-			function CheckSession() {
-				if (sessionStorage.getItem("userId") == null) {
-					alert("로그인 정보가 만료되어 로그인페이지로 이동합니다.");
-					window.location = "/Common/logOutProcess.jsp";
-				}
-			}
-
-			setInterval(CheckSession(), 100);
-		</script>
-	</c:if>
 </body>
 </html>

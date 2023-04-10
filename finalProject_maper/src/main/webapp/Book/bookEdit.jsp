@@ -2,6 +2,11 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../Common/link.jsp"%>
+<%
+response.setHeader("Pragma", "no-cache");
+response.setDateHeader("Expires", 0);
+response.setHeader("Cache-Control", "no-cache");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,13 +14,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<p>
-		세션 : ${ sessionScope.userId } <br> 작성자: ${ bookDTO.userId } <br>
-		북넘버 : ${ bookDTO.bookNum } <br> 북제목 : ${ bookDTO.title } <br>
-		허용 : ${ sessionScope.allow } <br> 좋아요 : ${ bookDTO.likesCount } <br>
-		조회수 : ${ bookDTO.visitCount }
-	</p>
-
 	<!-- header -->
 	<%@ include file="/WEB-INF/views/Common/header.jsp"%>
 
@@ -59,13 +57,6 @@
 							class="main-inputbar" style="width: 70%; padding-left: 20px;"
 							type="text" id="city" name="city" value="${ bookDTO.city }">
 					</div>
-					&nbsp;
-					<div class="mapers-book-inputbar child" style="padding-left: 20px;">
-						<label class="main-inputbar" for="date">일자</label> <input
-							class="main-inputbar" style="width: 70%; padding-left: 20px;"
-							type="date" id="date" name="bookDate"
-							value="${bookDTO.bookDate }">
-					</div>
 				</div>
 				<div class="input-group mb-3" id="fileUploads">
 					<label class="input-group-text" for="inputGroupFile01">Upload</label>
@@ -73,6 +64,7 @@
 						name="ofile" value="${ bookDTO.ofile }" />
 				</div>
 			</div>
+			<br>
 			<c:choose>
 				<c:when test="${ empty sessionScope.userId }">
 					<button type="button" class="btn btn-primary"
@@ -100,7 +92,7 @@
 			function CheckSession() {
 				if (sessionStorage.getItem("userId") == null) {
 					alert("로그인 정보가 만료되어 로그인페이지로 이동합니다.");
-					window.location = "/finalProject_maper_local/Common/logOutProcess.jsp";
+					window.location = "/Common/logOutProcess.jsp";
 				}
 			}
 

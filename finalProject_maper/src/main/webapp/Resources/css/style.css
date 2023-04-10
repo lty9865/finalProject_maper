@@ -56,6 +56,14 @@
 	border-radius: 2rem;
 }
 
+.maper-page-rounded {
+	width: 100%;
+	margin: 20px auto;
+	border: 2px solid #87cefa;
+	padding: 0.5rem;
+	border-radius: 2rem;
+}
+
 .maper-fontsize-1 {
 	font-size: 40px;
 }

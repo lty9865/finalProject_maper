@@ -109,7 +109,14 @@ response.setHeader("Cache-Control", "no-cache");
 		</div>
 		<br> <br>
 		<!-- 최신글 -->
-		<h3>최신글</h3>
+		<div class="parent">
+			<div class="child">
+				<h2>최신글</h2>
+			</div>
+			<div class="child" align="right" style="margin: auto auto 0 auto;">
+				<a href="../Book/book.do?command=bookList">+더보기</a>
+			</div>
+		</div>
 		<hr>
 		<div class="container text-center">
 			<div class="row row-cols-auto">
@@ -138,7 +145,14 @@ response.setHeader("Cache-Control", "no-cache");
 		</div>
 		<br>
 		<!-- 공지사항 -->
-		<h3>공지사항</h3>
+		<div class="parent">
+			<div class="child">
+				<h2>공지사항</h2>
+			</div>
+			<div class="child" align="right" style="margin: auto auto 0 auto;">
+				<a href="../Notice/notice.do?command=list">+더보기</a>
+			</div>
+		</div>
 		<hr>
 		<table border="1" class="table table-hover">
 			<thead>

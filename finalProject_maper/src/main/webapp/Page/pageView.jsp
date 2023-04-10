@@ -44,6 +44,24 @@ response.setHeader("Cache-Control", "no-cache");
 	z-index: 0;
 	padding: 0;
 }
+
+.test_obj {
+	position: relative;
+	display: inline-block;
+	width: 200px;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, .2);
+}
+
+.test_obj:before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(to right, rgba(0, 0, 0, 0.2) 0px,
+		transparent 5%, transparent 95%, rgba(0, 0, 0, 0.2) 100%);
+}
 </style>
 </head>
 <body>
@@ -93,9 +111,16 @@ response.setHeader("Cache-Control", "no-cache");
 		</div>
 	</div>
 	<div class="flipbook-viewport">
+		<div class="maper-body" align="center">
+			<button type="button" class="btn btn-outline-primary"
+				onclick="location.href='../Book/book.do?command=bookView&idx=${ bookDTO.bookNum }';">돌아가기</button>
+		</div>
 		<div class="container">
 			<div class="flipbook">
-				<div>${ bookDTO.title }</div>
+				<div class="test_obj" align="center">
+					<br> <img src="../Uploads/Book/${ bookDTO.sfile }" style="width: 60%; height: 40%; object-fit: cover; margin-bottom: 20px;">
+					<p style="font-size: 30px;">${ bookDTO.title }</p>
+				</div>
 				<c:choose>
 					<c:when test="${ empty pageList }">
 						<div>
@@ -141,7 +166,6 @@ response.setHeader("Cache-Control", "no-cache");
 										</div>
 									</div>
 								</div>
-
 							</div>
 						</c:forEach>
 					</c:otherwise>
@@ -150,7 +174,6 @@ response.setHeader("Cache-Control", "no-cache");
 			</div>
 		</div>
 	</div>
-
 	<script type="text/javascript">
 		function loadApp() {
 
@@ -196,7 +219,7 @@ response.setHeader("Cache-Control", "no-cache");
 	<!-- 좋아요 기능 -->
 	<script type="text/javascript">
 		function like(){
-			if('${sessionScope.userId}' == null){
+			if(${empty sessionScope.userId}){
 					LoginConfirmed();
 			}else{
 				

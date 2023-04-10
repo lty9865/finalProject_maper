@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ include file="/Common/link.jsp"%>
 
 <!DOCTYPE html>
@@ -46,12 +47,21 @@
 				</c:choose>
 			</tbody>
 		</table>
-		<c:if test="${ sessionScope.admis eq 1}">
+		<c:if
+			test="${fn:substringBefore(sessionScope.userId, '_') == 'admins' and fn:substringAfter(sessionScope.userId, '_') == '1'}">
 			<table class="table maper-body">
 				<tr align="center">
 					<td align="right">
-						<button type="button" class="btn btn-primary"
-							onclick="NoticeListLoginConfirmed()">글쓰기</button>
+						<c:choose>
+							<c:when test="${ empty sessionScope.userId }">
+								<button type="button" class="btn btn-primary"
+									onclick="emptySession()">글쓰기</button>
+							</c:when>
+							<c:otherwise>
+								<button type="button" class="btn btn-primary"
+									onclick="location.href='../Notice/notice.do?command=writeView';">글쓰기</button>
+							</c:otherwise>
+						</c:choose>
 					</td>
 				</tr>
 			</table>

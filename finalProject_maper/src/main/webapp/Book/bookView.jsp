@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="../Resource/css/myPage.css">
 </head>
 <body>
 	<!-- header -->
@@ -22,19 +23,49 @@
 			<input type="hidden" value="${ bookDTO.title }" name="title">
 			<div class="container text-center">
 				<div class="row">
-					<div class="col-4">사진</div>
-					<div class="col-8" align="left">
-						<p>
-							번호 : ${ bookDTO.bookNum }<br> 작성자 : ${ bookDTO.userId }<br>
-							제목 : ${ bookDTO.title }<br> 장소 : ${ bookDTO.country } +
-							${bookDTO.city}<br> 일자 : ${ bookDTO.bookDate }<br> 차단 :
-							${ bookDTO.block }<br> 만족도 : ${ bookDTO.rate }<br> 조회수
-							: ${ bookDTO.visitCount }<br> 좋아요 : ${ bookDTO.likesCount }<br>
-							이미지명 : ${ bookDTO.sfile }<br> ${ bookDTO.ofile }
-						</p>
+					<div class="col-4">
+						<img alt="" src="../Uploads/Book/${ bookDTO.sfile }"
+							style="width: 100%; height: 100%; object-fit: cover;">
+					</div>
+					<div class="col-8" align="left" style="height: 400px; vertical-align: middle; margin: auto;">
+						<div class="row" align="left">
+							<div class="col">작성자 :&nbsp;</div>
+							<div class="col">${ bookDTO.userId }</div>
+						</div>
+						<hr class="blue-line">
+						<div class="row" align="left">
+							<div class="col">제목 :&nbsp;</div>
+							<div class="col">${ bookDTO.title }</div>
+						</div>
+						<hr class="blue-line">
+						<div class="row" align="left">
+							<div class="col">장소 :&nbsp;</div>
+							<div class="col">${ bookDTO.country}&nbsp;${ bookDTO.city }</div>
+						</div>
+						<hr class="blue-line">
+						<div class="row" align="left">
+							<div class="col">작성일자 :&nbsp;</div>
+							<div class="col">${ bookDTO.bookDate }</div>
+						</div>
+						<hr class="blue-line">
+						<div class="row" align="left">
+							<div class="col">만족도 :&nbsp;</div>
+							<div class="col">${ bookDTO.rate }</div>
+						</div>
+						<hr class="blue-line">
+						<div class="row" align="left">
+							<div class="col">조회수 :&nbsp;</div>
+							<div class="col">${ bookDTO.visitCount }</div>
+						</div>
+						<hr class="blue-line">
+						<div class="row" align="left">
+							<div class="col">좋아요 :&nbsp;</div>
+							<div class="col">${ bookDTO.likesCount }</div>
+						</div>
 					</div>
 				</div>
 			</div>
+			<br>
 			<div class="row">
 				<div class="col" align="left">
 					<div class="btn-group" role="group"
@@ -51,17 +82,6 @@
 					<div class="btn-group" role="group"
 						aria-label="Basic outlined example">
 						<c:if test="${ sessionScope.allow eq 1}">
-							<c:choose>
-								<c:when test="${ empty sessionScope.userId }">
-									<button type="button" onclick="emptySession()">페이지
-										작성하기</button>
-								</c:when>
-								<c:otherwise>
-									<button type="button" class="btn btn-outline-primary"
-										onclick="location.href='../Page/page.do?command=pageWriteView';">페이지
-										작성하기</button>
-								</c:otherwise>
-							</c:choose>
 							<c:choose>
 								<c:when test="${ empty sessionScope.userId }">
 									<button type="button" onclick="emptySession()">수정하기</button>
