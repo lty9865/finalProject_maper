@@ -4,7 +4,6 @@ import com.mapers.common.Controller;
 import com.mapers.myPage.Admins.service.AdminsMemberHandler;
 import com.mapers.myPage.Admins.service.AdminsReportDeleteHandler;
 import com.mapers.myPage.Admins.service.AdminsReportHandler;
-import com.mapers.myPage.Admins.service.AdminsReportPostViewHandler;
 import com.mapers.myPage.Admins.service.AdminsRequestHandler;
 import com.mapers.myPage.Admins.service.AdminsRequestReplyDeleteHandler;
 import com.mapers.myPage.Admins.service.AdminsRequestReplyEditHandler;
@@ -88,8 +87,6 @@ public class HandlerMapping {
 			} else if (mainCommand.contentEquals("Admins")) {
 				if (subCommand.contentEquals("reportBoard")) {
 					controller = new AdminsReportHandler();
-				} else if (subCommand.contentEquals("reportPostView")) {
-					controller = new AdminsReportPostViewHandler();
 				} else if (subCommand.contentEquals("reportDelete")) {
 					controller = new AdminsReportDeleteHandler();
 				} else if (subCommand.contentEquals("requestBoard")) {
@@ -110,7 +107,9 @@ public class HandlerMapping {
 			}
 			
 		} else {
-			if (mainCommand.contentEquals("Admin")) {
+			if (mainCommand.contentEquals("StartMyPage")) {
+				controller = new MyPageStarter();
+			} else if (mainCommand.contentEquals("Admin")) {
 				controller = new AdminsMemberHandler();
 			} else if (mainCommand.contentEquals("MyLike")) {
 				controller = new MyLikeHandler();

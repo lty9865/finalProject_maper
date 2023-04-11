@@ -14,6 +14,8 @@ public class AdminsRequestReplyEditHandler implements Controller {
         request.setCharacterEncoding("UTF-8");
         String method = request.getMethod();
 
+        request.setAttribute("selectedMenuItem", "AdminsRequestBoard");
+        
         HttpSession session = request.getSession();
         String userId = (String) session.getAttribute("userId");
         String[] userIdFront = userId.split("_");
@@ -47,7 +49,7 @@ public class AdminsRequestReplyEditHandler implements Controller {
             return "/MyPage/Request/requestEdit.jsp";
         }
         request.setAttribute("url", "${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyRequest.requestPostView");
-
+        
         return "/MyPage/Request/requestPostView.jsp";
     }
 }

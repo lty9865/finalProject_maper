@@ -80,6 +80,8 @@ public class AdminsReportHandler implements Controller {
 
         request.setAttribute("url", "${pageContext.request.contextPath}/MyPage/MyPageFront?command=Admins.reportBoard");
 
+        request.setAttribute("selectedMenuItem", "AdminsReportBoard");
+        
         return "/MyPage/Admins/adminsReportList.jsp";
     }
 }

@@ -9,10 +9,10 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
+import com.mapers.SignUp.MemberDTO;
 import com.mapers.common.DataSourceManager;
 import com.mapers.myPage.Request.model.RequestDTO;
 import com.mapers.report.ReportDTO;
-import com.mapers.SignUp.MemberVO;
 
 public class AdminsDAO {
 	private Connection conn = null;
@@ -448,8 +448,8 @@ public class AdminsDAO {
 	}
 	
 	// 마이 페이지(관리자 모드), 문의사항 페이지 번호에 해당하는 게시물 리스트 조회 - 박강필
-	public ArrayList<MemberVO> getAllMemberList(int pageNo, int postsPerPage) {
-	    ArrayList<MemberVO> mList = new ArrayList<MemberVO>();
+	public ArrayList<MemberDTO> getAllMemberList(int pageNo, int postsPerPage) {
+	    ArrayList<MemberDTO> mList = new ArrayList<MemberDTO>();
 
 	    String sql = "SELECT * FROM ("
 	               + " SELECT a.*, ROWNUM rnum FROM ("
@@ -472,15 +472,15 @@ public class AdminsDAO {
 
 	        rs = psmt.executeQuery();
 	        while (rs.next()) {
-	            MemberVO mVO = new MemberVO();
+	            MemberDTO mDTO = new MemberDTO();
 	            
-	            mVO.setUserId(rs.getString("userid"));
-	            mVO.setEmail(rs.getString("usermail"));
-	            mVO.setBirth(rs.getString("birth"));
-//	            mVO.setState(rs.getInt("state"));
-//	            mVO.setDeleteDate(rs.getString("deleteDate"));
+	            mDTO.setUserId(rs.getString("userid"));
+	            mDTO.setEmail(rs.getString("usermail"));
+	            mDTO.setBirth(rs.getString("birth"));
+//	            mDTO.setState(rs.getInt("state"));
+//	            mDTO.setDeleteDate(rs.getString("deleteDate"));
 	            
-	            mList.add(mVO);
+	            mList.add(mDTO);
 	        }
 
 	    } catch (Exception e) {

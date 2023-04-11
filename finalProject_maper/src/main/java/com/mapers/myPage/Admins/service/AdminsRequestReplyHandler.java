@@ -12,17 +12,16 @@ public class AdminsRequestReplyHandler implements Controller {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request.setCharacterEncoding("UTF-8");
 
+        request.setAttribute("selectedMenuItem", "AdminsRequestBoard");
+        
         HttpSession session = request.getSession();
         String userId = (String) session.getAttribute("userId");
-        String[] userState = userId.split("_");
-        String userIdf = userState[0];
-        if (userIdf == null || userIdf.isEmpty()) {
-        	userIdf = "admins";
+        String[] userIdPart = userId.split("_");
+        String userIdFront = userIdPart[0];
+        if (userIdFront == null || userIdFront.isEmpty()) {
+        	userIdFront = "admins";
         }
-        int adminCon = Integer.parseInt(userState[1]);
-        if (adminCon != 1) {
-        	adminCon = 1;
-        }
+        int adminCon = Integer.parseInt(userIdPart[1]);
 
         if (adminCon == 1) {
         	session.setAttribute("userId", userId);

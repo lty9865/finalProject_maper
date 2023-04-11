@@ -6,9 +6,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.mapers.SignUp.MemberDTO;
 import com.mapers.common.Controller;
 import com.mapers.myPage.Admins.model.AdminsDAO;
-import com.mapers.SignUp.MemberVO;
 
 public class AdminsMemberHandler implements Controller {
 	private static final int RECORDS_PER_PAGE = 10;
@@ -46,7 +46,7 @@ public class AdminsMemberHandler implements Controller {
         int pageNo = page;
         int postsPerPage = RECORDS_PER_PAGE;
 
-        List<MemberVO> mDTO = aDAO.getAllMemberList(pageNo, postsPerPage);
+        List<MemberDTO> mDTO = aDAO.getAllMemberList(pageNo, postsPerPage);
         aDAO.closeAll();
         
         int totalPages = (int) Math.ceil((double) currentTotalCount / postsPerPage);
@@ -61,6 +61,8 @@ public class AdminsMemberHandler implements Controller {
 
         request.setAttribute("url", "${pageContext.request.contextPath}/MyPage/MyPageFront?command=Admins.memberBoard");
 
+        request.setAttribute("selectedMenuItem", "AdminsMemberBoard");
+        
         return "/MyPage/Admins/adminsMemberList.jsp";
 	}
 }

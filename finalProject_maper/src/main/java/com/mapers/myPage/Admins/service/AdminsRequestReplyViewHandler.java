@@ -14,6 +14,8 @@ public class AdminsRequestReplyViewHandler implements Controller {
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("UTF-8");
 		
+		request.setAttribute("selectedMenuItem", "AdminsRequestBoard");
+		
 		HttpSession session = request.getSession();
 		String userId = (String) session.getAttribute("userId");
         String[] userIdPart = userId.split("_");

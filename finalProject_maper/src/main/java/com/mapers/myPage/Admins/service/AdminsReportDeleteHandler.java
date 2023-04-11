@@ -83,7 +83,8 @@ public class AdminsReportDeleteHandler implements Controller {
                 response.setHeader("Expires", "0"); // Proxies
 
                 request.setAttribute("url", "${pageContext.request.contextPath}/MyPage/MyPageFront?command=Admins.reportBoard");
-
+                request.setAttribute("selectedMenuItem", "AdminsReportBoard");
+                
                 return "/MyPage/Admins/adminsReportList.jsp";
 
             } else {

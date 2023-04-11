@@ -40,9 +40,6 @@ public class DispatcherServlet extends HttpServlet {
 		try {
 			String command = request.getParameter("command");
 			System.out.println("Dispatcher receiving : " + command);
-			if (command == null) {
-				command = "MyProfile";
-			}
 			
 			Controller controller = HandlerMapping.getInstance().create(command);
 			String url = controller.execute(request, response).trim();

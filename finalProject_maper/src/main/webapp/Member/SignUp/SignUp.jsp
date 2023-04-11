@@ -8,6 +8,21 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript" src="../../Resources/javascript/Member.js"></script>
+<script>
+function verifyEmail() {
+    let email = document.getElementById("validationCustom01").value;
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            // Open a new window for the email verification form
+            window.open("${pageContext.request.contextPath}/Member/SignUp/verifyEmail.jsp", "EmailVerification", "width=500,height=300");
+        }
+    };
+    xhr.open("POST", "${pageContext.request.contextPath}/Member/SignUp/VerifyEmailServlet", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.send("email=" + encodeURIComponent(email));
+}
+</script>
 </head>
 <body>
 
@@ -48,10 +63,10 @@
 			<hr />
 			
 			<div class="col-md-4">
-				<label for="validationCustom01" class="form-label">이메일</label> <input
-					type="email" class="form-control" id="validationCustom01"
-					name="email" placeholder="이메일을 입력하세요." required>
-				<div class="valid-feedback">Looks good!</div>
+			    <label for="validationCustom01" class="form-label">이메일</label>
+			    <input type="email" class="form-control" id="validationCustom01" name="email" placeholder="이메일을 입력하세요." required>
+			    <input class="btn btn-primary" type="button" value="Verify Email" onclick="verifyEmail();">
+			    <div class="valid-feedback">Looks good!</div>
 			</div>
 			
 			<div class="row">

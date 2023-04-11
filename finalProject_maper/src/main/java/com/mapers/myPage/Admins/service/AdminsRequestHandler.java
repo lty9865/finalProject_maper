@@ -61,7 +61,8 @@ public class AdminsRequestHandler implements Controller {
         response.setHeader("Expires", "0"); // Proxies
 
         request.setAttribute("url", "${pageContext.request.contextPath}/MyPage/MyPageFront?command=Admins.requestBoard");
-
+        request.setAttribute("selectedMenuItem", "AdminsRequestBoard");
+        
         return "/MyPage/Admins/adminsRequestList.jsp";
     }
 }

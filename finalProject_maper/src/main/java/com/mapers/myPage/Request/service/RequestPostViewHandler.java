@@ -23,6 +23,13 @@ public class RequestPostViewHandler implements Controller {
 //		int adminCon = Integer.parseInt(userState[1]);
 		// 0 : 일반 회원, 1: 관리자
 		
+		session.setAttribute("userId", userId);
+		if (userId == null || userId.isEmpty()) {
+			userId = "not admins";
+		}
+        System.out.println(userId);
+        
+		
 		// 게시글 상세보기
 		RequestDTO rDTO = RequestDAO.getInstance().viewRequest(requestNum, userIdPart[0]);
 		
