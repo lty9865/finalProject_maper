@@ -5,27 +5,26 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<title>회원 관리</title>
+<script type="text/javascript" src="../../Resources/javascript/Member.js"></script>
 </head>
 <body>
-	<form action="IdCheck.do" method="get" name="frm">
-		아이디 <input type="text" name="userid" value="${userid}">
+	
+	<h2>아이디 중복 확인</h2>
+	<form action="idCheck.do" method="get" name="frm">
+	
+		아이디 <input type="text" class="form-control" name="userId" value="${userId}">
 		<input type="submit" value="중복 체크"> <br>
 		<c:if test="${result==1}">
-			${userid}는 이미 사용 중인 아이디 입니다.
-		</c:if>
-		<script type="text/javascript">
-			function idok() {
-				opener.frm.userid.value=document.frm.userid.value;
-				opener.frm.reid.value=document.frm.userid.value;
-				self.close();
-			}
-				opener.document.frm.userid.value="";
+			<script type="text/javascript">
+				opener.document.frm.userId.value="";
 			</script>
+			${userId}는 이미 사용 중인 아이디 입니다.
+		</c:if>
 		<c:if test="${result==-1}">
-			${userid}는 사용 가능한 아이디입니다.
-			<input type="button" value="사용" class="cancel" onclick="idok()">
+			${userId}는 사용 가능한 아이디입니다.
+		<input type="button" value="사용" class="cancel"  onclick="idok()">
 		</c:if>
 	</form>
-			
 </body>
 </html>
