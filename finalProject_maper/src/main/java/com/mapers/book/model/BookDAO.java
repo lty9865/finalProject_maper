@@ -494,6 +494,20 @@ public class BookDAO {
 			System.out.println("삭제할 책 기준 좋아요 리스트 삭제");
 		}
 	}
+	
+	public void deleteAllReportList(int bookNum) {
+		String query = "DELETE FROM REPORT WHERE BOOKNUM=?";
+
+		try {
+			conn = dataSource.getConnection();
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, bookNum);
+			pstmt.executeQuery();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("삭제할 책 기준 신고 리스트 삭제");
+		}
+	}
 
 	// 북 삭제
 	public int deleteBook(int idx) {

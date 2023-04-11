@@ -80,6 +80,7 @@ public class BookListController implements Controller {
 			request.getSession().removeAttribute("likeCheck");
 		}
 
+		dao.close();
 		return "/Book/book.jsp";
 	}
 }

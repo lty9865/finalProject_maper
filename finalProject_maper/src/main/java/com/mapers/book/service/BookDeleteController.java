@@ -26,6 +26,7 @@ public class BookDeleteController implements Controller {
 			BookDTO dto = dao.selectBook(idx);
 			System.out.println("셀렉트 북 성공");
 			dao.deleteAllLikeList(idx);
+			dao.deleteAllReportList(idx);
 			int result = dao.deleteBook(idx);
 			if (result == 1) {
 				String saveFileName = dto.getSfile();
@@ -34,6 +35,7 @@ public class BookDeleteController implements Controller {
 			System.out.println("북 삭제 성공");
 
 			request.setAttribute("url", "/Book/book.do?command=bookList");
+			dao.close();
 			return "redirect:../Book/book.do?command=bookList";
 		}
 	}

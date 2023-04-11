@@ -101,14 +101,6 @@ response.setHeader("Cache-Control", "no-cache");
 							</c:choose>
 						</form>
 					</td>
-					<td width="25%">
-						<!-- 신고 ajax -->
-						<form id="report_form" class="row">
-							<button type="button"
-								style="background-color: rgba(0, 0, 0, 0); border: none;"
-								onclick="return report()">신고</button>
-						</form>
-					</td>
 					<th width="3%"><img alt=""
 						src="../Resources/assets/img/baseimg/like.png"
 						style="width: 15px; height: 15px"></th>
@@ -117,68 +109,82 @@ response.setHeader("Cache-Control", "no-cache");
 				</tr>
 			</table>
 		</div>
-	</div>
-	<div class="flipbook-viewport">
-		<div class="maper-body" align="center">
-			<button type="button" class="btn btn-outline-primary"
-				onclick="location.href='../Book/book.do?command=bookView&idx=${ bookDTO.bookNum }';">돌아가기</button>
-		</div>
-		<div class="container">
-			<div class="flipbook">
-				<div class="test_obj" align="center">
-					<br> <img src="../Uploads/Book/${ bookDTO.sfile }" style="width: 60%; height: 40%; object-fit: cover; margin-bottom: 20px;">
-					<p style="font-size: 30px;">${ bookDTO.title }</p>
+		<div class="flipbook-viewport">
+			<div class="maper-body" align="center">
+				<div class="parent" style="width: 20%;">
+					<div class="child">
+						<button type="button" class="btn btn-outline-primary"
+							onclick="location.href='../Book/book.do?command=bookView&idx=${ bookDTO.bookNum }';">돌아가기</button>
+					</div>
+					<div class="child">
+						<!-- 신고 ajax -->
+						<form id="report_form">
+							<button type="button" class="btn btn-outline-primary child"
+								onclick="return reportBtn()">신고버튼</button>
+						</form>
+					</div>
 				</div>
-				<c:choose>
-					<c:when test="${ empty pageList }">
-						<div>
-							<p>게시물이 없습니다.</p>
-						</div>
-					</c:when>
-					<c:otherwise>
-						<c:forEach items="${ pageList }" var="row" varStatus="loop">
-							<c:set var="numCheck" value="${ loop.index }" />
+			</div>
+			<div class="container">
+				<div class="flipbook">
+					<div class="test_obj" align="center">
+						<br> <img src="../Uploads/Book/${ bookDTO.sfile }"
+							style="width: 60%; height: 40%; object-fit: cover; margin-bottom: 20px;">
+						<p style="font-size: 30px;">${ bookDTO.title }</p>
+					</div>
+					<div></div>
+					<c:choose>
+						<c:when test="${ empty pageList }">
 							<div>
-								<c:choose>
-									<c:when test="${ numCheck } % 2 = 0">
-										<div class="even"></div>
-										<div class="gradient"></div>
-									</c:when>
-									<c:otherwise>
-										<div class="odd"></div>
-										<div class="gradient"></div>
-									</c:otherwise>
-								</c:choose>
-								<div class="pageWrapper">
-									<div class="pageItem">
-										<div class="polaroid">
-											<img src="../Uploads/Page/${ row.sfile }">
-											<div class="caption">${row.subTitle}&nbsp;&nbsp;${row.postDate}</div>
-										</div>
-									</div>
-								</div>
-								<br />
-								<div style="width: 380px; height: 150px; margin: auto"
-									align="center">
-									<p style="word-wrap: break-word;">${ row.content }</p>
-								</div>
-								<!-- 별 -->
-								<div align="center">
-									<div class="star-ratings">
-										<div class="star-ratings-fill space-x-2 text-lg"
-											style="width: ${row.percent}%;">
-											<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-										</div>
-										<div class="star-ratings-base space-x-2 text-lg">
-											<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-										</div>
-									</div>
-								</div>
+								<p>게시물이 없습니다.</p>
 							</div>
-						</c:forEach>
-					</c:otherwise>
-				</c:choose>
-				<div></div>
+						</c:when>
+						<c:otherwise>
+							<c:forEach items="${ pageList }" var="row" varStatus="loop">
+								<c:set var="numCheck" value="${ loop.index }" />
+								<div>
+									<c:choose>
+										<c:when test="${ numCheck } % 2 = 0">
+											<div class="even"></div>
+											<div class="gradient"></div>
+										</c:when>
+										<c:otherwise>
+											<div class="odd"></div>
+											<div class="gradient"></div>
+										</c:otherwise>
+									</c:choose>
+									<div class="pageWrapper">
+										<div class="pageItem">
+											<div class="polaroid">
+												<img src="../Uploads/Page/${ row.sfile }">
+												<div class="caption">${row.subTitle}&nbsp;&nbsp;${row.postDate}</div>
+											</div>
+										</div>
+									</div>
+									<br />
+									<div style="width: 380px; height: 150px; margin: auto"
+										align="center">
+										<p style="word-wrap: break-word;">${ row.content }</p>
+									</div>
+									<!-- 별 -->
+									<div align="center">
+										<div class="star-ratings">
+											<div class="star-ratings-fill space-x-2 text-lg"
+												style="width: ${row.percent}%;">
+												<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+											</div>
+											<div class="star-ratings-base space-x-2 text-lg">
+												<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</c:forEach>
+						</c:otherwise>
+					</c:choose>
+					<div></div>
+					<div></div>
+				</div>
 			</div>
 		</div>
 	</div>

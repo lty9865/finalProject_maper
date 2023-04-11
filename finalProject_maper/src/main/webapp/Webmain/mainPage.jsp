@@ -20,7 +20,7 @@ response.setHeader("Cache-Control", "no-cache");
 
 	<!-- body -->
 	<div class="maper-body">
-		<form action="../Book/book.do?command=bookList" method="post">
+		<form action="${pageContext.request.contextPath}/Book/book.do?command=bookList" method="post">
 			<div class="input-group" style="margin-top: 10px;">
 				<select class="form-select circle" id="inputGroupSelect04"
 					aria-label="Example select with button addon" name="searchField">
@@ -62,7 +62,7 @@ response.setHeader("Cache-Control", "no-cache");
 								<c:choose>
 									<c:when test="${loop.first}">
 										<div class="carousel-item active">
-											<img src="../Uploads/Book/${ row.sfile }"
+											<img src="${pageContext.request.contextPath}/Uploads/Book/${ row.sfile }"
 												style="opacity: 30%;" class="d-block w-100">
 											<div class="carousel-caption d-none d-md-block">
 												<h1>${ row.title }</h1>
@@ -70,14 +70,14 @@ response.setHeader("Cache-Control", "no-cache");
 												<p>${ row.bookDate }</p>
 												<p>${ row.visitCount }</p>
 												<a
-													href="../Book/book.do?command=bookView&idx=${ row.bookNum }"
+													href="${pageContext.request.contextPath}/Book/book.do?command=bookView&idx=${ row.bookNum }"
 													class="btn btn-primary">보러가기</a>
 											</div>
 										</div>
 									</c:when>
 									<c:otherwise>
 										<div class="carousel-item">
-											<img src="../Uploads/Book/${ row.sfile }"
+											<img src="${pageContext.request.contextPath}/Uploads/Book/${ row.sfile }"
 												style="opacity: 30%;" class="d-block w-100">
 											<div class="carousel-caption d-none d-md-block">
 												<h1>${ row.title }</h1>
@@ -85,7 +85,7 @@ response.setHeader("Cache-Control", "no-cache");
 												<p>${ row.bookDate }</p>
 												<p>${ row.visitCount }</p>
 												<a
-													href="../Book/book.do?command=bookView&idx=${ row.bookNum }"
+													href="${pageContext.request.contextPath}/Book/book.do?command=bookView&idx=${ row.bookNum }"
 													class="btn btn-primary">보러가기</a>
 											</div>
 										</div>
@@ -114,7 +114,7 @@ response.setHeader("Cache-Control", "no-cache");
 				<h2>최신글</h2>
 			</div>
 			<div class="child" align="right" style="margin: auto auto 0 auto;">
-				<a href="../Book/book.do?command=bookList">+더보기</a>
+				<a href="${pageContext.request.contextPath}/Book/book.do?command=bookList">+더보기</a>
 			</div>
 		</div>
 		<hr>
@@ -128,12 +128,12 @@ response.setHeader("Cache-Control", "no-cache");
 						<c:forEach items="${ searchBook }" var="row" varStatus="loop">
 							<div class="col">
 								<div class="card" style="width: 18rem; margin: 0 auto 10px auto">
-									<img src="../Uploads/Book/${ row.sfile }" Style="height: 300px"
+									<img src="${pageContext.request.contextPath}/Uploads/Book/${ row.sfile }" Style="height: 300px"
 										class="card-img-top" alt="..." id="mainMenu">
 									<div class="card-body">
 										<h5 class="card-title">${ row.title }</h5>
 										<a
-											href="../Book/book.do?command=bookView&idx=${ row.bookNum }"
+											href="${pageContext.request.contextPath}/Book/book.do?command=bookView&idx=${ row.bookNum }"
 											class="btn btn-primary">보러가기</a>
 									</div>
 								</div>
@@ -150,7 +150,7 @@ response.setHeader("Cache-Control", "no-cache");
 				<h2>공지사항</h2>
 			</div>
 			<div class="child" align="right" style="margin: auto auto 0 auto;">
-				<a href="../Notice/notice.do?command=list">+더보기</a>
+				<a href="${pageContext.request.contextPath}/Notice/notice.do?command=list">+더보기</a>
 			</div>
 		</div>
 		<hr>
@@ -174,7 +174,7 @@ response.setHeader("Cache-Control", "no-cache");
 						<c:forEach items="${ mainNoticeList }" var="row" varStatus="loop">
 							<tr align="center">
 								<td width="25%;"><a
-									href="../Notice/notice.do?command=view&idx=${ row.idx }">${ row.title }</a>
+									href="${pageContext.request.contextPath}/Notice/notice.do?command=view&idx=${ row.idx }">${ row.title }</a>
 								</td>
 								<td width="25%;">관리자</td>
 								<td width="25%;">${ row.visitCount }</td>

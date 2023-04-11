@@ -15,25 +15,23 @@ public class MainPageController implements Controller {
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		MainPageDAO dao = MainPageDAO.getInstance();
 
 		HttpSession session = request.getSession();
 		if (session.getAttribute("my") != null) {
 			session.removeAttribute("my");
 		}
 
-		String like = "LIKESCOUNT";
-		String last = "BOOKDATE";
-		List<BookDTO> popularBook = dao.searchBook(like);
-		List<BookDTO> searchBook = dao.searchBook(last);
+		MainPageDAO dao = MainPageDAO.getInstance();
+		List<BookDTO> popularBook = dao.likeListBook();
+		List<BookDTO> searchBook = dao.lastListBook();
 		List<NoticeDTO> mainNoticeList = dao.mainNotice();
+		
+		dao.close();
 
 		request.setAttribute("popularBook", popularBook);
 		request.setAttribute("searchBook", searchBook);
 		request.setAttribute("mainNoticeList", mainNoticeList);
 		request.setAttribute("url", "/Webmain/mainPage.do?command=main");
-		
-		dao.close();
 
 		return "/Webmain/mainPage.jsp";
 	}

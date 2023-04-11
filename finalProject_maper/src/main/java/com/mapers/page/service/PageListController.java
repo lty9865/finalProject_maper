@@ -67,6 +67,8 @@ public class PageListController implements Controller {
 		request.setAttribute("map", map);
 		request.setAttribute("url", "/Page/page.do?command=pageList");
 		
+		dao.close();
+		
 		return "/Page/pageList.jsp";
 	}
 

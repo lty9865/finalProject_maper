@@ -5,6 +5,15 @@ function pageDelete(idx) {
 	}
 }
 
+function reportBtn(){
+	if(confirm('해당 책을 신고하시겠습니까?')){
+		alert('신고 했습니다.');
+		return true;
+	}else{
+		return false;
+	}
+}
+
 // 페이지 작성 시 공란 유효성 검사
 function pageBlank() {
 	if (document.pageWriteFrm.subTitle.value.length == 0) {
@@ -12,11 +21,22 @@ function pageBlank() {
 		pageWriteFrm.subTitle.focus();
 		return false;
 	}
-
+	if (document.pageWriteFrm.pageDate.value.length == 0) {
+		alert('여행일자를 입력하세요.');
+		pageWriteFrm.pageDate.focus();
+		return false;
+	}
 	if (document.pageWriteFrm.ofile.value.length == 0) {
 		alert('파일 첨부는 필수입니다.');
 		pageWriteFrm.ofile.focus();
 		return false;
+	}
+	if (document.pageWriteFrm.rate.value == 1) {
+		if (confirm('만족도를 1점으로 선택하신게 맞습니까?')) {
+		} else {
+			pageWriteFrm.rate.focus();
+			return false;
+		}
 	}
 	if (document.pageWriteFrm.content.value.length == 0) {
 		alert('내용을 입력하세요.');
@@ -28,11 +48,6 @@ function pageBlank() {
 		pageWriteFrm.content.focus();
 		return false;
 	}
-	if (document.pageWriteFrm.rate.value.length == 0) {
-		alert('만족도를 입력하세요.');
-		pageWriteFrm.rate.focus();
-		return false;
-	}
 
 	// 수정
 	if (document.pageEditFrm.subTitle.value.length == 0) {
@@ -40,17 +55,17 @@ function pageBlank() {
 		pageWriteFrm.subTitle.focus();
 		return false;
 	}
-
+	if (document.pageWriteFrm.rate.value == 1) {
+		if (confirm('만족도를 1점으로 선택하신게 맞습니까?')) {
+		} else {
+			pageWriteFrm.rate.focus();
+			return false;
+		}
+	}
 	if (document.pageEditFrm.content.value.length == 0) {
 		alert('내용을 입력하세요.');
 		pageWriteFrm.content.focus();
 		return false;
 	}
-	if (document.pageEditFrm.rate.value.length == 0) {
-		alert('만족도를 입력하세요.');
-		pageWriteFrm.rate.focus();
-		return false;
-	}
-
 	return true;
 }

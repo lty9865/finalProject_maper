@@ -15,7 +15,7 @@
 				<c:when test="${ empty sessionScope.userId }">
 					<div class="right maper-header-font-2" align="right">
 						<button type="button" class="btn btn-outline-primary" id="login"
-							onclick="location.href='${pageContext.request.contextPath}/Member/Login/login.jsp'">로그인</button>
+							onclick="location.href='${pageContext.request.contextPath}/Member/Login/login.jsp';">로그인</button>
 					</div>
 				</c:when>
 				<c:otherwise>
@@ -39,7 +39,7 @@
 										</c:when>
 										<c:otherwise>
 											<li><a class="dropdown-item"
-												href="../Book/book.do?command=bookList&mode=my">내 책장</a></li>
+												href="${pageContext.request.contextPath}/Book/book.do?command=bookList&mode=my">내 책장</a></li>
 										</c:otherwise>
 									</c:choose>
 									<li><hr class="dropdown-divider"></li>

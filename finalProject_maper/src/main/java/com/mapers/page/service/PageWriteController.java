@@ -52,6 +52,8 @@ public class PageWriteController implements Controller {
 
 		PageDAO dao = PageDAO.getInstance();
 		int result = dao.insertPage(dto);
+		
+		dao.close();
 
 		int idx = dto.getBookNum();
 		String title = request.getParameter("title");

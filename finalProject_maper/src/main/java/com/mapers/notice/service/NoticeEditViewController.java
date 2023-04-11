@@ -18,6 +18,8 @@ public class NoticeEditViewController implements Controller {
 		request.setAttribute("dto", dto);
 		request.setAttribute("url", "/Notice/notice.do?command=editView");
 		
+		dao.close();
+		
 		return "/Notice/noticeEdit.jsp";
 	}
 

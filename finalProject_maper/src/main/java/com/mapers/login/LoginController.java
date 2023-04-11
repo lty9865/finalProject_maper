@@ -56,7 +56,7 @@ public class LoginController extends HttpServlet {
 		}
 
 		else if (result == 0) {
-			request.setAttribute("falseMsg", "아이디 및 비밀번호가 틉립니다. 다시 확인해주세요.");
+			request.setAttribute("falseMsg", "아이디 및 비밀번호가 틀립니다. 다시 확인해주세요.");
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/Member/Login/login.jsp");
 			dispatcher.forward(request, response);

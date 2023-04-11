@@ -24,6 +24,7 @@ public class NoticeEditController implements Controller {
 		NoticeDAO dao = NoticeDAO.getInstance();
 
 		int result = dao.updateNotice(dto);
+		dao.close();
 		if (result == 1) {
 			System.out.println("공지사항 수정에 성공하였습니다.");
 			request.setAttribute("url", "/Notice/notice.do?command=view&idx="+idx);

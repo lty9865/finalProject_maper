@@ -69,6 +69,8 @@ public class PageEditController implements Controller {
 
 		PageDAO dao = PageDAO.getInstance();
 		int result = dao.updatePage(dto);
+		
+		dao.close();
 
 		if (result == 1) {
 			request.setAttribute("url", "/Page/page.do?command=pageEdit&idx=" + bookNum);

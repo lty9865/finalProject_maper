@@ -56,6 +56,8 @@ public class NoticeListController implements Controller {
 		request.setAttribute("noticeLists", noticeLists);
 		request.setAttribute("map", map);
 		request.setAttribute("url", "/Notice/notice.do?command=list");
+		
+		dao.close();
 
 		return "/Notice/notice.jsp";
 	}

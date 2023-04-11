@@ -21,6 +21,8 @@ public class NoticeViewController implements Controller {
 		
 		request.setAttribute("dto", dto);
 		request.setAttribute("url", "/Notice/notice.do?command=view");
+		
+		dao.close();
 
 		return "/Notice/noticeView.jsp";
 	}

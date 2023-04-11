@@ -17,6 +17,8 @@ public class PageEditViewController implements Controller {
 		PageDTO dto = dao.selectPageView(idx);
 		request.setAttribute("dto", dto);
 		request.setAttribute("url", "/Page/page.do?command=pageEditView&idx=" + idx + "&title=" + title);
+		
+		dao.close();
 		return "/Page/pageEdit.jsp";
 	}
 }

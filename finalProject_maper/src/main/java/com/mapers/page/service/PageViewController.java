@@ -21,6 +21,8 @@ public class PageViewController implements Controller {
 
 		request.setAttribute("pageList", pageList);
 		request.setAttribute("url", "/Page/page.do?command=pageView&idx=" + idx);
+		
+		dao.close();
 
 		return "/Page/pageView.jsp";
 	}

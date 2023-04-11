@@ -23,6 +23,7 @@ public class BookEditViewController implements Controller {
 			request.setAttribute("dto", dto);
 			request.setAttribute("url", "/Book/book.do?command=bookEditView");
 			
+			dao.close();
 			return "/Book/bookEdit.jsp";
 		}
 	}

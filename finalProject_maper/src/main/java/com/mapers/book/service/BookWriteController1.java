@@ -60,6 +60,7 @@ public class BookWriteController1 implements Controller {
 
 		BookDAO dao = BookDAO.getInstance();
 		int result = dao.insertBook(dto);
+		dao.close();
 
 		if (result == 1) {
 			request.setAttribute("url", "/Book/book.do?command=bookList");

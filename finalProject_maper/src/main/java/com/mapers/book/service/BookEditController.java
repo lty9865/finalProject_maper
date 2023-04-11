@@ -73,6 +73,7 @@ public class BookEditController implements Controller {
 		BookDAO dao = BookDAO.getInstance();
 		int result = dao.updateBook(dto);
 
+		dao.close();
 		if (result == 1) {
 			request.setAttribute("url", "/Book/book.do?command=bookList");
 			return "redirect:../Book/book.do?command=bookList";

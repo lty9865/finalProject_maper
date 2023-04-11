@@ -59,6 +59,7 @@ public class DispatcherServlet extends HttpServlet {
 					session.setAttribute("likeCheck", 0);
 				}
 				bookDTO.setLikesCount(likeCount);
+				dao.close();
 			}
 		}
 
@@ -77,6 +78,7 @@ public class DispatcherServlet extends HttpServlet {
 			} else {
 				dao.updateReport(bookNum, userId);
 			}
+			dao.close();
 		} else {
 
 			// handlerRequest method 호출

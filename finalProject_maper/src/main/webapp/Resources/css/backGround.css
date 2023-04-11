@@ -1,0 +1,39 @@
+@charset "UTF-8";
+
+.indexBox01 {
+	width: 95%;
+	height: 900px;
+	margin: 30px auto auto auto; position : relative;
+	background-image: url("../assets/img/bg-masthead.jpg");
+	background-size: cover;
+	position: relative;
+}
+
+.indexBox01::before {
+	content: "";
+	opacity: 0.5;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	background-color: #000;
+	border-radius: 20px;
+}
+
+.indexFont-title {
+	color: #fff;
+	text-align: center;
+	position: relative;
+	font-size: 80px;
+	padding-top: 250px;
+}
+
+.indexFont-content {
+	color: #fff;
+	vertical-align: middle;
+	text-align: center;
+	position: relative;
+	font-size: 40px;
+	padding-top: 15px;
+}
