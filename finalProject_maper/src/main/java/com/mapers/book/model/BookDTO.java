@@ -13,6 +13,15 @@ public class BookDTO {
 	private int likesCount;
 	private String ofile;
 	private String sfile;
+	private int reportCount;
+	
+	public int getReportCount() {
+		return reportCount;
+	}
+
+	public void setReportCount(int reportCount) {
+		this.reportCount = reportCount;
+	}
 
 	public int getBookNum() {
 		return bookNum;

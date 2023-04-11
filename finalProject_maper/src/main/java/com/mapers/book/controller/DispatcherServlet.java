@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import com.mapers.book.model.BookDAO;
 import com.mapers.book.model.BookDTO;
 import com.mapers.common.Controller;
+import com.mapers.report.ReportDAO;
 
 @WebServlet("/Book/book.do")
 public class DispatcherServlet extends HttpServlet {
@@ -59,7 +60,23 @@ public class DispatcherServlet extends HttpServlet {
 				}
 				bookDTO.setLikesCount(likeCount);
 			}
+		}
 
+		// 신고 기능
+		else if (request.getParameter("command").equals("report")) {
+			HttpSession session = request.getSession();
+			BookDTO bookDTO = (BookDTO) session.getAttribute("bookDTO");
+			ReportDAO dao = ReportDAO.getInstance();
+
+			String userId = (String) session.getAttribute("userId");
+			int bookNum = bookDTO.getBookNum();
+
+			int resultCheck = dao.searchReport(bookNum, userId);
+			if (resultCheck == 0) {
+				dao.insertReport(bookNum, userId);
+			} else {
+				dao.updateReport(bookNum, userId);
+			}
 		} else {
 
 			// handlerRequest method 호출
