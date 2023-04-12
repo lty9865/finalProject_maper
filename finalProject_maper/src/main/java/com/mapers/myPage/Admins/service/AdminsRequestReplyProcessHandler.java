@@ -22,14 +22,8 @@ public class AdminsRequestReplyProcessHandler implements Controller {
         HttpSession session = request.getSession();
         String userId = (String) session.getAttribute("userId");
         String[] userIdPart = userId.split("_");
-        String userIdFront = userIdPart[0];
-        if (userIdFront == null || userIdFront.isEmpty()) {
-        	userIdFront = "admins";
-        }
         int adminCon = Integer.parseInt(userIdPart[1]);
-        if (adminCon != 1) {
-        	adminCon = 1;
-        }
+        
         session.setAttribute("userId", userId);
 
         if (adminCon == 1) {

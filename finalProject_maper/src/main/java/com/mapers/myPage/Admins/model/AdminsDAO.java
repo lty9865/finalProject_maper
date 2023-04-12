@@ -256,7 +256,6 @@ public class AdminsDAO {
 				dto.setContent(rs.getString("content"));
 				dto.setPostDate(rs.getString("postdate"));
 				
-				
 			}
 			
 		} catch (Exception e) {
@@ -369,6 +368,34 @@ public class AdminsDAO {
 		return result;
 	}
 	
+	// 마이 페이지(관리자 모드), 문의 글 답변 완료 시 상태 변경 - 박강필
+	public int updateRequestStatus(int requestNum) {
+	    int result = 0;
+	    PreparedStatement psmt = null;
+
+	    String sql = "UPDATE request SET status = 0 WHERE requestnum = ?";
+
+	    try {
+	    	
+	    	if (conn != null) {
+	    		conn.close();
+	    	}
+	    	
+	    	conn = dataSource.getConnection();
+	    	
+	        psmt = conn.prepareStatement(sql);
+	        psmt.setInt(1, requestNum);
+	        
+	        result = psmt.executeUpdate();
+	    
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } 
+
+	    return result;
+	}
+
+	
 	// 마이 페이지(관리자 모드), 문의 글 삭제 - 박강필
 	public int deleteRequest(int requestNum) {
 		int result = 0;
@@ -476,9 +503,9 @@ public class AdminsDAO {
 	            
 	            mDTO.setUserId(rs.getString("userid"));
 	            mDTO.setEmail(rs.getString("usermail"));
-	            mDTO.setBirth(rs.getString("birth"));
-//	            mDTO.setState(rs.getInt("state"));
-//	            mDTO.setDeleteDate(rs.getString("deleteDate"));
+	            mDTO.setState(rs.getInt("state"));
+	            mDTO.setJoinDate(rs.getString("joindate"));
+	            mDTO.setDeleteDate(rs.getString("deletedate"));
 	            
 	            mList.add(mDTO);
 	        }

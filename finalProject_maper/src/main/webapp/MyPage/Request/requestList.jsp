@@ -7,6 +7,11 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/Resources/css/myPage.css">
 <title>Request List</title>
+<style>
+	.write-btn {
+		margin-left: 53rem;
+	}
+</style>
 <script>
     window.onload = function() {
         var message = "${message}";
@@ -27,7 +32,6 @@
     <div class="maper-body">
 		<h2>내가 넣은 문의</h2>
 		<hr><hr>
-    </div>
     <table class="table maper-body table-hover boardlist">
         <thead>
             <tr align="center" class="warning header-row">
@@ -42,7 +46,7 @@
                 <tr align="center" class="header-row">
                     <td>${post.requestNum}</td>
                     <td>
-						<c:url value="${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyRequest.requestTitleClick" var="titleClickUrl">
+						<c:url value="/MyPage/MyPageFront?command=MyRequest.requestTitleClick" var="titleClickUrl">
 							<c:param name="requestNum" value="${post.requestNum}" />
 						</c:url> 
 						<a href="${titleClickUrl}">${post.title}</a>
@@ -53,7 +57,19 @@
             </c:forEach>
         </tbody>
     </table>
-    <br>
+    </div>
+    
+    <!-- Write button -->
+    <div class="maper-body">
+	    <c:if test="${not empty sessionScope.userId}">
+	        <div class="write-button">
+				<form action="${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyRequest.requestPost" method="POST">
+					<input type="hidden" name="userId" value="sessionScope.userId"/>
+					<input type="submit" class="btn btn-primary write-btn" value="글쓰기"/>
+				</form>
+			</div>
+	    </c:if>
+    </div>
 
 	<!-- Paging Process -->
     <div class="pagingArea">
@@ -93,15 +109,6 @@
                 </li>
             </c:if>
         </ul>
-	    <!-- Write button -->
-	    <c:if test="${not empty sessionScope.userId}">
-	        <div class="write-button">
-				<form action="${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyRequest.requestPost" method="POST">
-					<input type="hidden" name="userId" value="sessionScope.userId"/>
-					<input type="submit" class="btn btn-primary" value="글쓰기"/>
-				</form>
-			</div>
-	    </c:if>
     </div>
 
     <!-- footer -->

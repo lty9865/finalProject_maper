@@ -23,48 +23,38 @@
     <!-- body/main -->
     <div class="maper-body">
         <h1>My Like List</h1>
-		<!-- Display errorMsg if it exists -->
-		<c:if test="${not empty errorMsg}">
+        <!-- Display errorMsg if it exists -->
+        <c:if test="${not empty errorMsg}">
             <div class="alert alert-danger" role="alert">${errorMsg}</div>
         </c:if>
         <hr>
         <table class="table maper-body table-hover boardlist">
             <thead>
                 <tr align="center" class="warning header-row">
-                    <th>이미지</th>
-                    <th>제목</th>
+                    <th>책 제목</th>
                     <th>페이지</th>
                     <th>작성자</th>
+                    <th>작성일</th>
                 </tr>
             </thead>
             <tbody>
-	            <c:forEach var="dto" items="${likeList}">
-	                <tr>
-	                    <td>
-	                        <c:choose>
-	                            <c:when test="${dto.sfileBook != null}">
-	                                <img src="${pageContext.request.contextPath}/Uploads/Profile/${dto.sfileBook}" alt="Book Image" width="50" height="50">
-	                            </c:when>
-	                            <c:otherwise>
-	                                <img src="${pageContext.request.contextPath}/Uploads/Profile/${dto.ofileBook}" alt="Book Image" width="50" height="50">
-	                            </c:otherwise>
-	                        </c:choose>
-	                    </td>
-	                    <td>
-	                        <a href="${pageContext.request.contextPath}/MyPage/MyPage/MyPageFront?command=MyLike.likedBookView&bookNum=${dto.bookNum}">
-	                            ${dto.title}
-	                        </a>
-	                        <!-- Include the bookNum value as a hidden field -->
-	                        <input type="hidden" name="listNum" value="${dto.listNum}">
-	                        <input type="hidden" name="bookNum" value="${dto.bookNum}">
-	                    </td>
-	                    <td>${dto.pageNo}</td>
-	                    <td>${dto.userId}</td>
-	                </tr>
-	            </c:forEach>
-		    </tbody>
-		</table>
-	</div>
+                <c:forEach var="dto" items="${likeList}" varStatus="status">
+                    <tr>
+                        <td>
+                            <form method="post" action="${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyLike.likedBookView" class="book-title-form">
+							    <input type="hidden" name="idx" value="${dto.bookNum}">
+							    <button type="submit" class="custom-button">${dto.title}</button>
+							</form>
+                        </td>
+                        <td>${bookPageMap[dto.bookNum]}</td>
+                        <td>${dto.userId}</td>
+                        <td>${dto.postDate}</td>
+                    </tr>
+                </c:forEach>
+            </tbody>
+        </table>
+        <br>
+    </div>
     
 	<!-- Pagination -->
 	<div class="pagingArea">

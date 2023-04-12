@@ -28,8 +28,10 @@ public class CheckRealAccountHandler implements Controller {
             request.setAttribute("errMsg", "비밀번호를 입력해주세요.");
             request.setAttribute("url", "${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyProfile.checkRealAccount");
             session.setAttribute("userId", userId);
-
+            request.setAttribute("selectedMenuItem", "MyProfile");
+            
             return "/MyPage/Profile/checkRealAccount.jsp";
+            
 
         } else {
             session.setAttribute("userId", userId);
@@ -41,7 +43,8 @@ public class CheckRealAccountHandler implements Controller {
 
             String relativeUrl = "${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyProfile.profileEdit";
             request.setAttribute("url", relativeUrl);
-
+            request.setAttribute("selectedMenuItem", "MyProfile");
+            
             return "/MyPage/Profile/profileEdit.jsp";
         }
     }

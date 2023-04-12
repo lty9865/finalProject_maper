@@ -1,6 +1,8 @@
 package com.mapers.myPage.Like.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,9 +35,18 @@ public class MyLikeHandler implements Controller {
         int postsPerPage = RECORDS_PER_PAGE;
 
         ArrayList<LikeDTO> kList = kDAO.getAllList(pageNo, postsPerPage, userId);
+        Map<Integer, Integer> bookPageMap = new HashMap<>();
+
+        for (LikeDTO likeDTO : kList) {
+            int booknum = likeDTO.getBookNum(); // Assuming you have a getter method for booknum in your LikeDTO class
+            int bookPage = kDAO.countBookPage(booknum);
+            bookPageMap.put(booknum, bookPage);
+        }
+
         int totalPages = (int) Math.ceil((double) totalPostCount / postsPerPage);
 
         request.setAttribute("likeList", kList);
+        request.setAttribute("bookPageMap", bookPageMap); // Pass the bookPageList to the JSP
         request.setAttribute("totalPages", totalPages);
         request.setAttribute("page", pageNo);
 
@@ -46,7 +57,7 @@ public class MyLikeHandler implements Controller {
         request.setAttribute("url", "${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyLike");
 
         request.setAttribute("selectedMenuItem", "MyLike");
-        
+
         return "/MyPage/Like/likeList.jsp";
     }
 }

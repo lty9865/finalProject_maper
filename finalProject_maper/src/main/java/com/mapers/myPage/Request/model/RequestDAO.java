@@ -196,7 +196,6 @@ public class RequestDAO {
 				dto.setContent(rs.getString("content"));
 				dto.setPostDate(rs.getString("postdate"));
 				
-				
 			}
 			
 		} catch (Exception e) {

@@ -15,8 +15,11 @@ public class BookViewController1 implements Controller {
 		BookDAO dao = BookDAO.getInstance();
 
 		HttpSession session = request.getSession();
-
+		
 		int idx = Integer.parseInt(request.getParameter("idx"));
+		if (request.getParameter("idx") == null || request.getParameter("idx").isEmpty()) {
+			idx = Integer.parseInt(request.getParameter("booknum"));
+		}
 		dao.updateBookVisitCount(idx);
 		BookDTO dto = dao.selectBook(idx);
 

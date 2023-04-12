@@ -86,6 +86,7 @@ public class ProfileEditProcessHandler implements Controller {
 	    	String url = "${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyProfile";
 	    	request.setAttribute("url", url);
 	    	request.setAttribute("msg", "정보가 수정되었습니다");
+	    	request.setAttribute("selectedMenuItem", "MyProfile");
 	    	
 	    	return "/MyPage/Profile/profile.jsp";
 	    	
@@ -94,6 +95,7 @@ public class ProfileEditProcessHandler implements Controller {
 	    	
 	    	String url = "${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyProfile.profileEdit";
 	    	request.setAttribute("url", url);
+	    	request.setAttribute("selectedMenuItem", "MyProfile");
 	    	
 	    	return "/MyPage/Profile/profileEdit.jsp";
 	    }

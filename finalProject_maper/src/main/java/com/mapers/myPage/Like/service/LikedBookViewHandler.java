@@ -17,10 +17,10 @@ public class LikedBookViewHandler implements Controller {
         session.setAttribute("userId", userId);
         
         // Get bookNum parameter from the request
-        int bookNum = Integer.parseInt(request.getParameter("bookNum"));
+        String idx = request.getParameter("idx");
 
         // Set the bookNum parameter for the request
-        request.setAttribute("idx", String.valueOf(bookNum));
+        request.setAttribute("idx", idx);
         
         // Forward the request to the BookViewController1
         return "/Book/book.do?command=bookView";

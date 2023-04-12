@@ -21,15 +21,10 @@ public class AdminsReportHandler implements Controller {
 
         HttpSession session = request.getSession();
         String userId = (String) session.getAttribute("userId");
-        String[] userIdPart = userId.split("_");
-        String userIdFront = userIdPart[0];
-        if (userIdFront == null || userIdFront.isEmpty()) {
-        	userIdFront = "admins";
-        }
-        int adminCon = Integer.parseInt(userIdPart[1]);
-        if (adminCon != 1) {
-        	adminCon = 1;
-        }
+//        String[] userIdPart = userId.split("_");
+//        String userIdFront = userIdPart[0];
+//        int adminCon = Integer.parseInt(userIdPart[1]);
+        
         session.setAttribute("userId", userId);
 
         Integer totalPostCount = (Integer) session.getAttribute("totalPostCount");

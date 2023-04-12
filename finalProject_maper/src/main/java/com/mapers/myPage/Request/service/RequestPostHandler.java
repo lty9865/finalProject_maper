@@ -17,7 +17,7 @@ public class RequestPostHandler implements Controller {
 		String userId = (String) session.getAttribute("userId");
 		session.setAttribute("userId", userId);
 		
-		
+		request.setAttribute("selectedMenuItem", "MyRequest");
 		
 		return "/MyPage/Request/requestPost.jsp";
 	}

@@ -14,14 +14,14 @@ import com.mapers.common.Controller;
 import com.mapers.myPage.Request.model.RequestDAO;
 import com.mapers.myPage.Request.model.RequestDTO;
 
-public class RequestPostProcessHandler implements Controller {
+public class RequestPostProcessHandlerWithConversation implements Controller {
     private static final int RECORDS_PER_PAGE = 10;
 
-	@Override
-	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		request.setCharacterEncoding("UTF-8");
-
-        HttpSession session = request.getSession(false);
+    @Override
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        request.setCharacterEncoding("UTF-8");
+        
+        HttpSession session = request.getSession();
 
         String userId = (String) session.getAttribute("userId");
         session.setAttribute("userId", userId);
@@ -38,8 +38,7 @@ public class RequestPostProcessHandler implements Controller {
                 } else {
                     title = originalTitle;
                 }
-                int numberOfReplies = convDAO.getNumberOfRepliesForTitle(title);
-                title = "RE#" + (numberOfReplies + 1) + ": " + title;
+                title = "RE: " + title;
             } else {
                 title = originalTitle;
             }
@@ -48,7 +47,7 @@ public class RequestPostProcessHandler implements Controller {
         String content = request.getParameter("content");
 
         Date postDate = new Date();
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String postDateString = dateFormat.format(postDate);
 
         RequestDTO rDTO = new RequestDTO();
@@ -78,11 +77,13 @@ public class RequestPostProcessHandler implements Controller {
             request.setAttribute("requestList", requestList);
             request.setAttribute("totalPages", totalPages);
             request.setAttribute("page", page);
-
+            request.setAttribute("selectedMenuItem", "MyRequest");
+            
             return "/MyPage/Request/requestList.jsp";
         } else {
             request.setAttribute("error", "문의가 올라가는 데 오류가 발생했습니다. 다시 시도주시길 바랍니다.");
-
+            request.setAttribute("selectedMenuItem", "MyRequest");
+            
             return "/MyPage/Request/requestPost.jsp";
         }
     }

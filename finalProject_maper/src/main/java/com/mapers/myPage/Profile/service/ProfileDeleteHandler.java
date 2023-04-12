@@ -29,6 +29,7 @@ public class ProfileDeleteHandler implements Controller {
 		ProfileDAO.getInstance().deleteMember(userId, password);
 		
 		request.setAttribute("url", "${pageContext.request.contextPath}/Main/MyPageFront?command=home");
+		request.setAttribute("selectedMenuItem", "MyProfile");
 		
 		return "redirect:/Webmain/mainpage.jsp";
 	}

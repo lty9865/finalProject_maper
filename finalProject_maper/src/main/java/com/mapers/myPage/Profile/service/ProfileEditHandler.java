@@ -41,6 +41,7 @@ public class ProfileEditHandler implements Controller {
 
         String url = "${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyProfile.profileEdit";
         request.setAttribute("url", url);
+        request.setAttribute("selectedMenuItem", "MyProfile");
         
         return "/MyPage/Profile/profileEdit.jsp"; // Show the profileEdit.jsp page
     }

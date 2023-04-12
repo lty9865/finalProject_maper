@@ -104,14 +104,14 @@ public class LikeDAO {
 	public ArrayList<LikeDTO> getAllList(int pageNo, int postsPerPage, String userId) {
 	    ArrayList<LikeDTO> kList = new ArrayList<LikeDTO>();
 
-	    String sql = "SELECT a.*, b.ofile, b.sfile, a.rnum FROM ("
-	               + " SELECT k.*, ROWNUM rnum FROM ("
-	               + "  	SELECT k.* FROM LIKELIST k, BOOK b "
-	               + "  	WHERE k.BOOKNUM = b.BOOKNUM AND k.USERID = ? "
-	               + "  	ORDER BY k.listnum DESC) k "
-	               + " WHERE ROWNUM <= ?) a "
-	               + " INNER JOIN BOOK b ON a.BOOKNUM = b.BOOKNUM "
-	               + "WHERE a.rnum > ?";
+	    String sql = "SELECT a.listnum, a.userid, b.title, b.booknum, b.bookdate, a.rnum FROM ("
+	            + " SELECT k.*, ROWNUM rnum FROM ("
+	            + "  	SELECT k.* FROM LIKELIST k, BOOK b "
+	            + "  	WHERE k.booknum = b.booknum AND k.userid = ? "
+	            + "  	ORDER BY k.listnum DESC) k "
+	            + " WHERE ROWNUM <= ?) a "
+	            + " INNER JOIN BOOK b ON a.booknum = b.booknum "
+	            + "WHERE a.rnum > ?";
 
 	    try {
 	    	
@@ -132,9 +132,9 @@ public class LikeDAO {
 	            
 	            kDTO.setListNum(rs.getInt("listnum"));
 	            kDTO.setUserId(rs.getString("userid"));
+	            kDTO.setTitle(rs.getString("title"));
 				kDTO.setBookNum(rs.getInt("booknum"));
-				kDTO.setOfileBook(rs.getString("ofile"));
-				kDTO.setSfileBook(rs.getString("sfile"));
+				kDTO.setPostDate(rs.getString("bookdate"));
 				
 	            kList.add(kDTO);
 	        }
@@ -211,6 +211,36 @@ public class LikeDAO {
 		return totalLikeCount;
 	}
 	
+	// 마이 페이지, 좋아요 누른 책 쪽수 구하기 - 박강필
+	public int countBookPage(int bookNum) {
+		int bookPage = 0;
+		
+		String sql = "select count(*) from book where booknum=? ";
+		
+		try {
+			
+			if (conn != null) {
+				conn.close();
+			}
+			
+			conn = dataSource.getConnection();
+			
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, bookNum);
+			
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				bookPage = rs.getInt(1);
+			}
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("count Book Page Error");
+		}
+		
+		return bookPage;
+	}
+	
 	// 마이 페이지, 좋아요한 책 상세보기 - 박강필
 	public LikeDTO viewLike(int bookNum, String userId) {
 		LikeDTO dto = new LikeDTO();
@@ -231,8 +261,8 @@ public class LikeDAO {
 			
 			rs = psmt.executeQuery();
 			while (rs.next()) {
-				dto.setBookNum(rs.getInt("bookNum"));
-				dto.setUserId(rs.getString("userId"));
+				dto.setBookNum(rs.getInt("booknum"));
+				dto.setUserId(rs.getString("userid"));
 				dto.setOfileBook(rs.getString("ofile"));
 				dto.setSfileBook(rs.getString("sfile"));
 			}

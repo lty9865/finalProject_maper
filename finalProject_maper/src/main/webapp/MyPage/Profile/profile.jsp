@@ -8,17 +8,17 @@
 <title>My Page - My Profile</title>
 <link rel="stylesheet" href="../Resources/css/myPage.css">
 <style>
-    .center-area {
-        width: 50%;
-        margin-left: 30px;
-        margin-right: 30px;
-    }
-    
-    .bottom-area {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+.center-area {
+    width: 70%;
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
+.bottom-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 </style>
 </head>
 <body>
@@ -32,10 +32,11 @@
         </div>
         <br>
         <br>
-        <div class="bottom-area maper-body">
-            <div class="center-area maper-body">
+        <div class="bottom-area">
+            <div class="center-area">
                 <h1 class="title">${userId}</h1>
                 <hr class="blue-line">
+                <br>
                 <p class="field">
                     <strong>아이디:</strong> 
                 </p>
@@ -50,11 +51,6 @@
                     <strong>이메일:</strong> 
                 </p>
                 ${email}
-                <hr class="blue-line">
-                <p class="field">
-                    <strong>생년월일:</strong> 
-                </p>
-                ${birth}
                 <hr class="blue-line">
                 <br>
                 <form

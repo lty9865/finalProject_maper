@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>My Page - Edit Profile</title>
-<link rel="stylesheet" href="../Resources/css/myPage.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/Resources/css/myPage.css">
 <script>
 	function submitForms() {
 	    document.getElementById('image-upload-form').submit();
@@ -23,17 +23,11 @@
         <div class="top-area">
             <jsp:include page="../menu.jsp"/>
         </div>
+        <br>
 		<h2>프로필 수정</h2>
 		<hr class="title-line">
         <div class="bottom-area">
-            <div class="left-area">
-                <p class="field"><strong>프로필 사진:</strong></p>
-				<form id="image-upload-form" action="${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyProfile.profileImageChoice" method="post" enctype="multipart/form-data">
-				    <img src="${empty sFile ? oFile : sFile}" alt="Profile Image" onclick="location.href='${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyProfile.profileImageChoice'">
-				    <input type="file" name="image" form="image-upload-form">
-				</form>
-            </div>
-            <div class="right-area">
+            <div class="center-area">
                 <form id="profile-edit-form" action="${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyProfile.profileEditProcess" method="post" enctype="multipart/form-data">
                     <h1 class="title">${userId}</h1>
                     <hr class="blue-line">

@@ -34,11 +34,13 @@ public class RequestEditHandler implements Controller {
             rDTO.setPostDate(postDate);
             request.setAttribute("rDTO", rDTO);
             request.setAttribute("url", "${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyRequest.requestEdit");
+            request.setAttribute("selectedMenuItem", "MyRequest");
             
             return "/MyPage/Request/requestEdit.jsp";
         }
         request.setAttribute("url", "${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyRequest.requestPostView");
-
+        request.setAttribute("selectedMenuItem", "MyRequest");
+        
         return "/MyPage/Request/requestPostView.jsp";
     }
 }

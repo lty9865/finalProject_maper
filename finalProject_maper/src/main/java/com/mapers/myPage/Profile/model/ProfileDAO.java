@@ -135,7 +135,6 @@ public class ProfileDAO {
 				dto.setUserId(rs.getString("userid"));
 				dto.setPassword(rs.getString("password"));
 				dto.setEmail(rs.getString("usermail"));
-				dto.setBirth(rs.getString("birth"));
 				dto.setOfile(rs.getString("ofile"));
 				dto.setSfile(rs.getString("sfile"));
 			}
@@ -173,7 +172,6 @@ public class ProfileDAO {
 				dto.setUserId(rs.getString("userid"));
 				dto.setPassword(rs.getString("password"));
 				dto.setEmail(rs.getString("usermail"));
-				dto.setBirth(rs.getString("birth"));
 				dto.setOfile(rs.getString("ofile"));
 				dto.setSfile(rs.getString("sfile"));
 			}
@@ -213,7 +211,6 @@ public class ProfileDAO {
 					
 					psmt = conn.prepareStatement(sql2);
 					psmt.setString(1, dto.getEmail());
-					psmt.setString(2, dto.getBirth());
 					psmt.setString(3, dto.getUserId());
 					
 					// update 쿼리문 실행

@@ -24,9 +24,9 @@
 	            <tr align="center" class="warning header-row">
 	                <th>아이디</th>
 	                <th>이메일</th>
-	                <th>생년월일</th>
-	                <th>가입 여부</th>
-	                <th>탈퇴일자</th>
+	                <th>회원 상태</th>
+	                <th>가입 일자</th>
+	                <th>탈퇴 일자</th>
 	            </tr>
 	        </thead>
 	        <tbody>
@@ -34,7 +34,18 @@
 	                <tr align="center" class="header-row">
 	                    <td>${post.userId}</td>
 	                    <td>${post.email}</td>
-	                    <td>${post.birth}</td>
+	                    <td>
+	                        <c:choose>
+	                            <c:when test="${post.state == 1}">
+	                                가입 중
+	                            </c:when>
+	                            <c:otherwise>
+	                                탈퇴
+	                            </c:otherwise>
+	                        </c:choose>
+                    	</td>
+	                    <td>${post.joinDate}</td>
+	                    <td>${post.deleteDate}</td>
 	                </tr>
 	            </c:forEach>
 	        </tbody>

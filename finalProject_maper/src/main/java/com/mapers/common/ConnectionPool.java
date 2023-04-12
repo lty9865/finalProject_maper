@@ -57,8 +57,8 @@ public final class ConnectionPool {
 		this.initialCons = initialCons;
 		this.maxCons = maxCons;
 		
-		if (initialCons < 0) initialCons = 5;
-		if (maxCons < 0) maxCons = 10;
+		if (initialCons < 0) initialCons = 10;
+		if (maxCons < 0) maxCons = 30;
 		
 		free = new ArrayList<Connection>(initialCons);
 		used = new ArrayList<Connection>(initialCons);

@@ -13,7 +13,7 @@
 <style>
     .input-row {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         margin-bottom: 1rem;
     }
     .input-label {
@@ -24,6 +24,9 @@
     }
     .required {
         color: red;
+    }
+    .btn-margin {
+    	margin-left: 50.5rem;
     }
 </style>
 <script>
@@ -63,18 +66,21 @@
                 name="originalTitle" value="${selectedRequest.title}" />
             </div>
             <div class="input-row">
-                <label class="input-label">작성자 <span class="required">*</span></label>
-                <span>${sessionScope.userId}</span>
-                <input type="hidden" name="userId" value="${sessionScope.userId}" required="required">
-            </div>
+			    <label class="input-label">작성자 <span class="required">*</span></label>
+			    <div>
+			        <span>${sessionScope.userId}</span>
+			        <input type="hidden" name="userId" value="${sessionScope.userId}" required="required">
+			    </div>
+			</div>
             <div class="input-row">
                 <label class="input-label" for="content">내용 <span class="required">*</span></label>
                 <textarea class="input-field" cols="90" rows="15" name="content" id="content"
                     required="required" placeholder=" 본문내용을 입력하세요">${selectedRequest.content}</textarea>
             </div>
+            <br>
             <div class="btnArea">
-                <button type="submit" class="btn-success">작성 완료</button>
-                <button type="reset" class="btn-warning" onclick="resetFields()">다시
+                <button type="submit" class="custom-button btn-margin">작성 완료</button>
+                <button type="reset" class="custom-button" onclick="resetFields()">다시
                     쓰기</button>
             </div>
         </form>

@@ -22,7 +22,7 @@ import com.mapers.myPage.Request.service.RequestDeleteHandler;
 import com.mapers.myPage.Request.service.RequestEditHandler;
 import com.mapers.myPage.Request.service.RequestEditProcessHandler;
 import com.mapers.myPage.Request.service.RequestPostHandler;
-import com.mapers.myPage.Request.service.RequestPostProcessHandler;
+import com.mapers.myPage.Request.service.RequestPostProcessHandlerWithConversation;
 import com.mapers.myPage.Request.service.RequestPostViewHandler;
 import com.mapers.myPage.Request.service.RequestTitleClickHandler;
 
@@ -64,7 +64,7 @@ public class HandlerMapping {
 				if (subCommand.contentEquals("requestPost")) {
 					controller = new RequestPostHandler();
 				} else if (subCommand.contentEquals("requestPostProcess")) {
-					controller = new RequestPostProcessHandler();
+					controller = new RequestPostProcessHandlerWithConversation();
 				} else if (subCommand.contentEquals("requestEdit")) {
 					controller = new RequestEditHandler();
 				} else if (subCommand.contentEquals("requestEditProcess")) {

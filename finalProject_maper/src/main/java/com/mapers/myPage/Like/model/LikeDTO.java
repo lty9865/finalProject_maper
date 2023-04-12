@@ -8,12 +8,13 @@ public class LikeDTO {
 	private String ofileBook;
 	private String sfileBook;
 	private int pageNo;
+	private String postDate;
 	
 	public LikeDTO() {
 		super();
 	}
 	
-	public LikeDTO(int listNum, String userId, int bookNum, String title, String ofileBook, String sfileBook, int pageNo) {
+	public LikeDTO(int listNum, String userId, int bookNum, String title, String ofileBook, String sfileBook, int pageNo, String postDate) {
 		super();
 		this.listNum = listNum;
 		this.userId = userId;
@@ -22,6 +23,7 @@ public class LikeDTO {
 		this.ofileBook = ofileBook;
 		this.sfileBook = sfileBook;
 		this.pageNo = pageNo;
+		this.postDate = postDate;
 	}
 
 	public int getListNum() {
@@ -78,6 +80,14 @@ public class LikeDTO {
 
 	public void setPageNo(int pageNo) {
 		this.pageNo = pageNo;
+	}
+
+	public String getPostDate() {
+		return postDate;
+	}
+
+	public void setPostDate(String postDate) {
+		this.postDate = postDate;
 	}
 	
 

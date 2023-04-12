@@ -38,6 +38,7 @@
 						<td>
 							<c:url value="/MyPage/MyPageFront?command=MyRequest.requestTitleClick" var="titleClickUrl">
 								<c:param name="requestNum" value="${post.requestNum}" />
+								<c:param name="postUserId" value="${post.userId}" />
 							</c:url> 
 							<a href="${titleClickUrl}">${post.title}</a></td>
 						<td>${post.userId}</td>

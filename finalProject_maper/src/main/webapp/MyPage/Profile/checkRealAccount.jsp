@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="../Resources/css/myPage.css">
 <title>Check Real Account</title>
 </head>
 <body class="maper-body-background">

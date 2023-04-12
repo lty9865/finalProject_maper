@@ -17,7 +17,7 @@ public class LikeDeleteHandler implements Controller {
         String userId = (String) session.getAttribute("userId");
         session.setAttribute("userId", userId);
 
-        int bookNum = Integer.parseInt(request.getParameter("bookNum"));
+        int bookNum = Integer.parseInt(request.getParameter("idx"));
 
         LikeDAO kDAO = LikeDAO.getInstance();
 
