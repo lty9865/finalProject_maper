@@ -30,7 +30,7 @@
 
     <!-- body/main -->
     <div class="maper-body">
-	    <h3 align="left">Details of Re: ${rDTO.title}</h3>
+	    <h3 align="left">Re: ${rDTO.title}</h3>
 	    <ul class="list-group detailList">
 	        <li class="list-group-item"><strong>제목</strong></li>
 	        <li class="list-group-item">Re: ${rDTO.title}</li>

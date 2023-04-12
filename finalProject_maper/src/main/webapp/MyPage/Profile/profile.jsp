@@ -7,6 +7,19 @@
 <meta charset="UTF-8">
 <title>My Page - My Profile</title>
 <link rel="stylesheet" href="../Resources/css/myPage.css">
+<style>
+    .center-area {
+        width: 50%;
+        margin-left: 30px;
+        margin-right: 30px;
+    }
+    
+    .bottom-area {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
 </head>
 <body>
     <!-- header -->
@@ -19,24 +32,8 @@
         </div>
         <br>
         <br>
-        <div class="bottom-area">
-            <div class="left-area">
-                <div class="profile-img">
-                    <form id="profile-image-form" action="imageChoice.jsp" method="post" enctype="multipart/form-data">
-                        <div class="profile-image-container">
-                            <c:choose>
-                                <c:when test="${not empty sfile}">
-                                    <img src="${pageContext.request.contextPath}/Uploads/Profile/${sfile}" alt="Profile Image">
-                                </c:when>
-                                <c:otherwise>
-                                    <img src="${pageContext.request.contextPath}/Uploads/Profile/${ofile}" alt="Profile Image">
-                                </c:otherwise>
-                            </c:choose>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="right-area">
+        <div class="bottom-area maper-body">
+            <div class="center-area maper-body">
                 <h1 class="title">${userId}</h1>
                 <hr class="blue-line">
                 <p class="field">

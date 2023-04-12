@@ -15,9 +15,6 @@ public class LikeDeleteHandler implements Controller {
 
         HttpSession session = request.getSession();
         String userId = (String) session.getAttribute("userId");
-        if (userId == null || userId.isEmpty()) {
-            userId = "test1";
-        }
         session.setAttribute("userId", userId);
 
         int bookNum = Integer.parseInt(request.getParameter("bookNum"));

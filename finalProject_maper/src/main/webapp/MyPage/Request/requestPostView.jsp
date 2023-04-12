@@ -21,16 +21,23 @@
 	<div style="display:none" id="error-message">
 	   <c:out value="${requestScope.error}" />
 	</div>
-	
+
 	<!-- header -->
 	<%@ include file="/WEB-INF/views/Common/header.jsp"%>
 	
 	<!-- body/menu -->
-	<jsp:include page="../menu.jsp" />
+	<c:choose>
+	    <c:when test="${fn:contains(sessionScope.userId, 'admins_1')}">
+	        <jsp:include page="/MyPage/adminsMenu.jsp"/>
+	    </c:when>
+	    <c:otherwise>
+	        <jsp:include page="/MyPage/menu.jsp"/>
+	    </c:otherwise>
+	</c:choose>
 
 	<!-- body/main -->
 	<div class="maper-body">
-		<h3 align="left">Details of ${rDTO.title}</h3>
+		<h3 align="left">문의 번호 ${rDTO.requestNum}의 글:</h3>
 		<ul class="list-group detailList">
 			<li class="list-group-item"><strong>문의 번호</strong></li>
 			<li class="list-group-item">${rDTO.requestNum}</li>

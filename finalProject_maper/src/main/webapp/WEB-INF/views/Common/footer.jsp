@@ -9,6 +9,11 @@
 <body>
 	<div>
 		<div>
+			<a href="${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyReqeust.requestPostView">
+			
+			</a>
+		</div>
+		<div>
 			<p align="center">copyright 2023 MAPER</p>
 		</div>
 	</div>

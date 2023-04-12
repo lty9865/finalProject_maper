@@ -217,6 +217,10 @@ public class RequestDAO {
 	            + " VALUES (c##mapers.request_seq.nextval, ?, ?, ?, ?)";
 
 	    try {
+	    	
+	    	if (conn != null) {
+	    		conn.close();
+	    	}
 
 	    	conn = dataSource.getConnection();
 

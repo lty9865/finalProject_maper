@@ -20,9 +20,6 @@ public class MyLikeHandler implements Controller {
 
         HttpSession session = request.getSession();
         String userId = (String) session.getAttribute("userId");
-        if (userId == null || userId.isEmpty()) {
-            userId = "test1";
-        }
         session.setAttribute("userId", userId);
 
         int totalPostCount = LikeDAO.getInstance().getTotalPostCount(userId);

@@ -18,13 +18,13 @@
 <body>
   <ul class="nav maper-body nav-tabs">
     <li class="nav-item">
-      <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/MyPage/MyPageFront?command=Admins.memberBoard">회원 리스트</a>
+      <a class="nav-link <c:if test="${selectedMenuItem == 'AdminsMemberBoard'}">active</c:if>" href="${pageContext.request.contextPath}/MyPage/MyPageFront?command=Admins.memberBoard">회원 리스트</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="${pageContext.request.contextPath}/MyPage/MyPageFront?command=Admins.requestBoard">문의 리스트</a>
+      <a class="nav-link <c:if test="${selectedMenuItem == 'AdminsRequestBoard'}">active</c:if>" href="${pageContext.request.contextPath}/MyPage/MyPageFront?command=Admins.requestBoard">문의 리스트</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="${pageContext.request.contextPath}/MyPage/MyPageFront?command=Admins.reportBoard">신고 리스트</a>
+      <a class="nav-link <c:if test="${selectedMenuItem == 'AdminsReportBoard'}">active</c:if>" href="${pageContext.request.contextPath}/MyPage/MyPageFront?command=Admins.reportBoard">신고 리스트</a>
     </li>
   </ul>
   <br>

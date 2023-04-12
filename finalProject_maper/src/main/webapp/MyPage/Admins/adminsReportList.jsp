@@ -25,19 +25,17 @@
 	                <th>제목</th>
 	                <th>작성자</th>
 	                <th>신고 횟수</th>
+	                <th>처리</th>
 	            </tr>
 	        </thead>
 	        <tbody>
 	            <c:forEach items="${requestScope.reportBoard}" var="post">
 	                <tr align="center" class="header-row">
 	                    <td>${post.reportNum}</td>
-	                    <td>
-	                    	<a href="${pageContext.request.contextPath}/MyPage/MyPageFront?command=Admins.reportPostView&reportNum=${post.reportNum}">
-			                    ${post.bookTitle}
-	                    	</a>
-	                    </td>
+	                    <td>${post.bookTitle}</td>
 	                    <td>${post.userId}</td>
 	                    <td>${post.count}</td>
+	                    <td><a href="${pageContext.request.contextPath}/MyPage/MyPageFront?command=Admins.reportDelete&reportNum=${post.reportNum}">[완료]</a>
 	                </tr>
 	            </c:forEach>
 	        </tbody>
