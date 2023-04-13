@@ -16,6 +16,7 @@ import com.mapers.myPage.Like.service.MyLikeHandler;
 import com.mapers.myPage.Profile.service.CheckRealAccountHandler;
 import com.mapers.myPage.Profile.service.MyProfileHandler;
 import com.mapers.myPage.Profile.service.ProfileDeleteHandler;
+import com.mapers.myPage.Profile.service.ProfileDeleteProcessHandler;
 import com.mapers.myPage.Profile.service.ProfileEditHandler;
 import com.mapers.myPage.Profile.service.ProfileImageChoiceHandler;
 import com.mapers.myPage.Request.service.MyRequestHandler;
@@ -54,6 +55,8 @@ public class HandlerMapping {
 					controller = new ProfileEditHandler();
 				} else if (subCommand.contentEquals("profileDelete")) {
 					controller = new ProfileDeleteHandler();
+				} else if (subCommand.contentEquals("profileDeleteProcess")) {
+					controller = new ProfileDeleteProcessHandler();
 				} else if (subCommand.contentEquals("checkRealAccount")) {
 					controller = new CheckRealAccountHandler();
 				} else if (subCommand.contentEquals("profileImageChoice")) {

@@ -61,16 +61,9 @@
 					</p>
 					<hr class="blue-line">
 					
-					<p class="field">
-					    <span class="input-label"><strong>생년월일:</strong></span>
-					    <input type="date" name="birth" value="${birth}">
-					</p>
-                    <hr class="blue-line">
-                    <br>
-                    
                     <input type="submit" value="정보 수정" class="custom-button" onclick="submitForm();">
 					<input type="button" value="돌아가기" onclick="location.href='${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyProfile'" class="custom-button">
-					<button type="button" onclick="location.href='${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyProfile.profileDelete';" class="custom-button">계정 삭제</button>
+					<button type="button" onclick="location.href='${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyProfile.profileDelete'" class="custom-button">계정 삭제</button>
                 </form>
             </div>
         </div>

@@ -235,7 +235,7 @@ public class ProfileDAO {
 		// 회원탈퇴: 성공 1/ 실패 0
 		int answer = -1;
 		
-		String sql1 = "select userid from account where password=?";
+		String sql1 = "delete from account where userid=? and password=?";
 		
 		try {
 
@@ -243,26 +243,14 @@ public class ProfileDAO {
 				conn.close();
 			}
 			
+			conn = dataSource.getConnection();
+			
 			psmt = conn.prepareStatement(sql1);
-			psmt.setString(1, password);
+			psmt.setString(1, userId);
+			psmt.setString(2, password);
 			
-			rs = psmt.executeQuery();
-			if (rs.next()) {
-				String existedId = rs.getString("userid");
-				
-				if (existedId.equals(userId)) {
-					String sql2 = "delete from account where id=?";
-					
-					psmt = conn.prepareStatement(sql2);
-					psmt.setString(1, userId);
-					psmt.executeUpdate();
-					
-					answer = 1;
-				} else {
-					answer = 0;
-				}
-			}
-			
+			answer = psmt.executeUpdate();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		
