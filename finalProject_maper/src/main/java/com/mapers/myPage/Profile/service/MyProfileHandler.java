@@ -16,9 +16,6 @@ public class MyProfileHandler implements Controller {
 
 	    HttpSession session = request.getSession();
 	    String userId = (String) session.getAttribute("userId");
-	    if (userId == null || userId.isEmpty()) {
-	        userId = "test1";
-	    }
 
 	    ProfileDTO pDTO = ProfileDAO.getInstance().getProfile(userId);
 	    String ofile = "basicProfile.png";
