@@ -1,11 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="../Common/link.jsp"%>
-<%
-response.setHeader("Pragma","no-cache"); 
-response.setDateHeader("Expires",0); 
-response.setHeader("Cache-Control", "no-cache");
-%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -102,6 +98,10 @@ response.setHeader("Cache-Control", "no-cache");
 			</c:otherwise>
 		</c:choose>
 	</div>
+	<hr>
+	<!-- footer -->
+	<%@ include file="/WEB-INF/views/Common/footer.jsp"%>
+	
 	<script type="text/javascript" src="../Resources/javascript/book.js"></script>
 </body>
 </html>

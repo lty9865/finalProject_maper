@@ -99,7 +99,7 @@
 						</div>
 			            
 						<div class="maper-login-labels">
-							<a href="${pageContext.request.contextPath}/Member/SignUp/SignUp.jsp">회원가입</a>&nbsp;&nbsp;&nbsp; <a
+							<a href="${pageContext.request.contextPath}/Member/SignUp/signUpTest.jsp">회원가입</a>&nbsp;&nbsp;&nbsp; <a
 								href="${pageContext.request.contextPath}/Member/Login/findID.jsp">아이디찾기</a>&nbsp;&nbsp;&nbsp; <a
 								href="${pageContext.request.contextPath}/Member/Login/findPassword.jsp">패스워드찾기</a>
 						</div>

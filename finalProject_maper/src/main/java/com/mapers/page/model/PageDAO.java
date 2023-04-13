@@ -327,8 +327,8 @@ public class PageDAO {
 			pstmt.setInt(7, dto.getPageNum());
 
 			result = pstmt.executeUpdate();
-
-			updateRate(dto.getBookNum());
+			int bookNum = dto.getBookNum();
+			updateRate(bookNum);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("페이지 게시물 수정 중 예외 발생");

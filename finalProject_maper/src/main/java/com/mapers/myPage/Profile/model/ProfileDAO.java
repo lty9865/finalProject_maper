@@ -135,8 +135,6 @@ public class ProfileDAO {
 				dto.setUserId(rs.getString("userid"));
 				dto.setPassword(rs.getString("password"));
 				dto.setEmail(rs.getString("usermail"));
-				dto.setOfile(rs.getString("ofile"));
-				dto.setSfile(rs.getString("sfile"));
 			}
 		
 		} catch (Exception e) {
@@ -172,8 +170,6 @@ public class ProfileDAO {
 				dto.setUserId(rs.getString("userid"));
 				dto.setPassword(rs.getString("password"));
 				dto.setEmail(rs.getString("usermail"));
-				dto.setOfile(rs.getString("ofile"));
-				dto.setSfile(rs.getString("sfile"));
 			}
 		
 		} catch (Exception e) {

@@ -5,30 +5,14 @@ public class MemberDTO {
 	private String password;
 	private String confirmPassword;
 	private String email;
-	private String birth;
 	private int admins;
 	private String licenseKey;
 	private int state;
 	private String joinDate;
 	private String deleteDate;
+
 	
 	public MemberDTO() {
-		super();
-	}
-
-	public MemberDTO(String userId, String password, String confirmPassword, String email, String birth, int admins,
-			String licenseKey, int state, String joinDate, String deleteDate) {
-		super();
-		this.userId = userId;
-		this.password = password;
-		this.confirmPassword = confirmPassword;
-		this.email = email;
-		this.birth = birth;
-		this.admins = admins;
-		this.licenseKey = licenseKey;
-		this.state = state;
-		this.joinDate = joinDate;
-		this.deleteDate = deleteDate;
 	}
 
 	public String getUserId() {
@@ -61,14 +45,6 @@ public class MemberDTO {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public String getBirth() {
-		return birth;
-	}
-
-	public void setBirth(String birth) {
-		this.birth = birth;
 	}
 
 	public int getAdmins() {

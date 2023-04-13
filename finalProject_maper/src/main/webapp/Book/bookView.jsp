@@ -27,7 +27,8 @@
 						<img alt="" src="../Uploads/Book/${ bookDTO.sfile }"
 							style="width: 100%; height: 100%; object-fit: cover;">
 					</div>
-					<div class="col-8" align="left" style="height: 400px; vertical-align: middle; margin: auto;">
+					<div class="col-8" align="left"
+						style="height: 400px; vertical-align: middle; margin: auto;">
 						<div class="row" align="left">
 							<div class="col">작성자 :&nbsp;</div>
 							<div class="col">${ bookDTO.userId }</div>

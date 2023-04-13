@@ -6,12 +6,12 @@
 <head>
 <meta charset="UTF-8">
 <title>회원 관리</title>
-<script type="text/javascript" src="../../Resources/javascript/Member.js"></script>
+<script type="text/javascript" src="../../Resources/javascript/signUp.js"></script>
 </head>
 <body>
 	
 	<h2>아이디 중복 확인</h2>
-	<form action="idCheck.do" method="get" name="frm">
+	<form action="idCheck.do" method="get" name="signUpFrm">
 	
 		아이디 <input type="text" class="form-control" name="userId" value="${userId}">
 		<input type="submit" value="중복 체크"> <br>

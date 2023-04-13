@@ -30,7 +30,9 @@
 											<li><a class="dropdown-item" onclick="LoginConfirmed()">마이페이지</a></li>
 										</c:when>
 										<c:otherwise>
-											<li><a class="dropdown-item" href="${pageContext.request.contextPath}/MyPage/myPage.jsp">마이페이지</a></li>
+											<li>
+												<a class="dropdown-item" href="${pageContext.request.contextPath}/MyPage/myPage.jsp">마이페이지</a>
+											</li>
 										</c:otherwise>
 									</c:choose>
 									<c:choose>

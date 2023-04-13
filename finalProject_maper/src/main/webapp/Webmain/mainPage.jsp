@@ -2,11 +2,6 @@
 	pageEncoding="UTF-8"%>
 <!-- 각종 링크 헤더 include -->
 <%@ include file="../Common/link.jsp"%>
-<%
-response.setHeader("Pragma", "no-cache");
-response.setDateHeader("Expires", 0);
-response.setHeader("Cache-Control", "no-cache");
-%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -68,7 +63,7 @@ response.setHeader("Cache-Control", "no-cache");
 												<h1>${ row.title }</h1>
 												<p>${ row.country }&nbsp;${ row.city }</p>
 												<p>${ row.bookDate }</p>
-												<p>${ row.visitCount }</p>
+												<p>조회수 : ${ row.visitCount }</p>
 												<a
 													href="${pageContext.request.contextPath}/Book/book.do?command=bookView&idx=${ row.bookNum }"
 													class="btn btn-primary">보러가기</a>
@@ -83,7 +78,7 @@ response.setHeader("Cache-Control", "no-cache");
 												<h1>${ row.title }</h1>
 												<p>${ row.country }&nbsp;${ row.city }</p>
 												<p>${ row.bookDate }</p>
-												<p>${ row.visitCount }</p>
+												<p>조회수 : ${ row.visitCount }</p>
 												<a
 													href="${pageContext.request.contextPath}/Book/book.do?command=bookView&idx=${ row.bookNum }"
 													class="btn btn-primary">보러가기</a>
@@ -188,6 +183,6 @@ response.setHeader("Cache-Control", "no-cache");
 	</div>
 	<hr>
 	<!-- footer -->
-	<div class="maper-footer"></div>
+	<%@ include file="/WEB-INF/views/Common/footer.jsp"%>
 </body>
 </html>

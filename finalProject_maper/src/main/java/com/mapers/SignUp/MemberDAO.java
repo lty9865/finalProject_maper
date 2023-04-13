@@ -52,7 +52,7 @@ public class MemberDAO {
 
 		int result = -1;
 
-		String query = "INSERT INTO ACCOUNT (userId, password, usermail, birth, licensekey) VALUES (?, ?, ?, ?, ?)";
+		String query = "INSERT INTO ACCOUNT (userId, password, usermail, licensekey) VALUES (?, ?, ?, ?)";
 
 		try {
 
@@ -62,8 +62,7 @@ public class MemberDAO {
 			pstmt.setString(1, mDto.getUserId());
 			pstmt.setString(2, mDto.getPassword());
 			pstmt.setString(3, mDto.getEmail());
-			pstmt.setString(4, mDto.getBirth());
-			pstmt.setString(5, mDto.getLicenseKey());
+			pstmt.setString(4, mDto.getLicenseKey());
 
 			result = pstmt.executeUpdate();
 
@@ -174,7 +173,6 @@ public class MemberDAO {
 				mDto.setUserId(rs.getString("userId"));
 				mDto.setPassword(rs.getString("password"));
 				mDto.setEmail(rs.getString("email"));
-				mDto.setBirth(rs.getString("birth"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

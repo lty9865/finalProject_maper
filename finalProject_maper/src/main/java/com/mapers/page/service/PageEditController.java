@@ -47,6 +47,7 @@ public class PageEditController implements Controller {
 		dto.setContent(content);
 		dto.setPostDate(postDate);
 		dto.setRate(rate);
+		dto.setBookNum(bookNum);
 
 		String fileName = mr.getFilesystemName("ofile");
 		if (fileName != null) {

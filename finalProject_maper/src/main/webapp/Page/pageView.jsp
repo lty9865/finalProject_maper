@@ -120,7 +120,7 @@ response.setHeader("Cache-Control", "no-cache");
 						<!-- 신고 ajax -->
 						<form id="report_form">
 							<button type="button" class="btn btn-outline-primary child"
-								onclick="return reportBtn()">신고버튼</button>
+								onclick="return report()">신고버튼</button>
 						</form>
 					</div>
 				</div>
@@ -230,8 +230,8 @@ response.setHeader("Cache-Control", "no-cache");
 	<script type="text/javascript"
 		src="../Resources/javascript/pageScript.js"></script>
 
-	<!-- 좋아요 기능 -->
 	<script type="text/javascript">
+	<!-- 좋아요 기능 -->
 		function like(){
 			if(${empty sessionScope.userId}){
 					LoginConfirmed();
@@ -257,31 +257,30 @@ response.setHeader("Cache-Control", "no-cache");
 			});
 			}
 		}
-	</script>
-	<!-- 신고 기능 -->
-	<script type="text/javascript">
+		<!-- 신고 기능 -->
 		function report(){
 			if(${empty sessionScope.userId}){
 					LoginConfirmed();
 			}else{
-				
-			$.ajax({
-				url : "../Book/book.do?command=report",
-				type : "POST",
-				date : {
-					bookNum : ${ bookDTO.bookNum },
-					userId : "${ sessionScope.userId }"
-					},
-					success:
-					function(data){
-					  location.reload();
-					},
-					
-					error:
-						function(request, status, error){
-						alert("신고 실패");
-					}
-			});
+				if(reportBtn()){
+					$.ajax({
+						url : "../Book/book.do?command=report",
+						type : "POST",
+						date : {
+							bookNum : ${ bookDTO.bookNum },
+							userId : "${ sessionScope.userId }"
+							},
+							success:
+							function(data){
+							  location.reload();
+							},
+							
+							error:
+								function(request, status, error){
+								alert("신고 실패");
+							}
+					});
+				}
 			}
 		}
 	</script>

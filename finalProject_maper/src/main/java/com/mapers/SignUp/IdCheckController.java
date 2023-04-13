@@ -25,8 +25,9 @@ public class IdCheckController extends HttpServlet {
 
 		request.setAttribute("userId", userId);
 		request.setAttribute("result", result);
+		mDao.closeAll();
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/Member/SignUp/idCheck.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/Member/SignUp/IdCheck.jsp");
 		dispatcher.forward(request, response);
 		
 		
