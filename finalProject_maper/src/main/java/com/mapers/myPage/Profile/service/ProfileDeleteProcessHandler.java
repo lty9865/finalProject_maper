@@ -24,7 +24,7 @@ public class ProfileDeleteProcessHandler implements Controller {
 			HttpSession session = request.getSession();
 			session.setAttribute("userId", null);
 			
-			return "${pageContext.request.contextPath}/Common/logOutProcess.jsp";
+			return "/Common/logOutProcess.jsp";
 		} else {
 			request.setAttribute("msg", "계정 삭제 중 오류가 발생했습니다. 잠시 후 다시 시도해주십시오.");
 			

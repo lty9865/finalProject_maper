@@ -40,11 +40,6 @@ function signUpBlank() {
 		signUpFrm.EMAIL.focus();
 		return false;
 	}
-	let emailVerified = document.getElementById("emailVerified").value;
-	if (emailVerified === "false") {
-		alert("이메일 인증을 해주세요.");
-		return false;
-	}
 
 	if (pw.length < 10 || pw.length > 20) {
 		alert("10자리 ~ 20자리 이내로 입력해주세요.");

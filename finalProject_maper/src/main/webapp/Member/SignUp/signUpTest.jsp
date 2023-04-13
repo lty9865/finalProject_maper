@@ -11,6 +11,14 @@
 	src="../../Resources/javascript/signUp.js"></script>
 <script>
 	function verifyEmail() {
+	    // Check if the email is already verified
+	    let emailVerified = document.getElementById("emailVerified").value;
+	    if (emailVerified === "true") {
+	        alert("Your email has already been verified.");
+	        return;
+	    }
+
+		
 		let email = document.getElementById("Email").value;
 		if (email.length == 0) {
 			alert("이메일을 입력해주세요.");
@@ -98,7 +106,7 @@
 				<div align="center">
 					<button class="btn btn-primary" type="submit">가입완료</button>
 					<button class="btn btn-primary" type="button"
-						onclick="location.href='';">가입취소</button>
+						onclick="location.href='../Login/login.jsp';">가입취소</button>
 				</div>
 			</form>
 		</div>
