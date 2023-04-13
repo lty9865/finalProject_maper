@@ -51,20 +51,22 @@
 			<li class="list-group-item"><strong>내용</strong></li>
 			<li class="list-group-item"><pre>${rDTO.content}</pre></li>
 		</ul>
-		<c:if test="${rDTO.status == 0}">
-			<input type="button" id="viewReplyButton" class="custom-button" value="답변 보기" />
-		</c:if>
 		<c:if test="${rDTO.userId == sessionScope.userId}">
 			<div class="text-end">
+				<form id="lookReply" action="${pageContext.request.contextPath}/MyPage/MyPageFront?command=Admins.requestReplyView" method="post">
+					<input type="hidden" name="requestNum" value="${rDTO.requestNum}" />
+					<input type="hidden" name="requestTitle" value="${rDTO.title}" />
+					<input type="hidden" name="requestDate" value="${rDTO.postDate}" />
+					<input type="submit" id="viewReplyButton" class="custom-button" value="답변 보기" />
+				</form>
 				<form id="editForm" class="d-inline-block"
 					action="${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyRequest.requestEdit"
 					method="POST">
 					<input type="hidden" name="requestNum" value="${rDTO.requestNum}" />
-					<input type="hidden" name="title" value="${rDTO.title}" /> <input
-						type="hidden" name="postDate" value="${rDTO.postDate}" /> <input
-						type="hidden" name="content" value="${rDTO.content}" /> <input
-						type="submit" class="btn btn-info" value="수정하기"
-						onclick="return confirmEdit();" />
+					<input type="hidden" name="title" value="${rDTO.title}" /> 
+					<input type="hidden" name="postDate" value="${rDTO.postDate}" /> 
+					<input type="hidden" name="content" value="${rDTO.content}" /> 
+					<input type="submit" class="custom-button" value="수정하기" onclick="return confirmEdit();" />
 				</form>
 				<form id="deleteForm" class="d-inline-block"
 					action="${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyRequest.requestDelete"

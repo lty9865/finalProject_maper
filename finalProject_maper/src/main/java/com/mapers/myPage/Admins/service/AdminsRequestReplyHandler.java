@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.mapers.common.Controller;
+import com.mapers.myPage.Admins.model.AdminsDAO;
 
 public class AdminsRequestReplyHandler implements Controller {
 
@@ -18,19 +19,26 @@ public class AdminsRequestReplyHandler implements Controller {
         String userId = (String) session.getAttribute("userId");
         String[] userIdPart = userId.split("_");
         String userIdFront = userIdPart[0];
-        if (userIdFront == null || userIdFront.isEmpty()) {
-        	userIdFront = "admins";
-        }
         int adminCon = Integer.parseInt(userIdPart[1]);
 
+        String requestNum = request.getParameter("requestNum");
+        String requestTitle = request.getParameter("requestTitle");
+        String requestUserId = request.getParameter("requestUserId");
+        
+        String requestDate = AdminsDAO.getInstance().viewRequestAsDate(requestNum, requestUserId);
+        
         if (adminCon == 1) {
+        	request.setAttribute("requestNum", requestNum);
+        	request.setAttribute("requestTitle", requestTitle);
+        	request.setAttribute("requestUserId", requestUserId);
+        	request.setAttribute("requestDate", requestDate);
+        	
         	session.setAttribute("userId", userId);
-
-            // Return the path to adminsRequestReply.jsp page
-            return "/MyPage/Admins/adminsRequestReply.jsp";
+        	
+        	return "/MyPage/Admins/adminsRequestReply.jsp";
         } else {
-            // Return the path to /Member/Login/login.jsp page
-            return "/Member/Login/login.jsp";
+            
+        	return "/Member/Login/login.jsp";
         }
     }
 }

@@ -41,17 +41,21 @@ window.onload = function() {
         <hr>
 
         <!-- Display requestNum and title from the requestScope -->
-        <p><strong>문의 번호 </strong> ${requestScope.requestNum}</p>
-        <p><strong>제목 </strong>RE: ${requestScope.title}</p>
-        <p><strong>작성자 </strong>${fn:substringBefore(sessionScope.userId, '_')}</p>
+        
+        <p><strong class="input-label">문의 번호: </strong>${requestScope.requestNum}</p>
+        <p><strong class="input-label">제목: </strong>RE: ${requestScope.requestTitle}</p>
+        <p><strong class="input-label">문의한 사람: </strong>${requestScope.requestUserId}</p>
+        <p><strong class="input-label">문의 일자: </strong>${requestScope.requestDate}</p>
+        <p><strong class="input-label">작성자: </strong>${fn:substringBefore(sessionScope.userId, '_')}</p>
 
         <!-- Reply form -->
         <form action="${pageContext.request.contextPath}/MyPage/MyPageFront?command=Admins.requestReplyProcess" method="POST">
             <input type="hidden" name="requestNum" value="${requestScope.requestNum}" />
-            <input type="hidden" name="title" value="${requestScope.title}" />
+            <input type="hidden" name="title" value="${requestScope.requestTitle}" />
             <input type="hidden" name="userId" value="${fn:substringBefore(sessionScope.userId, '_')}" />
+            <input type="hidden" name="requestDate" value="${requestScope.requestDate}" />
             <div class="form-group">
-                <label for="replyContent">답변 내용</label>
+                <label for="replyContent"><strong style="margin-left: 25px;">답변 내용:</strong></label>
                 <textarea class="form-control" id="replyContent" name="replyContent" rows="10" required></textarea>
             </div>
             <br>

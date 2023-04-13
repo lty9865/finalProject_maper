@@ -16,7 +16,7 @@ public class MyPageStarter implements Controller {
         String userId = (String) session.getAttribute("userId");
 
         String nextPage;
-        if ("admins_1".equals(userId)) {
+        if (userId.equals("admins_1")) {
             nextPage = "/MyPage/Admins/adminsMemberList.jsp";
         } else {
             nextPage = "/MyPage/Profile/profile.jsp";

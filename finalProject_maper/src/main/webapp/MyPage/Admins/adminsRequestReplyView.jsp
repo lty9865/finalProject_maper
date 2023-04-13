@@ -26,18 +26,26 @@
     <%@ include file="/WEB-INF/views/Common/header.jsp"%>
     
     <!-- body/menu -->
-    <jsp:include page="/MyPage/adminsMenu.jsp" />
+   	<c:choose>
+	    <c:when test="${fn:contains(sessionScope.userId, 'admins_1')}">
+	        <jsp:include page="/MyPage/adminsMenu.jsp"/>
+	    </c:when>
+	    <c:otherwise>
+	        <jsp:include page="/MyPage/menu.jsp"/>
+	    </c:otherwise>
+	</c:choose>
 
     <!-- body/main -->
     <div class="maper-body">
-	    <h3 align="left">Re: ${rDTO.title}</h3>
+	    <h3 align="left">문의하신 ${rDTO.requestNum}번 글에 대한 답변</h3>
+	    <br>
 	    <ul class="list-group detailList">
 	        <li class="list-group-item"><strong>제목</strong></li>
 	        <li class="list-group-item">Re: ${rDTO.title}</li>
 	        <li class="list-group-item"><strong>작성자</strong></li>
-	        <li class="list-group-item">${rDTO.userId}</li>
+	        <li class="list-group-item">admins</li>
 	        <li class="list-group-item"><strong>작성일</strong></li>
-	        <li class="list-group-item">${rDTO.postDate}</li>
+	        <li class="list-group-item">${rDTO.replyDate}</li>
 	        <li class="list-group-item"><strong>내용</strong></li>
 	        <li class="list-group-item"><pre>${rDTO.content}</pre></li>
 	
@@ -48,7 +56,7 @@
 	                    method="POST">
 	                    <input type="hidden" name="requestNum" value="${rDTO.requestNum}" />
 	                    <input type="hidden" name="title" value="Re: ${rDTO.title}" /> <input
-	                        type="hidden" name="postDate" value="${rDTO.postDate}" /> <input
+	                        type="hidden" name="postDate" value="${rDTO.replyDate}" /> <input
 	                        type="hidden" name="content" value="${rDTO.content}" /> <input
 	                        type="submit" class="btn btn-info" value="수정하기"
 	                        onclick="return confirmEdit();" />

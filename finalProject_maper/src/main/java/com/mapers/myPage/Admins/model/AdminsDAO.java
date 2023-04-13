@@ -266,6 +266,74 @@ public class AdminsDAO {
 		return dto;
 	}
 	
+	public RequestDTO matchRequest(String requestDate, String requestTitle, String userId) {
+		RequestDTO dto = new RequestDTO();
+		
+		String sql = "select * from request where postdate=? and title=? and userid=? ";
+		
+		try {
+
+			if (conn != null) {
+				conn.close();
+			}
+			
+			conn = dataSource.getConnection();
+			
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, requestDate);
+			psmt.setString(2, requestTitle);
+			psmt.setString(3, userId);
+			
+			rs = psmt.executeQuery();
+			while (rs.next()) {
+				dto.setRequestNum(rs.getInt("requestnum"));
+				dto.setUserId(rs.getString("userid"));
+				dto.setTitle(rs.getString("title"));
+				dto.setContent(rs.getString("content"));
+				dto.setPostDate(rs.getString("postdate"));
+				dto.setReplyDate(rs.getString("replydate"));
+				
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("문의사항 글 상세보기 중 Error");
+		} 
+		
+		return dto;
+	}
+	
+	public String viewRequestAsDate(String requestNum, String userId) {
+		String replyDate = null;
+		
+		String sql = "select postdate from request where requestnum=? and userid=? ";
+		
+		try {
+
+			if (conn != null) {
+				conn.close();
+			}
+			
+			conn = dataSource.getConnection();
+			
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, requestNum);
+			psmt.setString(2, userId);
+			
+			rs = psmt.executeQuery();
+			while (rs.next()) {
+				replyDate = rs.getString("postdate");
+				
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("viewRequestAsDate 중 Error");
+		} 
+		
+		return replyDate;
+	}
+	
 	// 마이 페이지(관리자 모드), 신고 글 상세보기 - 박강필
 	public ReportDTO viewReport(int reportNum) {
 		ReportDTO wDTO = new ReportDTO();
@@ -307,8 +375,8 @@ public class AdminsDAO {
 	    int result = 0;
 
 	    // requestNunm = request_seq로 처리
-	    String sql = "INSERT INTO request(requestnum, userid, title, content, postdate)"
-	            + " VALUES (c##mapers.request_seq.nextval, ?, ?, ?, ?)";
+	    String sql = "INSERT INTO request(requestnum, userid, title, content, postdate, replydate)"
+	            + " VALUES (c##mapers.request_seq.nextval, ?, ?, ?, ?, ?)";
 
 	    try {
 
@@ -323,6 +391,7 @@ public class AdminsDAO {
 	        psmt.setString(2, dto.getTitle());
 	        psmt.setString(3, dto.getContent());
 	        psmt.setString(4, dto.getPostDate());
+	        psmt.setString(5, dto.getReplyDate());
 
 	        result = psmt.executeUpdate();
 	        System.out.println("문의 글 저장 완료");

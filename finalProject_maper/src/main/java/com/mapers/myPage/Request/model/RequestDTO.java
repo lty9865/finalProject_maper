@@ -2,6 +2,7 @@ package com.mapers.myPage.Request.model;
 
 public class RequestDTO {
 	private int requestNum;
+	private String replyDate;
 	private String userId;
 	private String title;
 	private String content;
@@ -13,10 +14,11 @@ public class RequestDTO {
 		super();
 	}
 	
-	public RequestDTO(int requestNum, String userId, String title, String content, int status, String postDate,
-			String licenseKey) {
+	public RequestDTO(int requestNum, String replyDate, String userId, String title, String content, int status,
+			String postDate, String licenseKey) {
 		super();
 		this.requestNum = requestNum;
+		this.replyDate = replyDate;
 		this.userId = userId;
 		this.title = title;
 		this.content = content;
@@ -80,4 +82,13 @@ public class RequestDTO {
 	public void setLicenseKey(String licenseKey) {
 		this.licenseKey = licenseKey;
 	}
+
+	public String getReplyDate() {
+		return replyDate;
+	}
+
+	public void setReplyDate(String replyDate) {
+		this.replyDate = replyDate;
+	}
+
 }

@@ -9,6 +9,11 @@
   <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/Resources/css/myPage.css">
   <script src="${pageContext.request.contextPath}/Resources/javascript/requestEdit.js"></script>
   <title>Request Post</title>
+  <style type="text/css">
+  .btnMargin {
+  	margin-left: 48rem;
+  }
+  </style>
 </head>
 <body>
   <!-- header -->
@@ -45,7 +50,7 @@
 	      <tr>
 	        <td colspan="2">
 	          <div class="btnArea">
-	            <button type="submit" class="custom-button">수정 완료</button>
+	            <button type="submit" class="custom-button btnMargin">수정 완료</button>
 	            <button type="button" class="custom-button" onclick="resetForm();">글 초기화</button>
 	          </div>
 	        </td>

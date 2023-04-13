@@ -39,6 +39,7 @@ public class RequestPostViewHandler implements Controller {
 		session.setAttribute("userId", userId);
 		// url에 상세보기 페이지로 이동
 		request.setAttribute("url", "${pageContext.request.contextPath}/MyPage/MyPageFront?command=MyRequest.requestPostView");
+		request.setAttribute("selectedMenuItem", "MyRequest");
 		
 		return "/MyPage/Request/requestPostView.jsp";
 	}

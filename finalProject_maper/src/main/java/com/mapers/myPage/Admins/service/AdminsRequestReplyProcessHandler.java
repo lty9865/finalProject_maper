@@ -27,25 +27,37 @@ public class AdminsRequestReplyProcessHandler implements Controller {
         session.setAttribute("userId", userId);
 
         if (adminCon == 1) {
-            String originalTitle = request.getParameter("originalTitle");
-            String newTitle = "RE: " + originalTitle;
-            String content = request.getParameter("content");
-
+        	int requestNum = Integer.parseInt(request.getParameter("requestNum"));
+            String originalTitle = request.getParameter("title");
+            if (originalTitle.startsWith("RE: ")) {
+            	String[] titlePart = originalTitle.split(" ");
+            	originalTitle = titlePart[titlePart.length - 1];
+            }
+            String title = "RE: " + originalTitle;
+            String content = request.getParameter("replyContent");
+            String requestDate = request.getParameter("requestDate");
             Date postDate = new Date();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
             String postDateString = dateFormat.format(postDate);
 
             RequestDTO rDTO = new RequestDTO();
-            rDTO.setTitle(newTitle);
+            rDTO.setRequestNum(requestNum);
+            rDTO.setTitle(title);
             rDTO.setContent(content);
-            rDTO.setUserId(userIdFront);
-            rDTO.setPostDate(postDateString);
+            rDTO.setUserId(userIdPart[0]);
+            rDTO.setPostDate(requestDate);
+            rDTO.setReplyDate(postDateString);
 
             int result = aDAO.insertRequest(rDTO);
+            
+            request.setAttribute("selectedMenuItem", "AdminsRequestBoard");
 
             if (result > 0) {
                 request.setAttribute("message", "The response to the inquiry has been processed.");
-
+                request.setAttribute("rDTO", rDTO);
+                
+                aDAO.updateRequestStatus(requestNum);
+                
                 return "/MyPage/Admins/adminsRequestReplyView.jsp";
 
             } else {

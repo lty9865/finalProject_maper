@@ -8,14 +8,16 @@ public class MemberDTO {
 	private String birth;
 	private int admins;
 	private String licenseKey;
-
+	private int state;
+	private String joinDate;
+	private String deleteDate;
 	
 	public MemberDTO() {
 		super();
 	}
 
 	public MemberDTO(String userId, String password, String confirmPassword, String email, String birth, int admins,
-			String licenseKey) {
+			String licenseKey, int state, String joinDate, String deleteDate) {
 		super();
 		this.userId = userId;
 		this.password = password;
@@ -24,6 +26,9 @@ public class MemberDTO {
 		this.birth = birth;
 		this.admins = admins;
 		this.licenseKey = licenseKey;
+		this.state = state;
+		this.joinDate = joinDate;
+		this.deleteDate = deleteDate;
 	}
 
 	public String getUserId() {
@@ -80,6 +85,36 @@ public class MemberDTO {
 
 	public void setLicenseKey(String licenseKey) {
 		this.licenseKey = licenseKey;
+	}
+
+
+	public int getState() {
+		return state;
+	}
+
+
+	public void setState(int state) {
+		this.state = state;
+	}
+
+
+	public String getJoinDate() {
+		return joinDate;
+	}
+
+
+	public void setJoinDate(String joinDate) {
+		this.joinDate = joinDate;
+	}
+
+
+	public String getDeleteDate() {
+		return deleteDate;
+	}
+
+
+	public void setDeleteDate(String deleteDate) {
+		this.deleteDate = deleteDate;
 	}
 
 }

@@ -10,6 +10,7 @@ import com.mapers.myPage.Admins.service.AdminsRequestReplyEditHandler;
 import com.mapers.myPage.Admins.service.AdminsRequestReplyEditProcessHandler;
 import com.mapers.myPage.Admins.service.AdminsRequestReplyHandler;
 import com.mapers.myPage.Admins.service.AdminsRequestReplyProcessHandler;
+import com.mapers.myPage.Admins.service.AdminsRequestReplyViewHandler;
 import com.mapers.myPage.Like.service.LikedBookViewHandler;
 import com.mapers.myPage.Like.service.MyLikeHandler;
 import com.mapers.myPage.Profile.service.CheckRealAccountHandler;
@@ -22,7 +23,7 @@ import com.mapers.myPage.Request.service.RequestDeleteHandler;
 import com.mapers.myPage.Request.service.RequestEditHandler;
 import com.mapers.myPage.Request.service.RequestEditProcessHandler;
 import com.mapers.myPage.Request.service.RequestPostHandler;
-import com.mapers.myPage.Request.service.RequestPostProcessHandlerWithConversation;
+import com.mapers.myPage.Request.service.RequestPostProcessHandler;
 import com.mapers.myPage.Request.service.RequestPostViewHandler;
 import com.mapers.myPage.Request.service.RequestTitleClickHandler;
 
@@ -64,7 +65,7 @@ public class HandlerMapping {
 				if (subCommand.contentEquals("requestPost")) {
 					controller = new RequestPostHandler();
 				} else if (subCommand.contentEquals("requestPostProcess")) {
-					controller = new RequestPostProcessHandlerWithConversation();
+					controller = new RequestPostProcessHandler();
 				} else if (subCommand.contentEquals("requestEdit")) {
 					controller = new RequestEditHandler();
 				} else if (subCommand.contentEquals("requestEditProcess")) {
@@ -95,6 +96,8 @@ public class HandlerMapping {
 					controller = new AdminsRequestReplyHandler();
 				} else if (subCommand.contentEquals("requestReplyProcess")) {
 					controller = new AdminsRequestReplyProcessHandler();
+				} else if (subCommand.contentEquals("requestReplyView")) {
+					controller = new AdminsRequestReplyViewHandler();
 				} else if (subCommand.contentEquals("requestReplyEdit")) {
 					controller = new AdminsRequestReplyEditHandler();
 				} else if (subCommand.contentEquals("requestReplyEditProcess")) {

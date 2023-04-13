@@ -36,9 +36,10 @@
 					<tr align="center" class="header-row">
 						<td>${post.requestNum}</td>
 						<td>
-							<c:url value="/MyPage/MyPageFront?command=MyRequest.requestTitleClick" var="titleClickUrl">
+							<c:url value="/MyPage/MyPageFront?command=Admins.requestReply" var="titleClickUrl">
 								<c:param name="requestNum" value="${post.requestNum}" />
-								<c:param name="postUserId" value="${post.userId}" />
+								<c:param name="requestUserId" value="${post.userId}" />
+								<c:param name="requestTitle" value="${post.title}" />
 							</c:url> 
 							<a href="${titleClickUrl}">${post.title}</a></td>
 						<td>${post.userId}</td>
